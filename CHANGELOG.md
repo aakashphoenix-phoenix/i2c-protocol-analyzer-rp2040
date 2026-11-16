@@ -6,7 +6,7 @@ This repository is being prepared to retain the project’s **actual development
 
 - Added public-facing overview, hardware wiring notes, architecture, setup guidance, and measurement/validation principles.
 - Recorded the distinction between the original project and the later dual-master, 3D GUI implementation.
-- Historical source archive still **awaiting inspection**: the supplied \`software project.zip\` has not been safely unpacked in this session.
+- Historical source archive still **awaiting inspection**: the supplied `software project.zip` has not been safely unpacked in this session.
 - **No version tags or source release claims yet.**
 
 ## Planned: v1.0 — Original project
@@ -17,7 +17,7 @@ To complete this release:
 1. Review archive paths and remove generated binaries, virtual environments, private files, and unneeded artifacts.
 2. Commit the original source with a file inventory and instructions that match that source.
 3. Validate build/run instructions when practical.
-4. Tag that specific source commit \`v1.0\`.
+4. Tag that specific source commit `v1.0`.
 
 We will not invent missing original files or claim later features existed in Version 1.
 
@@ -30,7 +30,7 @@ Based on later project development:
 - Python desktop GUI showing decoded I²C activity and performance metrics.
 - Existing known limitations: reported record loss, address-NACK validation, lack of raw waveform export, and multi-master arbitration attribution.
 
-The \`v2.0\` tag will be added after the matching firmware and GUI sources are committed and checked.
+The `v2.0` tag will be added after the matching firmware and GUI sources are committed and checked.
 
 ## Release discipline
 
