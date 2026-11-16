@@ -1,0 +1,49 @@
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+*.log
+
+# Pico SDK / CMake build artifacts
+build/
+**/build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+*.uf2
+*.elf
+*.bin
+*.hex
+*.map
+*.o
+*.a
+
+# IDE and OS
+.vscode/settings.json
+.vscode/ipch/
+.idea/
+.vs/
+.DS_Store
+Thumbs.db
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*credentials*.json
+
+# Capture output should be selectively curated
+captures/raw/
+results/raw/
+*.tmp
