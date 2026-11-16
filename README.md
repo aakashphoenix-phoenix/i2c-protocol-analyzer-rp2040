@@ -24,7 +24,7 @@ The extended system uses **two masters**, **three slave peripherals**, and **one
 
 ## System architecture
 
-\`\`\`text
+```text
        Pico 1 (Master 1)       Pico W (Master 2)
                 |                    |
                 +---- SDA + SCL -----+
@@ -42,7 +42,7 @@ The extended system uses **two masters**, **three slave peripherals**, and **one
                            |
                  Python desktop GUI
              Packet view · 3D bus · Metrics
-\`\`\`
+```
 
 The analyzer is **in parallel**, not between the masters and slaves. All devices share a compatible **3.3 V logic** bus and common ground. Do not connect separately USB-powered Pico boards' 3V3 outputs together.
 
@@ -79,7 +79,7 @@ See [Testing and validation](docs/TESTING.md) for measurement cautions.
 3. Read [Data format and interpretation](docs/PROTOCOL_AND_METRICS.md).
 4. Review [Architecture](docs/ARCHITECTURE.md) and [Version history](CHANGELOG.md).
 
-**Source release note:** The historical source snapshot from the supplied original-project ZIP is awaiting archive inspection. Until the actual \`firmware/\` and \`software/\` trees are committed, this repository is documentation for the project—not yet a ready-to-build software release.
+**Source release note:** The historical source snapshot from the supplied original-project ZIP is awaiting archive inspection. Until the actual `firmware/` and `software/` trees are committed, this repository is documentation for the project—not yet a ready-to-build software release.
 
 ## Technology
 
@@ -93,7 +93,7 @@ See [Testing and validation](docs/TESTING.md) for measurement cautions.
 - **Extended version (v2.0 planned):** Track the dual-master setup, analyzer, 3D GUI, and real sensor telemetry as a separate source snapshot.
 - **Future:** Capture-reliability improvements, 3D protocol-phase visualization, fault-injection tests, and arbitration validation.
 
-No \`v1.0\` or \`v2.0\` tag should be created until the corresponding source snapshot is complete. See [CHANGELOG.md](CHANGELOG.md).
+No `v1.0` or `v2.0` tag should be created until the corresponding source snapshot is complete. See [CHANGELOG.md](CHANGELOG.md).
 
 ## License and contributors
 
