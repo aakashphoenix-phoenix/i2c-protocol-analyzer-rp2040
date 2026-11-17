@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "failures": [],
+  "renderer": "3D (OpenGL)",
+  "live": {
+    "observe_s": 900.0,
+    "speed": 0.5,
+    "animated_transfers": 5,
+    "banner_heads": [
+      "[Master 1 (Pico 1) → OLED 0x3C · WRITE]",
+      "[Master 1 (Pico 1) → RTC 0x68 · READ]",
+      "[Master 1 (Pico 1) → RTC 0x68 · WRITE]",
+      "[Master 2 (Pico 3) → BMP280 0x76 · READ]",
+      "[Master 2 (Pico 3) → BMP280 0x76 · WRITE]",
+      "[Master 2 (Pico 3) → OLED 0x3C · WRITE]",
+      "[Master 2 (Pico 3) → RTC 0x68 · READ]",
+      "[Master 2 (Pico 3) → RTC 0x68 · WRITE]"
+    ],
+    "animated_pairs": {
+      "Master 2 0x76 WRITE→READ": 1,
+      "Master 1 0x3C WRITE": 1,
+      "Master 1 0x68 WRITE→READ": 1,
+      "Master 2 0x3C WRITE": 1,
+      "Master 2 0x68 WRITE→READ": 1
+    },
+    "engine_packets": 28025,
+    "engine_unattributed": 1,
+    "engine_by_master": {
+      "1": 26285,
+      "2": 1739,
+      "None": 1
+    },
+    "m2_oled_packets": 313,
+    "m1_oled_packets": 24149,
+    "outside_input": [],
+    "page_changes": []
+  }
+}

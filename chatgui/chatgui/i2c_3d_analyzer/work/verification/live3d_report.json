@@ -1,0 +1,537 @@
+{
+  "mode": "LIVE HARDWARE",
+  "renderer": "3D (OpenGL)",
+  "checks": {
+    "Connect all: capturing, both masters clock-aligned": {
+      "ok": true,
+      "detail": "{'capturing': True, 'masters': [(1, 'HEALTHY', 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)'), (2, 'HEALTHY', 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)')]}"
+    },
+    "Reset view is on the LEFT of the 3D header (before the title)": {
+      "ok": true,
+      "detail": "{'x_in_card': 17, 'title_x': 128, 'card_w': 961, 'text': '⟲ Reset view'}"
+    },
+    "startup camera saved on first fit (elevation 62, azimuth -90, fov 60)": {
+      "ok": true,
+      "detail": "{'camera': {'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60}, 'level': 2, 'split': [961, 300], 'labels': {'master': (233, 205), 'analyzer:sub': (400, 33), 'pc': (255, 34), '104': (321, 288), '118': (459, 273), '60': (596, 282), 'master:sub': (233, 224), 'master2': (637, 33), 'analyzer': (400, 14), 'rail:SDA': (700, 134), 'rail:SCL': (701, 152), 'rail:GND': (707, 171), '104:sub': (321, 307), '118:sub': (459, 292), '60:sub': (596, 301), 'usb': (319, 49)}, 'initial': {'center': 'PyQt6.QtGui.QVector3D(1.4291598796844482, -0.35162657499313354, 0.0)', 'distance': 41.69646628735524, 'elevation': 62, 'azimuth': -90, 'fov': 60, 'label_level': 2, 'size': (927, 321)}}"
+    },
+    "plain wheel over the view is ignored (no accidental zoom)": {
+      "ok": true,
+      "detail": "(41.69646628735524, 41.69646628735524)"
+    },
+    "Ctrl + wheel zooms": {
+      "ok": true,
+      "detail": "(41.69646628735524, 67.40077686398223)"
+    },
+    "view really disturbed before Reset": {
+      "ok": true,
+      "detail": "{'camera': {'center': (5.42916, -3.351627, 0.0), 'distance': 67.400777, 'elevation': 74, 'azimuth': -54.25, 'fov': 45}, 'split': [613, 648], 'labels': {'master': (169, 77), 'analyzer:sub': (287, 27), 'pc': (177, 12), '104': (179, 137), '118': (238, 169), '60': (291, 212), 'master:sub': (169, 96), 'master2': (397, 99), 'analyzer': (287, 50), 'rail:SDA': (401, 166), 'rail:SCL': (393, 185), 'rail:GND': (390, 204), '104:sub': (179, 156), '118:sub': (238, 188), '60:sub': (291, 231), 'usb': (206, 31)}}"
+    },
+    "Reset: camera == startup camera (centre, distance, elevation, azimuth, fov)": {
+      "ok": true,
+      "detail": "({'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60}, {'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60})"
+    },
+    "Reset: splitter == startup split": {
+      "ok": true,
+      "detail": "([961, 300], [961, 300])"
+    },
+    "Reset: label level and every board / label position == startup": {
+      "ok": true,
+      "detail": "{}"
+    },
+    "Reset: auto-rotate off, user view cleared": {
+      "ok": true,
+      "detail": "{'camera': {'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60}, 'level': 2, 'split': [961, 300], 'labels': {'master': (233, 205), 'analyzer:sub': (400, 33), 'pc': (255, 34), '104': (321, 288), '118': (459, 273), '60': (596, 282), 'master:sub': (233, 224), 'master2': (637, 33), 'analyzer': (400, 14), 'rail:SDA': (700, 134), 'rail:SCL': (701, 152), 'rail:GND': (707, 171), '104:sub': (321, 307), '118:sub': (459, 292), '60:sub': (596, 301), 'usb': (319, 49)}, 'rot': False, 'auto_rotate': False, 'user_view': False}"
+    },
+    "Reset view stays put (no drift 3 s later)": {
+      "ok": true,
+      "detail": "({'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60}, {'center': (1.42916, -0.351627, 0.0), 'distance': 41.696466, 'elevation': 62, 'azimuth': -90, 'fov': 60})"
+    },
+    "every animated transfer names Master 1 (Pico 1) or Master 2 (Pico 3) - never '?' / unattributed": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "both masters animated live": {
+      "ok": true,
+      "detail": "{'Master 2 0x76 WRITE→READ': 1, 'Master 1 0x3C WRITE': 1, 'Master 1 0x68 WRITE→READ': 1, 'Master 2 0x3C WRITE': 1, 'Master 2 0x68 WRITE→READ': 1}"
+    },
+    "observation undisturbed (no outside input, no page change)": {
+      "ok": true,
+      "detail": "([], [])"
+    },
+    "no dot cut": {
+      "ok": true,
+      "detail": "0"
+    },
+    "long live capture stays trustworthy: Health HEALTHY, 0 framing errors, 0 lost records": {
+      "ok": true,
+      "detail": "{'state': 'HEALTHY', 'reason': 'Fresh live capture', 'transport_errors': 0, 'lost_records': 0, 'fw': {'buf_pct': None, 'dropped': 0, 'overflows': 0, 'capturing': True, 'waveform_dropped': 0}, 'hud': \"t=02:44:09.286872  ·  RTC 2026-11-16 19:35:00 [VALID]  ·  Health <span style='color:#36F5A2'><b>HEALTHY</b></span> · ACK 75552 · NACK 615 (unexp <span style='color:#91A2BA'>0</span>) · <span style='co\", 'capture_s': 330.3}"
+    },
+    "Master 2 (Pico 3) -> OLED 0x3C animated live as a WRITE": {
+      "ok": true,
+      "detail": "{'animated': 1, 'operations': ['WRITE'], 'dots': 8, 'm2_to_oled': 5, 'oled_to_m2': 3, 'wrong': [], 'arrived': True}"
+    },
+    "Master 2 <-> OLED dots run between Master 2 and the OLED (data M2->OLED, ACKs OLED->M2), all arrived": {
+      "ok": true,
+      "detail": "{'animated': 1, 'operations': ['WRITE'], 'dots': 8, 'm2_to_oled': 5, 'oled_to_m2': 3, 'wrong': [], 'arrived': True}"
+    },
+    "no Python errors": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "user's native QSettings untouched": {
+      "ok": true,
+      "detail": "{}"
+    }
+  },
+  "failures": [],
+  "shots": [
+    "live3d_1_startup.png",
+    "live3d_2_disturbed.png",
+    "live3d_3_after_reset.png",
+    "live3d_4_live_1.png",
+    "live3d_4_live_2.png",
+    "live3d_4_live_3.png",
+    "live3d_4_live_4.png",
+    "live3d_5_m2_oled_write.png",
+    "live3d_4_live_5.png"
+  ],
+  "ports": {
+    "analyzer": "COM28",
+    "master1": "COM32",
+    "master2": "COM34"
+  },
+  "connect_all": {
+    "capturing": true,
+    "masters": [
+      [
+        1,
+        "HEALTHY",
+        "aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)"
+      ],
+      [
+        2,
+        "HEALTHY",
+        "aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)"
+      ]
+    ]
+  },
+  "reset_button": {
+    "x_in_card": 17,
+    "title_x": 128,
+    "card_w": 961,
+    "text": "⟲ Reset view"
+  },
+  "startup": {
+    "camera": {
+      "center": [
+        1.42916,
+        -0.351627,
+        0.0
+      ],
+      "distance": 41.696466,
+      "elevation": 62,
+      "azimuth": -90,
+      "fov": 60
+    },
+    "level": 2,
+    "split": [
+      961,
+      300
+    ],
+    "labels": {
+      "master": [
+        233,
+        205
+      ],
+      "analyzer:sub": [
+        400,
+        33
+      ],
+      "pc": [
+        255,
+        34
+      ],
+      "104": [
+        321,
+        288
+      ],
+      "118": [
+        459,
+        273
+      ],
+      "60": [
+        596,
+        282
+      ],
+      "master:sub": [
+        233,
+        224
+      ],
+      "master2": [
+        637,
+        33
+      ],
+      "analyzer": [
+        400,
+        14
+      ],
+      "rail:SDA": [
+        700,
+        134
+      ],
+      "rail:SCL": [
+        701,
+        152
+      ],
+      "rail:GND": [
+        707,
+        171
+      ],
+      "104:sub": [
+        321,
+        307
+      ],
+      "118:sub": [
+        459,
+        292
+      ],
+      "60:sub": [
+        596,
+        301
+      ],
+      "usb": [
+        319,
+        49
+      ]
+    },
+    "initial": {
+      "center": "PyQt6.QtGui.QVector3D(1.4291598796844482, -0.35162657499313354, 0.0)",
+      "distance": 41.69646628735524,
+      "elevation": 62,
+      "azimuth": -90,
+      "fov": 60,
+      "label_level": 2,
+      "size": [
+        927,
+        321
+      ]
+    }
+  },
+  "disturbed": {
+    "camera": {
+      "center": [
+        5.42916,
+        -3.351627,
+        0.0
+      ],
+      "distance": 67.400777,
+      "elevation": 74,
+      "azimuth": -54.25,
+      "fov": 45
+    },
+    "split": [
+      613,
+      648
+    ],
+    "labels": {
+      "master": [
+        169,
+        77
+      ],
+      "analyzer:sub": [
+        287,
+        27
+      ],
+      "pc": [
+        177,
+        12
+      ],
+      "104": [
+        179,
+        137
+      ],
+      "118": [
+        238,
+        169
+      ],
+      "60": [
+        291,
+        212
+      ],
+      "master:sub": [
+        169,
+        96
+      ],
+      "master2": [
+        397,
+        99
+      ],
+      "analyzer": [
+        287,
+        50
+      ],
+      "rail:SDA": [
+        401,
+        166
+      ],
+      "rail:SCL": [
+        393,
+        185
+      ],
+      "rail:GND": [
+        390,
+        204
+      ],
+      "104:sub": [
+        179,
+        156
+      ],
+      "118:sub": [
+        238,
+        188
+      ],
+      "60:sub": [
+        291,
+        231
+      ],
+      "usb": [
+        206,
+        31
+      ]
+    }
+  },
+  "after_reset": {
+    "camera": {
+      "center": [
+        1.42916,
+        -0.351627,
+        0.0
+      ],
+      "distance": 41.696466,
+      "elevation": 62,
+      "azimuth": -90,
+      "fov": 60
+    },
+    "level": 2,
+    "split": [
+      961,
+      300
+    ],
+    "labels": {
+      "master": [
+        233,
+        205
+      ],
+      "analyzer:sub": [
+        400,
+        33
+      ],
+      "pc": [
+        255,
+        34
+      ],
+      "104": [
+        321,
+        288
+      ],
+      "118": [
+        459,
+        273
+      ],
+      "60": [
+        596,
+        282
+      ],
+      "master:sub": [
+        233,
+        224
+      ],
+      "master2": [
+        637,
+        33
+      ],
+      "analyzer": [
+        400,
+        14
+      ],
+      "rail:SDA": [
+        700,
+        134
+      ],
+      "rail:SCL": [
+        701,
+        152
+      ],
+      "rail:GND": [
+        707,
+        171
+      ],
+      "104:sub": [
+        321,
+        307
+      ],
+      "118:sub": [
+        459,
+        292
+      ],
+      "60:sub": [
+        596,
+        301
+      ],
+      "usb": [
+        319,
+        49
+      ]
+    },
+    "rot": false,
+    "auto_rotate": false,
+    "user_view": false
+  },
+  "live": {
+    "observe_s": 900.0,
+    "speed": 0.5,
+    "animated_transfers": 5,
+    "banner_heads": [
+      "[Master 1 (Pico 1) → OLED 0x3C · WRITE]",
+      "[Master 1 (Pico 1) → RTC 0x68 · READ]",
+      "[Master 1 (Pico 1) → RTC 0x68 · WRITE]",
+      "[Master 2 (Pico 3) → BMP280 0x76 · READ]",
+      "[Master 2 (Pico 3) → BMP280 0x76 · WRITE]",
+      "[Master 2 (Pico 3) → OLED 0x3C · WRITE]",
+      "[Master 2 (Pico 3) → RTC 0x68 · READ]",
+      "[Master 2 (Pico 3) → RTC 0x68 · WRITE]"
+    ],
+    "animated_pairs": {
+      "Master 2 0x76 WRITE→READ": 1,
+      "Master 1 0x3C WRITE": 1,
+      "Master 1 0x68 WRITE→READ": 1,
+      "Master 2 0x3C WRITE": 1,
+      "Master 2 0x68 WRITE→READ": 1
+    },
+    "engine_packets": 28025,
+    "engine_unattributed": 1,
+    "engine_by_master": {
+      "1": 26285,
+      "2": 1739,
+      "None": 1
+    },
+    "m2_oled_packets": 313,
+    "m1_oled_packets": 24149,
+    "outside_input": [],
+    "page_changes": []
+  },
+  "timeline": {
+    "observe_start": 22143.05,
+    "stalls_over_0_1s": [
+      [
+        22133.62,
+        0.276
+      ],
+      [
+        22137.55,
+        0.232
+      ],
+      [
+        22139.67,
+        0.226
+      ],
+      [
+        22139.92,
+        0.105
+      ],
+      [
+        22204.09,
+        0.295
+      ],
+      [
+        22263.8,
+        0.245
+      ],
+      [
+        22324.03,
+        0.268
+      ],
+      [
+        22383.7,
+        0.254
+      ],
+      [
+        22434.88,
+        0.223
+      ],
+      [
+        22444.36,
+        0.222
+      ]
+    ],
+    "events": [
+      [
+        22133.2,
+        "shot 1_startup"
+      ],
+      [
+        22137.2,
+        "shot 2_disturbed"
+      ],
+      [
+        22139.34,
+        "shot 3_after_reset"
+      ],
+      [
+        22203.69,
+        "shot 4_live_1"
+      ],
+      [
+        22263.38,
+        "shot 4_live_2"
+      ],
+      [
+        22323.61,
+        "shot 4_live_3"
+      ],
+      [
+        22383.33,
+        "shot 4_live_4"
+      ],
+      [
+        22434.53,
+        "shot 5_m2_oled_write"
+      ],
+      [
+        22444.06,
+        "shot 4_live_5"
+      ]
+    ],
+    "backlog_over_6kB": [],
+    "backlog_max": 0
+  },
+  "health": {
+    "state": "HEALTHY",
+    "reason": "Fresh live capture",
+    "transport_errors": 0,
+    "lost_records": 0,
+    "fw": {
+      "buf_pct": null,
+      "dropped": 0,
+      "overflows": 0,
+      "capturing": true,
+      "waveform_dropped": 0
+    },
+    "hud": "t=02:44:09.286872  ·  RTC 2026-11-16 19:35:00 [VALID]  ·  Health <span style='color:#36F5A2'><b>HEALTHY</b></span> · ACK 75552 · NACK 615 (unexp <span style='color:#91A2BA'>0</span>) · <span style='co",
+    "capture_s": 330.3
+  },
+  "m2_oled": {
+    "animated": 1,
+    "operations": [
+      "WRITE"
+    ],
+    "dots": 8,
+    "m2_to_oled": 5,
+    "oled_to_m2": 3,
+    "wrong": [],
+    "arrived": true
+  },
+  "python_errors": [],
+  "engine_errors": [],
+  "result": "PASS"
+}

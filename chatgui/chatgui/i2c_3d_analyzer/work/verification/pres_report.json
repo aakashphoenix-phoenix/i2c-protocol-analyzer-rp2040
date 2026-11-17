@@ -1,0 +1,789 @@
+{
+  "renderer": "3D (OpenGL)",
+  "failures": [],
+  "checks": {
+    "speed options 0.1 / 0.25 / 0.4 / 0.5 (no 2x)": {
+      "ok": true,
+      "detail": "[0.1, 0.25, 0.4, 0.5]"
+    },
+    "default speed 0.25x (< 0.5x)": {
+      "ok": true,
+      "detail": "0.25"
+    },
+    "presentation mode on (SIMULATED)": {
+      "ok": true,
+      "detail": ""
+    },
+    "measured cycle undisturbed (no outside mouse / key input, no page change)": {
+      "ok": true,
+      "detail": "([], [])"
+    },
+    "full cycle completed without stopping": {
+      "ok": true,
+      "detail": "13 transfers in 328 s"
+    },
+    "pair 01 Master 1 (Pico 1) ↔ RTC 0x68 WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 02 Master 1 (Pico 1) ↔ RTC 0x68 READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 03 Master 1 (Pico 1) ↔ BMP280 0x76 WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 04 Master 1 (Pico 1) ↔ BMP280 0x76 READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 05 Master 1 (Pico 1) ↔ OLED 0x3C WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 06 Master 1 (Pico 1) ↔ OLED 0x3C READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 07 Master 2 (Pico 3) ↔ RTC 0x68 WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 08 Master 2 (Pico 3) ↔ RTC 0x68 READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 09 Master 2 (Pico 3) ↔ BMP280 0x76 WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 10 Master 2 (Pico 3) ↔ BMP280 0x76 READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 11 Master 2 (Pico 3) ↔ OLED 0x3C WRITE": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "pair 12 Master 2 (Pico 3) ↔ OLED 0x3C READ": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "uniform: every pair within 5 % of the median duration (no fast-forward)": {
+      "ok": true,
+      "detail": "[27.17, 27.16, 27.28, 27.3, 27.19, 27.26, 27.33, 27.3, 27.25, 27.27, 27.28, 27.27]"
+    },
+    "BMP280 / OLED never faster than RTC": {
+      "ok": true,
+      "detail": "([27.17, 27.16, 27.33, 27.3], [27.28, 27.3, 27.19, 27.26, 27.25, 27.27, 27.28, 27.27])"
+    },
+    "every stage on screen >= 1.5 s at 0.25x": {
+      "ok": true,
+      "detail": "1.5"
+    },
+    "zero overlap: never more than one stage dot in flight": {
+      "ok": true,
+      "detail": "1"
+    },
+    "3D banner == Packet Analyzer banner on every frame": {
+      "ok": true,
+      "detail": "['1958 frames']"
+    },
+    "no dot cut while playing": {
+      "ok": true,
+      "detail": "0"
+    },
+    "Pause holds": {
+      "ok": true,
+      "detail": ""
+    },
+    "held: nothing advances": {
+      "ok": true,
+      "detail": "(25, 0)"
+    },
+    "Step advances exactly one phase": {
+      "ok": true,
+      "detail": "((25, 0), 1)"
+    },
+    "NACK toggle: the next target NACKs its address": {
+      "ok": true,
+      "detail": "[Master 1 (Pico 1) → RTC 0x68 · READ] Phase 3/6: Address NACK"
+    },
+    "Play resumes": {
+      "ok": true,
+      "detail": ""
+    },
+    "Stop: draining": {
+      "ok": true,
+      "detail": "draining"
+    },
+    "Stop: the transfer on display finished, then stopped": {
+      "ok": true,
+      "detail": ""
+    },
+    "no engine errors": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "no Python / Qt errors": {
+      "ok": true,
+      "detail": "[]"
+    }
+  },
+  "shots": [
+    "pres_pair_01_M1_RTC_WRITE.png",
+    "pres_pair_02_M1_RTC_READ.png",
+    "pres_pair_03_M1_BMP280_WRITE.png",
+    "pres_pair_04_M1_BMP280_READ.png",
+    "pres_pair_05_M1_OLED_WRITE.png",
+    "pres_pair_06_M1_OLED_READ.png",
+    "pres_pair_07_M2_RTC_WRITE.png",
+    "pres_pair_08_M2_RTC_READ.png",
+    "pres_pair_09_M2_BMP280_WRITE.png",
+    "pres_pair_10_M2_BMP280_READ.png",
+    "pres_pair_11_M2_OLED_WRITE.png",
+    "pres_pair_11_M2_OLED_WRITE_packet_analyzer.png",
+    "pres_pair_12_M2_OLED_READ.png",
+    "pres_pair_12_M2_OLED_READ_packet_analyzer.png",
+    "pres_cycle_packet_analyzer_all_transfers.png",
+    "pres_step_paused_phase.png",
+    "pres_nack_address.png",
+    "pres_stopped.png"
+  ],
+  "outside_input_during_cycle": [],
+  "page_changes_during_cycle": [],
+  "pairs": [
+    {
+      "index": 1,
+      "pair": "Master 1 (Pico 1) ↔ RTC 0x68 WRITE",
+      "packet": 1,
+      "duration_s": 27.17,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.08
+        ],
+        "2": [
+          3.14,
+          1.56
+        ],
+        "3": [
+          3.24
+        ],
+        "4": [
+          3.28,
+          3.12
+        ],
+        "5": [
+          3.17,
+          3.2
+        ],
+        "6": [
+          3.38
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x68",
+        "rw": "WRITE",
+        "data": "W: 00 30",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 2,
+      "pair": "Master 1 (Pico 1) ↔ RTC 0x68 READ",
+      "packet": 2,
+      "duration_s": 27.16,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.03
+        ],
+        "2": [
+          3.23,
+          1.64
+        ],
+        "3": [
+          3.27
+        ],
+        "4": [
+          3.16,
+          3.19
+        ],
+        "5": [
+          3.17,
+          3.14
+        ],
+        "6": [
+          3.33
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x68",
+        "rw": "READ",
+        "data": "R: 22 08",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 3,
+      "pair": "Master 1 (Pico 1) ↔ BMP280 0x76 WRITE",
+      "packet": 3,
+      "duration_s": 27.28,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.12
+        ],
+        "2": [
+          3.11,
+          1.64
+        ],
+        "3": [
+          3.22
+        ],
+        "4": [
+          3.25,
+          3.14
+        ],
+        "5": [
+          3.22,
+          3.22
+        ],
+        "6": [
+          3.36
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x76",
+        "rw": "WRITE",
+        "data": "W: F4 27",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 4,
+      "pair": "Master 1 (Pico 1) ↔ BMP280 0x76 READ",
+      "packet": 4,
+      "duration_s": 27.3,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.09
+        ],
+        "2": [
+          3.22,
+          1.64
+        ],
+        "3": [
+          3.22
+        ],
+        "4": [
+          3.09,
+          3.14
+        ],
+        "5": [
+          3.3,
+          3.2
+        ],
+        "6": [
+          3.39
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x76",
+        "rw": "READ",
+        "data": "R: 27 A0",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 5,
+      "pair": "Master 1 (Pico 1) ↔ OLED 0x3C WRITE",
+      "packet": 5,
+      "duration_s": 27.19,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.12
+        ],
+        "2": [
+          3.22,
+          1.56
+        ],
+        "3": [
+          3.16
+        ],
+        "4": [
+          3.33,
+          3.19
+        ],
+        "5": [
+          3.19,
+          3.09
+        ],
+        "6": [
+          3.33
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x3C",
+        "rw": "WRITE",
+        "data": "W: 00 AF",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 6,
+      "pair": "Master 1 (Pico 1) ↔ OLED 0x3C READ",
+      "packet": 6,
+      "duration_s": 27.26,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.19
+        ],
+        "2": [
+          3.22,
+          1.66
+        ],
+        "3": [
+          3.14
+        ],
+        "4": [
+          3.2,
+          3.23
+        ],
+        "5": [
+          3.14,
+          3.16
+        ],
+        "6": [
+          3.33
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 1 (scripted, SIMULATED)",
+        "addr": "0x3C",
+        "rw": "READ",
+        "data": "R: 03 03",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 7,
+      "pair": "Master 2 (Pico 3) ↔ RTC 0x68 WRITE",
+      "packet": 7,
+      "duration_s": 27.33,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.36
+        ],
+        "2": [
+          3.06,
+          1.64
+        ],
+        "3": [
+          3.25
+        ],
+        "4": [
+          3.23,
+          3.17
+        ],
+        "5": [
+          3.03,
+          3.2
+        ],
+        "6": [
+          3.38
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x68",
+        "rw": "WRITE",
+        "data": "W: 0E 1C",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 8,
+      "pair": "Master 2 (Pico 3) ↔ RTC 0x68 READ",
+      "packet": 8,
+      "duration_s": 27.3,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.14
+        ],
+        "2": [
+          3.14,
+          1.62
+        ],
+        "3": [
+          3.17
+        ],
+        "4": [
+          3.22,
+          3.22
+        ],
+        "5": [
+          3.24,
+          3.19
+        ],
+        "6": [
+          3.36
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x68",
+        "rw": "READ",
+        "data": "R: 08 00",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 9,
+      "pair": "Master 2 (Pico 3) ↔ BMP280 0x76 WRITE",
+      "packet": 9,
+      "duration_s": 27.25,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          2.97
+        ],
+        "2": [
+          3.3,
+          1.67
+        ],
+        "3": [
+          3.12
+        ],
+        "4": [
+          3.33,
+          3.31
+        ],
+        "5": [
+          3.12,
+          3.12
+        ],
+        "6": [
+          3.3
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x76",
+        "rw": "WRITE",
+        "data": "W: F5 A0",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 10,
+      "pair": "Master 2 (Pico 3) ↔ BMP280 0x76 READ",
+      "packet": 10,
+      "duration_s": 27.27,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.28
+        ],
+        "2": [
+          3.08,
+          1.53
+        ],
+        "3": [
+          3.31
+        ],
+        "4": [
+          3.19,
+          3.17
+        ],
+        "5": [
+          3.17,
+          3.25
+        ],
+        "6": [
+          3.28
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x76",
+        "rw": "READ",
+        "data": "R: A0 00",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 11,
+      "pair": "Master 2 (Pico 3) ↔ OLED 0x3C WRITE",
+      "packet": 11,
+      "duration_s": 27.28,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.03
+        ],
+        "2": [
+          3.28,
+          1.5
+        ],
+        "3": [
+          3.31
+        ],
+        "4": [
+          3.11,
+          3.17
+        ],
+        "5": [
+          3.31,
+          3.11
+        ],
+        "6": [
+          3.45
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x3C",
+        "rw": "WRITE",
+        "data": "W: 00 A6",
+        "ack": "A A A",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    },
+    {
+      "index": 12,
+      "pair": "Master 2 (Pico 3) ↔ OLED 0x3C READ",
+      "packet": 12,
+      "duration_s": 27.27,
+      "phases_in_order": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        4,
+        5,
+        6
+      ],
+      "phase_seconds": {
+        "1": [
+          3.11
+        ],
+        "2": [
+          3.12,
+          1.7
+        ],
+        "3": [
+          3.17
+        ],
+        "4": [
+          3.17,
+          3.3
+        ],
+        "5": [
+          3.14,
+          3.2
+        ],
+        "6": [
+          3.34
+        ]
+      },
+      "dots": 8,
+      "master_to_slave_dots": 5,
+      "slave_to_master_dots": 3,
+      "analyzer_row": {
+        "master": "Master 2 (scripted, SIMULATED)",
+        "addr": "0x3C",
+        "rw": "READ",
+        "data": "R: 03 03",
+        "ack": "A A N",
+        "status": "Complete · DEMO"
+      },
+      "ok": true,
+      "problems": []
+    }
+  ],
+  "duration_median_s": 27.27,
+  "duration_spread_pct": 0.6,
+  "engine_errors": [],
+  "python_or_qt_errors": [],
+  "max_stage_dots_in_flight": 1,
+  "cycle_seconds": 327.5,
+  "result": "PASS"
+}

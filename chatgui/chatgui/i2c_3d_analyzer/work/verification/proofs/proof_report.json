@@ -1,0 +1,822 @@
+{
+  "mode": "LIVE HARDWARE",
+  "checks": {
+    "Connect all: capturing, both masters clock-aligned": {
+      "ok": true,
+      "detail": "[(1, 'HEALTHY', 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)'), (2, 'HEALTHY', 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)')]"
+    },
+    "Packet Proof M1_BMP280 (#514 WRITE→READ) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Packet Proof M1_RTC (#657 WRITE→READ) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Packet Proof M1_OLED (#728 WRITE) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Packet Proof M2_BMP280 (#732 WRITE→READ) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Packet Proof M2_RTC (#729 WRITE→READ) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Packet Proof M2_OLED (#948 WRITE) PROVEN": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "Known transactions: every report of each master found on the bus": {
+      "ok": true,
+      "detail": "[{'master_id': 1, 'master': 'Master 1 (Pico H)', 'connected': True, 'reported': 510, 'clock_locked': True, 'matched': 510, 'missing': 0, 'settling': 0, 'before_capture': 0, 'bus_packets': 510, 'results': {'ok': 510}, 'match_pct': 100.0}, {'master_id': 2, 'master': 'Master 2 (Pico W)', 'connected': True, 'reported': 510, 'clock_locked': True, 'matched': 510, 'missing': 0, 'settling': 0, 'before_capture': 0, 'bus_packets': 510, 'results': {'ok': 510}, 'match_pct': 100.0}]"
+    },
+    "Two decoders (Pico firmware vs PC raw edges) never disagree": {
+      "ok": true,
+      "detail": "{'agree': 1020, 'disagree': 0, 'applicable': True}"
+    },
+    "Known content: BMP280 chip ID 0x58 and DS3231 BCD time": {
+      "ok": true,
+      "detail": "{'chip_id_reads': 6, 'chip_id_ok': 6, 'rtc_reads': 14, 'rtc_bcd_ok': 14}"
+    },
+    "Waveform 'Export view' VCD holds the captured packet (re-decoded from the file)": {
+      "ok": true,
+      "detail": "335 samples in the file, 1 transactions re-decoded from it, packet #1094 found: True"
+    },
+    "Packet Analyzer: address filter shows only that slave": {
+      "ok": true,
+      "detail": "29 rows, addresses [118]"
+    },
+    "Unvalidated packets are labelled 'Unknown' (never guessed)": {
+      "ok": true,
+      "detail": "9 unknown-master packet(s)"
+    },
+    "no Python errors": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "user's native QSettings untouched": {
+      "ok": true,
+      "detail": ""
+    }
+  },
+  "failures": [],
+  "proofs": [
+    {
+      "pair": "M1_BMP280",
+      "packet": 514,
+      "op": "WRITE→READ",
+      "data": "W: F7 | R: 67 46 00 87 7B 00",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "194 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 2 frame(s), 9 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "81 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "3 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/7 parameters proven, 2 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "8 ACK, 1 NACK (end-of-read NACK = expected)"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 1 (Pico H): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 82 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STA (repeated START setup)",
+          null,
+          "measured 4.500 µs (±0.500) vs minimum 4.700 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 416.500 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 81,
+      "master": "Master 1",
+      "meaning": [
+        "Target 0x76: BMP280 (confirmed)",
+        "Decoded from these bytes: Read BMP280: 31.60 °C / 974.98 hPa",
+        "Register pointer 0xF7 = press_msb",
+        "  raw ADC: pressure 0x67460 = 423008, temperature 0x877B0 = 554928",
+        "  compensated (Bosch datasheet formula, calibration = captured 0x88-0x9F words): 31.60 °C, 974.98 hPa"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 82,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4487.804878048781,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6186.746987951808,
+        "t_hd_sta": 4500.0,
+        "t_su_sta": 4500.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 416500
+      }
+    },
+    {
+      "pair": "M1_RTC",
+      "packet": 657,
+      "op": "WRITE→READ",
+      "data": "W: 00 | R: 05 58 18 03 17 11 26 00 00 00 10 00 00 00 1C 09",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "390 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 2 frame(s), 19 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "171 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "3 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/7 parameters proven, 2 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "18 ACK, 1 NACK (end-of-read NACK = expected)"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 1 (Pico H): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 172 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STA (repeated START setup)",
+          null,
+          "measured 5.000 µs (±0.500) vs minimum 4.700 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 4001039.500 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 171,
+      "master": "Master 1",
+      "meaning": [
+        "Target 0x68: DS3231 RTC (configured)",
+        "Decoded from these bytes: Read RTC: 18:58:05",
+        "Register pointer 0x00 = seconds",
+        "  read 0x00 seconds = 0x05 → BCD 5",
+        "  read 0x01 minutes = 0x58 → BCD 58",
+        "  read 0x02 hours = 0x18 → BCD 18"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 172,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4456.395348837209,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6205.202312138728,
+        "t_hd_sta": 4500.0,
+        "t_su_sta": 5000.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 4001039500
+      }
+    },
+    {
+      "pair": "M1_OLED",
+      "packet": 728,
+      "op": "WRITE",
+      "data": "W: 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "334 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 1 frame(s), 18 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "162 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "2 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/6 parameters proven, 1 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "18 ACK, 0 NACK"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 1 (Pico H): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 162 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 401.000 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 162,
+      "master": "Master 1",
+      "meaning": [
+        "Target 0x3C: OLED (SSD1306) (configured)",
+        "Decoded from these bytes: OLED Data Write: 16 bytes",
+        "Control byte 0x40: D/C# = 1 → 16 byte(s) of display RAM data (each byte = 8 vertical pixels of one column)",
+        "SSD1306 on I2C is write-only: the controller only ever writes it"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 162,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4422.83950617284,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6153.374233128834,
+        "t_hd_sta": 4500.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 401000
+      }
+    },
+    {
+      "pair": "M2_BMP280",
+      "packet": 732,
+      "op": "WRITE→READ",
+      "data": "W: F7 | R: 67 44 00 87 78 00",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "192 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 2 frame(s), 9 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "81 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "3 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/7 parameters proven, 2 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "8 ACK, 1 NACK (end-of-read NACK = expected)"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 2 (Pico W): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 82 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STA (repeated START setup)",
+          null,
+          "measured 5.000 µs (±0.500) vs minimum 4.700 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 470.500 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 81,
+      "master": "Master 2",
+      "meaning": [
+        "Target 0x76: BMP280 (confirmed)",
+        "Decoded from these bytes: Read BMP280: 31.58 °C / 975.01 hPa",
+        "Register pointer 0xF7 = press_msb",
+        "  raw ADC: pressure 0x67440 = 422976, temperature 0x87780 = 554880",
+        "  compensated (Bosch datasheet formula, calibration = captured 0x88-0x9F words): 31.58 °C, 975.01 hPa"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 82,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4487.804878048781,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6186.746987951808,
+        "t_hd_sta": 4500.0,
+        "t_su_sta": 5000.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 470500
+      }
+    },
+    {
+      "pair": "M2_RTC",
+      "packet": 729,
+      "op": "WRITE→READ",
+      "data": "W: 00 | R: 10 58 18 03 17 11 26 00 00 00 10 00 00 00 1C 09",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "388 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 2 frame(s), 19 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "171 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "3 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/7 parameters proven, 2 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "18 ACK, 1 NACK (end-of-read NACK = expected)"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 2 (Pico W): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 172 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STA (repeated START setup)",
+          null,
+          "measured 5.000 µs (±0.500) vs minimum 4.700 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 4000945.000 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 171,
+      "master": "Master 2",
+      "meaning": [
+        "Target 0x68: DS3231 RTC (configured)",
+        "Decoded from these bytes: Read RTC: 18:58:10",
+        "Register pointer 0x00 = seconds",
+        "  read 0x00 seconds = 0x10 → BCD 10",
+        "  read 0x01 minutes = 0x58 → BCD 58",
+        "  read 0x02 hours = 0x18 → BCD 18"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 172,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4450.581395348837,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6231.21387283237,
+        "t_hd_sta": 4500.0,
+        "t_su_sta": 5000.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 4000945000
+      }
+    },
+    {
+      "pair": "M2_OLED",
+      "packet": 948,
+      "op": "WRITE",
+      "data": "W: 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+      "verdict": "PROVEN",
+      "checks": [
+        [
+          "Raw SDA/SCL edges captured with timestamps",
+          true,
+          "337 samples, resolution ±500 ns"
+        ],
+        [
+          "Independent decode of the raw edges == stored packet",
+          true,
+          "identical: 1 frame(s), 18 byte(s) incl. address, every ACK/NACK and START kind equal"
+        ],
+        [
+          "Every bit: SDA sampled on the SCL rising edge == decoded bit",
+          true,
+          "162 clock(s) checked"
+        ],
+        [
+          "START / STOP: SDA edges while SCL is HIGH",
+          true,
+          "2 condition(s)"
+        ],
+        [
+          "Timing within UM10204 Standard-mode",
+          true,
+          "5/6 parameters proven, 1 not decidable"
+        ],
+        [
+          "ACK / NACK: no unexpected NACK",
+          true,
+          "18 ACK, 0 NACK"
+        ],
+        [
+          "Master identified and validated by its own transfer report",
+          true,
+          "Master 2 (Pico W): the master's own transfer report matches this packet (same address, bytes written, bytes read, first byte, at the same instant on the aligned clock)"
+        ],
+        [
+          "Packet complete (START … STOP)",
+          true,
+          "status ok"
+        ],
+        [
+          "No capture gap in this packet's window",
+          true,
+          "no lost records / stream gaps reported around it"
+        ],
+        [
+          "Analyzer buffer: no overflow / dropped samples (whole capture)",
+          true,
+          "overflows 0 · dropped 0 · lost serial records 0"
+        ]
+      ],
+      "spec": [
+        [
+          "f_SCL ≤ 100 kHz (Standard-mode)",
+          true,
+          "measured 95.24 kHz (median of 162 SCL periods)"
+        ],
+        [
+          "t_LOW (SCL low)",
+          true,
+          "measured 6.000 µs (±0.500) vs minimum 4.700 µs"
+        ],
+        [
+          "t_HIGH (SCL high)",
+          null,
+          "measured 4.000 µs (±0.500) vs minimum 4.000 µs - within one sample of the limit (cannot be decided at this sample rate)"
+        ],
+        [
+          "t_HD;STA (START hold)",
+          true,
+          "measured 4.500 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_SU;STO (STOP setup)",
+          true,
+          "measured 5.000 µs (±0.500) vs minimum 4.000 µs"
+        ],
+        [
+          "t_BUF (bus free before START)",
+          true,
+          "measured 406.000 µs (±0.500) vs minimum 4.700 µs"
+        ]
+      ],
+      "bits": 162,
+      "master": "Master 2",
+      "meaning": [
+        "Target 0x3C: OLED (SSD1306) (configured)",
+        "Decoded from these bytes: OLED Data Write: 16 bytes",
+        "Control byte 0x40: D/C# = 1 → 16 byte(s) of display RAM data (each byte = 8 vertical pixels of one column)",
+        "SSD1306 on I2C is write-only: the controller only ever writes it"
+      ],
+      "timing": {
+        "f_scl_hz": 95238.09523809524,
+        "period_median_ns": 10500.0,
+        "cycles": 162,
+        "t_high_min": 4000.0,
+        "t_high_mean": 4425.925925925926,
+        "t_low_min": 6000.0,
+        "t_low_mean": 6150.306748466258,
+        "t_hd_sta": 4500.0,
+        "t_su_sto": 5000.0,
+        "t_buf": 406000
+      }
+    }
+  ],
+  "capture": {
+    "sample_hz": 2000000,
+    "tick_ns": 500.0,
+    "firmware": "RP2040 segment analyzer",
+    "packets": 656,
+    "segment_decoder": true
+  },
+  "cross_check": {
+    "known_transactions": [
+      {
+        "master_id": 1,
+        "master": "Master 1 (Pico H)",
+        "connected": true,
+        "reported": 510,
+        "clock_locked": true,
+        "matched": 510,
+        "missing": 0,
+        "settling": 0,
+        "before_capture": 0,
+        "bus_packets": 510,
+        "results": {
+          "ok": 510
+        },
+        "match_pct": 100.0
+      },
+      {
+        "master_id": 2,
+        "master": "Master 2 (Pico W)",
+        "connected": true,
+        "reported": 510,
+        "clock_locked": true,
+        "matched": 510,
+        "missing": 0,
+        "settling": 0,
+        "before_capture": 0,
+        "bus_packets": 510,
+        "results": {
+          "ok": 510
+        },
+        "match_pct": 100.0
+      }
+    ],
+    "unknown_master_packets": 0,
+    "decoders": {
+      "agree": 1020,
+      "disagree": 0,
+      "applicable": true
+    },
+    "content": {
+      "chip_id_reads": 6,
+      "chip_id_ok": 6,
+      "rtc_reads": 14,
+      "rtc_bcd_ok": 14
+    }
+  },
+  "message_boxes": [],
+  "python_errors": [],
+  "result": "PASS"
+}

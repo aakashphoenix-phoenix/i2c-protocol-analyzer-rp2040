@@ -1,0 +1,1644 @@
+{
+ "results": {
+  "Connect all: analyzer + Master 1 + Master 2 capturing (Real Hardware Mode)": {
+   "ok": true,
+   "detail": "capturing=True source=live"
+  },
+  "both masters report firmware 2.4-turns": {
+   "ok": true,
+   "detail": "{1: '2.4-turns', 2: '2.4-turns'}"
+  },
+  "Real-time playback selected": {
+   "ok": true,
+   "detail": "Real-time"
+  },
+  "Real-time: packets play strictly in capture order": {
+   "ok": true,
+   "detail": "91 played"
+  },
+  "Real-time: never more than ~2.5 s behind the bus": {
+   "ok": true,
+   "detail": "max lag 0.94 s over 35 frames"
+  },
+  "SEQ ON 500 acknowledged by both masters": {
+   "ok": true,
+   "detail": "[(2, True, 500), (1, True, 500)]"
+  },
+  "SEQ: every transfer stands alone (>= 0.45 s idle bus between packets)": {
+   "ok": true,
+   "detail": "96 packets, gaps min 0.501 s"
+  },
+  "SEQ: Master 1 RTC→BMP280→OLED, then Master 2 RTC→BMP280→OLED, alternating": {
+   "ok": true,
+   "detail": "[(2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C']), (2, ['0x68', '0x76', '0x3C']), (1, ['0x68', '0x76', '0x3C'])]"
+  },
+  "SEQ Master 1 ↔ RTC: write 0x00, read time bytes": {
+   "ok": true,
+   "detail": "12/12 packets"
+  },
+  "SEQ Master 1 ↔ BMP280: write 0xF7, read 6 P/T ADC bytes": {
+   "ok": true,
+   "detail": "12/12 packets"
+  },
+  "SEQ Master 1 ↔ OLED: write 0x00/0x40, every byte ACKed by the OLED": {
+   "ok": true,
+   "detail": "24/24 packets, first bytes ['0x0', '0x40']"
+  },
+  "SEQ Master 2 ↔ RTC: write 0x00, read time bytes": {
+   "ok": true,
+   "detail": "12/12 packets"
+  },
+  "SEQ Master 2 ↔ BMP280: write 0xF7, read 6 P/T ADC bytes": {
+   "ok": true,
+   "detail": "12/12 packets"
+  },
+  "SEQ Master 2 ↔ OLED: write 0x00/0x40, every byte ACKed by the OLED": {
+   "ok": true,
+   "detail": "24/24 packets, first bytes ['0x0', '0x40']"
+  },
+  "_refresh": {
+   "ok": true,
+   "detail": "507 refreshes · interval p50 0.110 p95 0.172 max 0.469 s · refresh cost p50 0.012 p95 0.059 max 0.084 s"
+  },
+  "_seq_skips": {
+   "ok": true,
+   "detail": "[]"
+  },
+  "_shots": {
+   "ok": true,
+   "detail": "[(6.5, '02_seq_network'), (14.5, '02_seq_packets'), (22.4, '02_seq_waveform'), (30.4, '02_seq_sensor'), (38.5, '02_seq_chip'), (46.3, '02_seq_error')]"
+  },
+  "_seq_played": {
+   "ok": true,
+   "detail": "[(0.2, 589), (0.7, 590), (1.3, 591), (1.8, 592), (2.7, 593), (3.3, 594), (3.9, 595), (4.5, 596), (5.3, 597), (5.9, 598), (6.5, 599), (7.1, 600), (7.7, 601), (8.3, 602), (8.8, 603), (9.5, 604), (10.2, 605), (10.8, 606), (11.4, 607), (11.9, 608), (12.7, 609), (13.3, 610), (14.0, 611), (14.7, 612), (15.2, 613), (16.0, 614), (16.5, 615), (17.0, 616), (17.8, 617), (18.4, 618), (19.0, 619), (19.6, 620), (20.2, 621), (20.9, 622), (21.5, 623), (22.1, 624), (23.0, 625), (23.6, 626), (24.1, 627), (24.6, 628), (25.2, 629), (26.0, 630), (26.8, 631), (27.0, 632), (27.7, 633), (28.2, 634), (28.7, 635), (29.4, 636), (30.3, 637), (31.1, 638), (31.5, 639), (32.0, 640), (32.7, 641), (33.5, 642), (33.9, 643), (34.4, 644), (35.2, 645), (36.0, 646), (36.4, 647), (36.9, 648), (37.8, 649), (38.8, 650), (39.0, 651), (39.5, 652), (40.3, 653), (41.0, 654), (41.5, 655), (42.0, 656), (42.9, 657), (43.5, 658), (44.0, 659), (44.6, 660), (45.4, 661), (46.0, 662), (46.6, 663), (47.1, 664), (48.0, 665), (48.4, 666), (49.1, 667), (49.6, 668), (50.4, 669), (51.0, 670), (51.5, 671), (52.1, 672), (52.9, 673), (53.6, 674), (54.2, 675), (54.8, 676), (55.5, 677), (56.0, 678), (56.7, 679), (57.3, 680), (57.8, 681), (58.5, 682), (59.1, 683), (59.7, 684)]"
+  },
+  "_seq_on_screen": {
+   "ok": true,
+   "detail": "min on screen 0.188 s, too short []"
+  },
+  "_seq_missing_trace": {
+   "ok": true,
+   "detail": "[]"
+  },
+  "SEQ: the 3D view showed every SEQ packet in order (none skipped)": {
+   "ok": true,
+   "detail": "96 shown, 91 comparable captured, missing []"
+  },
+  "SEQ: every packet stayed on screen >= ~80 ms (never replaced unseen)": {
+   "ok": true,
+   "detail": "min on screen 0.188 s, too short []"
+  },
+  "SEQ: never more than ~2.5 s behind the bus": {
+   "ok": true,
+   "detail": "max 1.22 s"
+  },
+  "Sensor Monitoring: RTC time + BMP280 temperature / pressure decoded from the bus": {
+   "ok": true,
+   "detail": "rtc (19, 0, 34) · 31.58 °C"
+  },
+  "Device Activity: both masters with all three targets on the bus": {
+   "ok": true,
+   "detail": "{(1, 104): 17, (1, 118): 21, (1, 60): 306, (2, 104): 16, (2, 118): 20, (2, 60): 304}"
+  },
+  "all packets attributed by telemetry (0 unknown), 0 lost records, 0 stream gaps": {
+   "ok": true,
+   "detail": "unknown 0 · lost 0 · gaps 0 · framing 0"
+  },
+  "PROBE 2A: a real 0x2A transfer on the bus with an Address NACK": {
+   "ok": true,
+   "detail": "packet #689 N"
+  },
+  "PROBE 2A: attributed to Master 1 by its telemetry": {
+   "ok": true,
+   "detail": "1 telemetry"
+  },
+  "PROBE 2A: logged in Error & Diagnostics as an error": {
+   "ok": true,
+   "detail": "Error: Invalid / unacknowledged slave address 0x2A — no slave pulled SDA LOW at the 9th clock (Address NACK)"
+  },
+  "Visualize Error Waveform: the 0x2A packet, labels S, ADDR 0x2A W, red NACK, P above SCL/SDA": {
+   "ok": true,
+   "detail": "shown #689 ['S', 'addr', 'nack', 'P']"
+  },
+  "Error banner above the waveform states the cause": {
+   "ok": true,
+   "detail": "<b style='color:#FF5364'>INVALID ADDRESS ERROR: Master 1 sent 0x2A (W), no slave answered → Address NACK at 9th clock (SDA stayed HIGH)</b>"
+  },
+  "ARB: both masters ran the arbitration test": {
+   "ok": true,
+   "detail": "{1: {'type': 'arb_test', 'source': 'controller', 'master_id': 1, 'target': 118, 't_us': 3103499140, 'transfers': 1, 'arb_lost': 1, 'gave_up': 0, 'result': 'lost_arbitration'}, 2: {'type': 'arb_test', 'source': 'controller', 'master_id': 2, 'target': 104, 't_us': 3083982970, 'transfers': 400, 'arb_lost': 0, 'gave_up': 0, 'result': 'no_loss_observed'}}"
+  },
+  "ARB: real arb_lost reported by a master's firmware": {
+   "ok": true,
+   "detail": "[(1, '0x76', 1, True)]"
+  },
+  "ARB: the winning bus packet was matched": {
+   "ok": true,
+   "detail": "[(1, 708, '0x68', 2)]"
+  },
+  "Arbitration never counted as a NACK": {
+   "ok": true,
+   "detail": "{1: {'txn_ok': 19395, 'addr_nack': 11, 'data_nack': 0, 'arb_lost': 13, 'retries': 13, 'gave_up': 0, 'busy_waits': 2, 'busy_timeouts': 0, 'timeouts': 0, 'other_aborts': 0, 'recoveries': 0, 'recovery_skipped': 0, 'controller_resets': 0}, 2: {'txn_ok': 23675, 'addr_nack': 0, 'data_nack': 0, 'arb_lost': 0, 'retries': 0, 'gave_up': 0, 'busy_waits': 0, 'busy_timeouts': 0, 'timeouts': 0, 'other_aborts': 0, 'recoveries': 0, 'recovery_skipped': 0, 'controller_resets': 0}}"
+  },
+  "Device Activity → Arbitration lists it": {
+   "ok": true,
+   "detail": "1"
+  },
+  "Visualize Arbitration: the winner's waveform with the ARBITRATION banner": {
+   "ok": true,
+   "detail": "<b style='color:#FFBF47'>⚡ ARBITRATION LOST: Master 2 (0x68) vs Master 1 (0x76) — wired-AND SDA=0 won; loser backed off 256 µs &amp; retried, NOT a NACK</b><br>Winner: Master 2 · bus packet #708 to 0x"
+  },
+  "Amber collision marker drawn above the waveform": {
+   "ok": true,
+   "detail": "2"
+  },
+  "Arbitration packet fully decoded above SCL/SDA (S, ADDR, ACK, DATA, P)": {
+   "ok": true,
+   "detail": "['S', 'addr', 'ack', 'data', 'ack', 'Sr', 'addr', 'ack', 'data', 'ack', 'data', 'ack'] · winner #708 bit times True raw_verified True"
+  },
+  "Error & Diagnostics logs the arbitration loss (Multi-master, not a NACK)": {
+   "ok": true,
+   "detail": "Master 1 (Pico H) lost arbitration addressing 0x76 (attempt 1, byte 0) to the other master (bus packet not yet matched); retried after 256 µs back-off. Not a NACK: the bus only shows the winner's bits."
+  },
+  "Error & Diagnostics → Visualize Arbitration opens the winner with the amber marker": {
+   "ok": true,
+   "detail": "#708 marks 2"
+  },
+  "no Python / Qt errors": {
+   "ok": true,
+   "detail": "([], [])"
+  },
+  "no modal message boxes": {
+   "ok": true,
+   "detail": "[]"
+  },
+  "user's native QSettings untouched": {
+   "ok": true,
+   "detail": ""
+  }
+ },
+ "failures": [],
+ "errors": [],
+ "qt_errors": [],
+ "boxes": [],
+ "records": [
+  [
+   -6.47,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 428,
+    "t_us": 2979948227,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000355,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   -6.47,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 428,
+    "t_us": 2980098732,
+    "dur_us": 150505,
+    "transfers": 74,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   -4.41,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 430,
+    "t_us": 3003586652,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000493,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   -4.11,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 430,
+    "t_us": 3003735278,
+    "dur_us": 148626,
+    "transfers": 74,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   -0.25,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 429,
+    "t_us": 2988246963,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000086,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   0.0,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 429,
+    "t_us": 2988393273,
+    "dur_us": 146310,
+    "transfers": 72,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   3.92,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 431,
+    "t_us": 3011881605,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000422,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   4.16,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 431,
+    "t_us": 3012025976,
+    "dur_us": 144371,
+    "transfers": 72,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   8.02,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 430,
+    "t_us": 2996538108,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000906,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   8.27,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 430,
+    "t_us": 2996688820,
+    "dur_us": 150712,
+    "transfers": 74,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   12.17,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 432,
+    "t_us": 3020177637,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000624,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   12.44,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 432,
+    "t_us": 3020325848,
+    "dur_us": 148211,
+    "transfers": 74,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   16.31,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 431,
+    "t_us": 3004836713,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000017,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   16.55,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 431,
+    "t_us": 3004983814,
+    "dur_us": 147101,
+    "transfers": 72,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   20.5,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 433,
+    "t_us": 3028472901,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000521,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   20.69,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 433,
+    "t_us": 3028617546,
+    "dur_us": 144645,
+    "transfers": 72,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   24.61,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 432,
+    "t_us": 3013128313,
+    "reason": "after_peer_turn",
+    "idle_before_us": 4000221,
+    "seq": false,
+    "gap_ms": 4000
+   }
+  ],
+  [
+   24.89,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 432,
+    "t_us": 3013279318,
+    "dur_us": 151005,
+    "transfers": 74,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": false
+   }
+  ],
+  [
+   25.27,
+   2,
+   {
+    "type": "seq",
+    "source": "controller",
+    "master_id": 2,
+    "enabled": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   25.27,
+   1,
+   {
+    "type": "seq",
+    "source": "controller",
+    "master_id": 1,
+    "enabled": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   25.78,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 434,
+    "t_us": 3033768373,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000127,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   27.36,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 434,
+    "t_us": 3035276821,
+    "dur_us": 1508448,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   28.27,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 433,
+    "t_us": 3016787116,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000043,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   29.86,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 433,
+    "t_us": 3018295611,
+    "dur_us": 1508495,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   30.78,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 435,
+    "t_us": 3038785099,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000367,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   32.34,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 435,
+    "t_us": 3040293110,
+    "dur_us": 1508011,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   33.3,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 434,
+    "t_us": 3021803804,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000705,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   34.86,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 434,
+    "t_us": 3023311918,
+    "dur_us": 1508114,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   35.86,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 436,
+    "t_us": 3043801472,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000255,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   37.38,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 436,
+    "t_us": 3045309356,
+    "dur_us": 1507884,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   38.33,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 435,
+    "t_us": 3026819672,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000504,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   39.89,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 435,
+    "t_us": 3028327730,
+    "dur_us": 1508058,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   40.8,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 437,
+    "t_us": 3048817634,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000352,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   42.39,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 437,
+    "t_us": 3050325620,
+    "dur_us": 1507986,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   43.31,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 436,
+    "t_us": 3031836055,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000901,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   44.94,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 436,
+    "t_us": 3033344149,
+    "dur_us": 1508094,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   45.83,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 438,
+    "t_us": 3053834356,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000462,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   47.41,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 438,
+    "t_us": 3055342278,
+    "dur_us": 1507922,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   48.33,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 437,
+    "t_us": 3036852240,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000663,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   49.91,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 437,
+    "t_us": 3038360374,
+    "dur_us": 1508134,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   50.91,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 439,
+    "t_us": 3058850825,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000539,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   52.41,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 439,
+    "t_us": 3060358712,
+    "dur_us": 1507887,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   53.34,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 438,
+    "t_us": 3041868251,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000419,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   54.97,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 438,
+    "t_us": 3043376299,
+    "dur_us": 1508048,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   55.89,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 440,
+    "t_us": 3063867018,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000438,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   57.41,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 440,
+    "t_us": 3065374958,
+    "dur_us": 1507940,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   58.48,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 439,
+    "t_us": 3046884336,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000473,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   59.89,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 439,
+    "t_us": 3048392395,
+    "dur_us": 1508059,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   60.88,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 441,
+    "t_us": 3068883417,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000550,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   62.44,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 441,
+    "t_us": 3070391308,
+    "dur_us": 1507891,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   63.41,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 440,
+    "t_us": 3051900441,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000412,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   64.95,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 440,
+    "t_us": 3053408486,
+    "dur_us": 1508045,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   65.91,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 442,
+    "t_us": 3073899846,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000709,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   67.45,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 442,
+    "t_us": 3075407722,
+    "dur_us": 1507876,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   68.39,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 441,
+    "t_us": 3056916932,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000755,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   69.98,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 441,
+    "t_us": 3058424929,
+    "dur_us": 1507997,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   70.91,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 443,
+    "t_us": 3078916044,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000222,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   72.52,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 443,
+    "t_us": 3080423927,
+    "dur_us": 1507883,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   73.41,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 442,
+    "t_us": 3061933231,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000986,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   74.98,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 442,
+    "t_us": 3063441276,
+    "dur_us": 1508045,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   76.09,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 444,
+    "t_us": 3083933274,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000903,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   77.47,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 444,
+    "t_us": 3085441127,
+    "dur_us": 1507853,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   78.44,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 443,
+    "t_us": 3066949363,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000207,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   79.98,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 443,
+    "t_us": 3068457374,
+    "dur_us": 1508011,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   80.97,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 445,
+    "t_us": 3088949244,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000494,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   82.45,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 445,
+    "t_us": 3090457176,
+    "dur_us": 1507932,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   83.47,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 444,
+    "t_us": 3071965491,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000490,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   85.02,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 444,
+    "t_us": 3073473516,
+    "dur_us": 1508025,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   85.97,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 446,
+    "t_us": 3093965319,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000234,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   87.55,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 446,
+    "t_us": 3095473230,
+    "dur_us": 1507911,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   88.11,
+   1,
+   {
+    "type": "probe",
+    "source": "controller",
+    "master_id": 1,
+    "state": "queued",
+    "addr": 42
+   }
+  ],
+  [
+   88.47,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 445,
+    "t_us": 3076981855,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000967,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   90.03,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 445,
+    "t_us": 3078489936,
+    "dur_us": 1508081,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   91.03,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 447,
+    "t_us": 3098982079,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000360,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   91.03,
+   1,
+   {
+    "type": "probe",
+    "source": "controller",
+    "master_id": 1,
+    "state": "done",
+    "addr": 42,
+    "t_us": 3098982381,
+    "result": "addr_nack"
+   }
+  ],
+  [
+   93.05,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 447,
+    "t_us": 3100990834,
+    "dur_us": 2008755,
+    "transfers": 5,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   93.98,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 446,
+    "t_us": 3082498816,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000544,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   95.52,
+   1,
+   {
+    "type": "arb_lost",
+    "source": "controller",
+    "master_id": 1,
+    "t_us": 3103500168,
+    "addr": 118,
+    "attempt": 1,
+    "byte": 0,
+    "abort_source": 4096,
+    "backoff_us": 256,
+    "retry": true
+   }
+  ],
+  [
+   95.58,
+   1,
+   {
+    "type": "arb_test",
+    "source": "controller",
+    "master_id": 1,
+    "target": 118,
+    "t_us": 3103499140,
+    "transfers": 1,
+    "arb_lost": 1,
+    "gave_up": 0,
+    "result": "lost_arbitration"
+   }
+  ],
+  [
+   96.59,
+   2,
+   {
+    "type": "arb_test",
+    "source": "controller",
+    "master_id": 2,
+    "target": 104,
+    "t_us": 3083982970,
+    "transfers": 400,
+    "arb_lost": 0,
+    "gave_up": 0,
+    "result": "no_loss_observed"
+   }
+  ],
+  [
+   96.59,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 446,
+    "t_us": 3084889165,
+    "dur_us": 2390349,
+    "transfers": 404,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   97.86,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 448,
+    "t_us": 3105881422,
+    "reason": "first_turn",
+    "idle_before_us": 1500186,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   99.45,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 448,
+    "t_us": 3107389376,
+    "dur_us": 1507954,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   100.39,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 447,
+    "t_us": 3088897125,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000692,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   101.88,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 447,
+    "t_us": 3090405218,
+    "dur_us": 1508093,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   102.97,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 449,
+    "t_us": 3110897688,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000151,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   104.44,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 449,
+    "t_us": 3112405675,
+    "dur_us": 1507987,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   105.45,
+   2,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 448,
+    "t_us": 3093913304,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000818,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   107.05,
+   2,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 2,
+    "turn": 448,
+    "t_us": 3095421367,
+    "dur_us": 1508063,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ],
+  [
+   107.91,
+   1,
+   {
+    "type": "turn_start",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 450,
+    "t_us": 3115913951,
+    "reason": "after_peer_turn",
+    "idle_before_us": 1000124,
+    "seq": true,
+    "gap_ms": 500
+   }
+  ],
+  [
+   109.19,
+   1,
+   {
+    "type": "seq",
+    "source": "controller",
+    "master_id": 1,
+    "enabled": false,
+    "gap_ms": 500
+   }
+  ],
+  [
+   109.19,
+   2,
+   {
+    "type": "seq",
+    "source": "controller",
+    "master_id": 2,
+    "enabled": false,
+    "gap_ms": 500
+   }
+  ],
+  [
+   109.48,
+   1,
+   {
+    "type": "turn_end",
+    "source": "controller",
+    "master_id": 1,
+    "turn": 450,
+    "t_us": 3117421694,
+    "dur_us": 1507743,
+    "transfers": 4,
+    "rtc": "ok",
+    "bmp": "ok",
+    "oled": "ok",
+    "seq": true
+   }
+  ]
+ ]
+}

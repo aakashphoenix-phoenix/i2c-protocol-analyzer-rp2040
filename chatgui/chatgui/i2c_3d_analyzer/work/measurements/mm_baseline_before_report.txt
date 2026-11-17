@@ -1,0 +1,23 @@
+Source: live analyzer COM28 for 30 s · records 6020 · rejected 0 · lost 0 · packets 2419
+
+0x3C  transactions 2107 · ACK 35136 · NACK 0 · NACK rate 0.00% · unexpected NACK 0 (0.00%)
+    addr-W:ACK                                              2107
+    write[0]:ACK(target)                                    2107
+    write[1]:ACK(target)                                    2107
+    write[>=2]:ACK(target)                                  28815
+
+0x68  transactions 58 · ACK 1044 · NACK 58 · NACK rate 5.26% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              58
+    addr-W:ACK                                              58
+    read[final]:NACK(controller end-of-read, normal)        58
+    read[not final]:ACK(controller)                         870
+    write[0]:ACK(target)                                    58
+
+0x76  transactions 254 · ACK 2110 · NACK 254 · NACK rate 10.74% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              254
+    addr-W:ACK                                              254
+    read[final]:NACK(controller end-of-read, normal)        254
+    read[not final]:ACK(controller)                         1348
+    write[0]:ACK(target)                                    254
+
+ALL  ACK 38290 · NACK 312 · unexpected 0

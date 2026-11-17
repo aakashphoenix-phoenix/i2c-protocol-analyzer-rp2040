@@ -1,0 +1,1513 @@
+"""Interactive I²C network view (large 3D page and compact dashboard box).
+
+One shared schematic layout drives both renderers:
+  * 3D  - pyqtgraph.opengl on QOpenGLWidget, photo textures of the bench parts;
+  * 2D  - QPainter fallback when OpenGL is unavailable/disabled.
+
+Physical roles (verified from firmware/native_rp2040_master/I2C.c and
+firmware/native_rp2040_analyzer/packet_analyzer.c):
+  * Pico 1  = I²C controller, i2c0 SDA=GP4 SCL=GP5, 100 kHz; it drives SCL for
+              READ and WRITE transfers.
+  * targets = DS3231 0x68, BMP280 0x76, SSD1306 0x3C (configured in firmware).
+  * Pico 2  = passive analyzer, PIO inputs GP2=SDA GP3=SCL with pulls disabled;
+              it never drives the bus, has no address and never ACKs.  It sends
+              JSON-lines records to the PC over USB CDC.
+Physical wiring that firmware cannot prove (common GND, target VCC, pull-ups)
+is labelled as unverified.
+
+Animation overlays are driven ONLY by decoded transaction records handed in by
+the capture engine (playback stages); nothing animates on its own.  Arrows show
+which party transmits the current bit/byte — SDA itself is a bidirectional
+open-drain wire, and a two-wire capture cannot prove which device pulled it LOW.
+"""
+from __future__ import annotations
+
+import math
+from functools import lru_cache
+from pathlib import Path
+
+import numpy as np
+from PyQt6.QtCore import QPointF, QRectF, Qt, QTimer, pyqtSignal
+from PyQt6.QtGui import QColor, QFont, QFontMetrics, QImage, QPainter, QPen, QTransform, QVector3D, QBrush, QPolygonF
+from PyQt6.QtWidgets import QGridLayout, QHBoxLayout, QLabel, QPushButton, QToolTip, QVBoxLayout, QWidget
+
+import config
+from config import ANALYZER_LABEL, COLORS as C, MASTER_LABEL
+from gui.widgets import MOTION
+from analysis.playback import capture_clock_text, format_capture_ns
+
+try:
+    import pyqtgraph.opengl as gl
+    from pyqtgraph.opengl import MeshData
+    HAVE_GL = True
+except Exception:          # PyOpenGL missing or broken driver
+    HAVE_GL = False
+
+# ----------------------------------------------------------------------------- layout constants
+CTRL_X, CTRL_Y = -10.2, 0.0
+RAIL_X0 = -8.7
+RAIL_Y = {"SDA": 1.1, "SCL": 0.0, "GND": -1.1}
+RAIL_Z = 0.25
+TARGET_Y = -5.0
+TARGET_X0 = -4.8
+TARGET_DX = 5.8
+ANALYZER_Y = 5.7
+PC_SIZE = (3.0, 2.0)
+DROP_OFF = {"SDA": -0.5, "SCL": 0.0, "GND": 0.5}
+TAP_OFF = {"SDA": -0.6, "SCL": 0.0, "GND": 0.6}
+# Kept for backwards compatibility with older imports.
+SLAVE_Y = TARGET_Y
+SDA_OFF, SCL_OFF = RAIL_Y["SDA"], RAIL_Y["SCL"]
+
+LINE_COL = {"SDA": C["sda"], "SCL": C["scl"], "GND": "#8A96AA", "USB": "#C58CFF"}
+CT_COL = C["blue"]          # controller -> target transmission
+TC_COL = C["cyan"]          # target -> controller transmission
+ACK_COL = C["green"]
+NACK_COL = C["red"]
+
+
+def rgba(hex_color, a=1.0, k=1.0):
+    q = QColor(hex_color)
+    return (min(1, q.redF() * k), min(1, q.greenF() * k), min(1, q.blueF() * k), a)
+
+
+def kind_for(addr, name):
+    n = (name or "").lower()
+    # Checked first: the RTC module's EEPROM is named "AT24C32 EEPROM (RTC module)",
+    # which must not be drawn/labelled as the DS3231 itself.
+    if "eeprom" in n or "at24" in n:
+        return "eeprom"
+    if "oled" in n or "ssd1306" in n:
+        return "oled"
+    if "ds3231" in n or "rtc" in n:
+        return "rtc"
+    if "bmp" in n or "bme" in n:
+        return "bmp"
+    return "unknown"
+
+
+KIND_STYLE = {   # board footprint (x, y) in scene units, pcb colour
+    "pico": ((2.1, 5.1), "#1E7A46"),
+    "rtc": ((2.2, 3.4), "#1F4FA3"),
+    "bmp": ((2.0, 2.6), "#5E2C8C"),
+    "oled": ((2.7, 2.8), "#123C70"),
+    "eeprom": ((2.0, 1.6), "#2F4A6E"),      # no photo asset: drawn as a plain board, not a fake one
+    "unknown": ((2.0, 1.6), "#4A566B"),
+}
+
+# Module header labels read from the supplied component photos (silkscreen).
+HEADER_PINS = {
+    "rtc": "HW-084 header: GND VCC SDA SCL SQW 32K",
+    "bmp": "GY-BME/PM280 header: VCC GND SCL SDA CSB SDO",
+    "oled": "0.96\" I²C module, 4-pin header",
+}
+
+
+@lru_cache(maxsize=8)
+def hardware_image(kind, horizontal=False):
+    """Decode each transparent photographic asset once for all network views."""
+    image = QImage(str(Path(__file__).resolve().parents[1] / "assets" / "hardware" / f"{kind}.png"))
+    if horizontal and not image.isNull():
+        image = image.transformed(QTransform().rotate(-90), Qt.TransformationMode.SmoothTransformation)
+    return image.convertToFormat(QImage.Format.Format_RGBA8888)
+
+
+@lru_cache(maxsize=8)
+def hardware_texture(kind, horizontal=False):
+    image = hardware_image(kind, horizontal)
+    if image.isNull():
+        return None
+    data = np.frombuffer(image.constBits().asstring(image.sizeInBytes()), dtype=np.uint8)
+    data = data.reshape(image.height(), image.bytesPerLine())[:, :image.width() * 4]
+    return np.ascontiguousarray(data.reshape(image.height(), image.width(), 4)[::-1].transpose(1, 0, 2))
+
+
+@lru_cache(maxsize=16)
+def board_size(kind, horizontal=False):
+    """Footprint fitted to the photo's real aspect ratio (no stretching)."""
+    (sx, sy), _ = KIND_STYLE[kind]
+    if horizontal:
+        sx, sy = sy, sx
+    image = hardware_image(kind, horizontal)
+    if image.isNull():
+        return sx, sy
+    scale = min(sx / image.width(), sy / image.height())
+    return image.width() * scale, image.height() * scale
+
+
+def display_name(device):
+    if device["kind"] == "bmp" and device["conf"] != "Confirmed":
+        return "BME280/BMP280 (Unverified)"
+    return device["name"]
+
+
+def short_name(device):
+    return {"rtc": "DS3231 RTC", "bmp": "BMP280" if device["conf"] == "Confirmed" else "BMP/BME280",
+            "oled": "SSD1306 OLED", "eeprom": "AT24C32 EEPROM"}.get(device["kind"], device["name"][:14] or "Device")
+
+
+class Particle:
+    __slots__ = ("path", "seg_len", "total", "s", "speed", "color")
+
+    def __init__(self, path, color, speed):
+        self.path = np.asarray(path, dtype=float)
+        d = np.diff(self.path, axis=0)
+        self.seg_len = np.sqrt((d ** 2).sum(axis=1))
+        self.total = float(self.seg_len.sum()) or 1.0
+        self.s = 0.0
+        self.speed = speed
+        self.color = color
+
+    def pos(self):
+        s = self.s
+        for i, L in enumerate(self.seg_len):
+            if s <= L or i == len(self.seg_len) - 1:
+                f = 0 if L == 0 else min(1.0, s / L)
+                return self.path[i] + f * (self.path[i + 1] - self.path[i])
+            s -= L
+        return self.path[-1]
+
+
+class NodeModel:
+    """Shared schematic layout for both renderers (scene units, z = up)."""
+
+    def __init__(self):
+        self.slaves: dict[int, dict] = {}     # addr -> {name, conf, status, x, kind}
+        self.order: list[int] = []
+
+    def update(self, devices):
+        """devices: list of (addr, name, confidence, status). Returns True if layout changed."""
+        changed = False
+        for addr, name, conf, status in devices:
+            if addr not in self.slaves:
+                self.slaves[addr] = {"name": name, "conf": conf, "status": status, "kind": kind_for(addr, name)}
+                changed = True
+            else:
+                s = self.slaves[addr]
+                if s["name"] != name or s["status"] != status or s["conf"] != conf:
+                    changed = True
+                if s["name"] != name:
+                    s["kind"] = kind_for(addr, name)
+                s.update(name=name, conf=conf, status=status)
+        if changed:
+            # configured devices first in a fixed order, then discovered ones by address
+            fixed = [a for a in (0x68, 0x76, 0x77, 0x3C, 0x3D) if a in self.slaves]
+            rest = sorted(a for a in self.slaves if a not in fixed)
+            self.order = fixed + rest
+            for i, a in enumerate(self.order):
+                self.slaves[a]["x"] = TARGET_X0 + i * TARGET_DX
+        return changed
+
+    # ---------------------------------------------------------------- geometry
+    @property
+    def rail_end(self):
+        last = TARGET_X0 + TARGET_DX * max(len(self.order) - 1, 2)
+        return last + 2.0
+
+    def analyzer_x(self):
+        # Between the first two target drops so the passive taps never sit on a target's wires.
+        return TARGET_X0 + TARGET_DX / 2
+
+    def pc_center(self):
+        return (CTRL_X, ANALYZER_Y)
+
+    def target_size(self, addr):
+        return board_size(self.slaves[addr]["kind"], False)
+
+    def target_top(self, addr):
+        return TARGET_Y + self.target_size(addr)[1] / 2
+
+    def drop_x(self, addr, line):
+        return self.slaves[addr]["x"] + DROP_OFF[line]
+
+    def tap_x(self, line):
+        return self.analyzer_x() + TAP_OFF[line]
+
+    def path_to(self, addr, line="SDA"):
+        """Controller pin -> rail -> target pin, along one bus line."""
+        if not isinstance(line, str):           # legacy offset argument
+            line = "SDA"
+        y = RAIL_Y[line]
+        x = self.drop_x(addr, line)
+        return [(RAIL_X0, y, RAIL_Z), (x, y, RAIL_Z), (x, self.target_top(addr), RAIL_Z)]
+
+    def tap_path(self, line):
+        x = self.tap_x(line)
+        _, sy = board_size("pico", True)
+        return [(x, RAIL_Y[line], RAIL_Z), (x, ANALYZER_Y - sy / 2, RAIL_Z)]
+
+    def usb_path(self):
+        sx, _ = board_size("pico", True)
+        px, py = self.pc_center()
+        return [(self.analyzer_x() - sx / 2, ANALYZER_Y, RAIL_Z), (px + PC_SIZE[0] / 2, py, RAIL_Z)]
+
+    def controller_usb_path(self):
+        _, sy = board_size("pico", False)
+        px, py = self.pc_center()
+        return [(CTRL_X, CTRL_Y + sy / 2, RAIL_Z), (px, py - PC_SIZE[1] / 2, RAIL_Z)]
+
+    def segments(self):
+        """(name, points, colour, dashed) for every schematic connection."""
+        out = []
+        _, csy = board_size("pico", False)
+        csx = board_size("pico", False)[0]
+        for line, y in RAIL_Y.items():
+            out.append((f"rail:{line}", [(CTRL_X + csx / 2, y, RAIL_Z), (self.rail_end, y, RAIL_Z)],
+                        LINE_COL[line], False))
+            for a in self.order:
+                x = self.drop_x(a, line)
+                out.append((f"drop:{a}:{line}", [(x, y, RAIL_Z), (x, self.target_top(a), RAIL_Z)],
+                            LINE_COL[line], False))
+            out.append((f"tap:{line}", self.tap_path(line), LINE_COL[line], True))
+        out.append(("usb:analyzer", self.usb_path(), LINE_COL["USB"], False))
+        out.append(("usb:controller", self.controller_usb_path(), LINE_COL["USB"], True))
+        return out
+
+    def junctions(self):
+        pts = []
+        for line, y in RAIL_Y.items():
+            pts += [(self.drop_x(a, line), y, RAIL_Z) for a in self.order]
+            pts.append((self.tap_x(line), y, RAIL_Z))
+        return pts
+
+    def rects(self):
+        """key -> (cx, cy, sx, sy) for boards and the PC."""
+        r = {"master": (CTRL_X, CTRL_Y, *board_size("pico", False)),
+             "analyzer": (self.analyzer_x(), ANALYZER_Y, *board_size("pico", True)),
+             "pc": (*self.pc_center(), *PC_SIZE)}
+        for a in self.order:
+            r[a] = (self.slaves[a]["x"], TARGET_Y, *self.target_size(a))
+        return r
+
+    def bounds_points(self):
+        pts = []
+        for cx, cy, sx, sy in self.rects().values():
+            pts += [(cx + dx * sx / 2, cy + dy * sy / 2, RAIL_Z) for dx in (-1, 1) for dy in (-1, 1)]
+        for _, seg, _, _ in self.segments():
+            pts += list(seg)
+        return pts
+
+    def label_specs(self, compact, level=0):
+        """(key, text, anchor(x,y,z), placement, colour, bold, priority).
+
+        placement: below / above / right / left of the anchor point.
+        level 0 = full text; 1 = short text (compact box); 2 = minimal text for
+        very small boxes.  Roles, addresses and pins are kept at every level.
+        """
+        compact = compact or level >= 1
+        tiny = level >= 2
+        specs = []
+        r = self.rects()
+        cx, cy, sx, sy = r["master"]
+        specs.append(("master", "Pico 1 · CONTROLLER" if not compact else "Pico 1 · controller" if not tiny else "Pico 1 ctrl",
+                      (cx, cy - sy / 2, RAIL_Z), "below", C["text"], True, 0))
+        specs.append(("master:sub", "SDA GP4 · SCL GP5 · drives SCL" if not compact else "GP4 SDA · GP5 SCL" if not tiny else "GP4/GP5",
+                      (cx, cy - sy / 2, RAIL_Z), "below2", C["text2"], False, 1))
+        ax, ay, asx, asy = r["analyzer"]
+        specs.append(("analyzer", "Pico 2 · PASSIVE ANALYZER (no address, never drives)" if not compact
+                      else "Pico 2 · passive analyzer" if not tiny else "Pico 2 analyzer", (ax, ay + asy / 2, RAIL_Z), "above2", C["text"], True, 1))
+        specs.append(("analyzer:sub", "taps GP2 SDA · GP3 SCL · GND" if not compact else "GP2 SDA · GP3 SCL" if not tiny else "GP2/GP3 · passive",
+                      (ax, ay + asy / 2, RAIL_Z), "above", C["text2"], False, 0))
+        px, py, psx, psy = r["pc"]
+        specs.append(("pc", "PC · this GUI", (px, py + psy / 2, RAIL_Z), "above", C["text"], True, 0))
+        u0, u1 = self.usb_path()
+        specs.append(("usb", "USB CDC: analyzer records → PC" if not compact else "USB records → PC" if not tiny else "USB",
+                      ((u0[0] + u1[0]) / 2, u0[1], RAIL_Z), "above", LINE_COL["USB"], False, 2))
+        c0, c1 = self.controller_usb_path()
+        if not compact:
+            specs.append(("usb:ctrl", "USB (power / optional telemetry)",
+                          (c0[0], (c0[1] + c1[1]) / 2, RAIL_Z), "right", LINE_COL["USB"], False, 3))
+        for line, y in RAIL_Y.items():
+            text = line if line != "GND" else ("GND (common · unverified)" if not compact else "GND")
+            specs.append((f"rail:{line}", text, (self.rail_end, y, RAIL_Z), "right", LINE_COL[line], True, 1))
+        for a in self.order:
+            d = self.slaves[a]
+            tx, ty, tsx, tsy = r[a]
+            title = display_name(d) if not compact else short_name(d) if not tiny else short_name(d).split()[0]
+            specs.append((a, title, (tx, ty - tsy / 2, RAIL_Z), "below", C["text"], True, 0))
+            conf_col = {"Confirmed": C["green"], "Configured": C["cyan"], "Likely": C["amber"]}.get(d["conf"], C["red"])
+            sub = (f"0x{a:02X} · {d['conf']} · {d['status']}" if not compact else
+                   f"0x{a:02X} · {d['status']}" if not tiny else f"0x{a:02X}")
+            specs.append((f"{a}:sub", sub, (tx, ty - tsy / 2, RAIL_Z), "below2", conf_col, False, 1))
+        return specs
+
+
+def place_labels(specs, project, sizes, view_w, view_h, margin=3):
+    """Pixel rectangles for every label: priority order, overlap avoidance, clamping.
+
+    project(point3) -> QPointF; sizes: key -> (w, h).  Returns key -> QRectF.
+    """
+    placed = {}
+    taken = []
+    gap = 4
+    place_labels.displaced = set()
+    for key, _text, anchor, where, _col, _bold, _prio in sorted(specs, key=lambda s: s[6]):
+        w, h = sizes[key]
+        p = project(anchor)
+        if where == "below":
+            r = QRectF(p.x() - w / 2, p.y() + gap, w, h)
+        elif where == "below2":
+            parent = key.rsplit(":", 1)[0]
+            parent = int(parent) if parent.isdigit() else parent
+            base = placed.get(parent)
+            top = base.bottom() + 1 if base is not None else p.y() + gap + h
+            r = QRectF(p.x() - w / 2, top, w, h)
+        elif where == "above":
+            r = QRectF(p.x() - w / 2, p.y() - gap - h, w, h)
+        elif where == "above2":
+            sub = placed.get(f"{key}:sub")
+            bottom = sub.top() - 1 if sub is not None else p.y() - gap - h
+            r = QRectF(p.x() - w / 2, bottom - h, w, h)
+        elif where == "right":
+            r = QRectF(p.x() + gap, p.y() - h / 2, w, h)
+        else:
+            r = QRectF(p.x() - gap - w, p.y() - h / 2, w, h)
+        # resolve overlaps by moving away from the anchor along the placement axis
+        for _ in range(6):
+            hit = next((t for t in taken if t.intersects(r)), None)
+            if hit is None:
+                break
+            place_labels.displaced.add(key)
+            if where in ("above", "above2"):
+                r.moveBottom(hit.top() - 1)
+            elif where in ("right", "left"):
+                r.moveTop(hit.bottom() + 1)
+            else:
+                r.moveTop(hit.bottom() + 1)
+        # clamp inside the view
+        r.moveLeft(min(max(margin, r.left()), max(margin, view_w - margin - w)))
+        r.moveTop(min(max(margin, r.top()), max(margin, view_h - margin - h)))
+        placed[key] = r
+        taken.append(r)
+    return placed
+
+
+def label_font(compact):
+    f = QFont("Segoe UI", 8 if compact else 10)
+    return f
+
+
+def stage_description(stage, txn, names):
+    """Plain-language transmitter/receiver text for one decoded protocol stage."""
+    if stage is None:
+        return "", None, None
+    dev = names.get(stage.address, f"0x{stage.address:02X}" if stage.address is not None else "bus")
+    kind = getattr(stage, "kind", "")
+    if kind == "cond" or stage.direction is None:
+        return "controller generates bus condition", None, None
+    if kind == "ack":
+        responder = "controller" if stage.direction == "W" else f"target {dev}"
+        if stage.ack:
+            return f"ACK: SDA LOW at 9th clock (expected from {responder})", stage.direction, ACK_COL
+        note = getattr(stage, "note", "") or "SDA HIGH at 9th clock"
+        return f"NACK: {note}", None, NACK_COL
+    if stage.direction == "W":
+        return f"Pico 1 (controller) → {dev}", "W", CT_COL
+    return f"{dev} → Pico 1 (controller)", "R", TC_COL
+
+
+def box_mesh(sx, sy, sz):
+    x, y, z = sx / 2, sy / 2, sz
+    v = np.array([[-x, -y, 0], [x, -y, 0], [x, y, 0], [-x, y, 0],
+                  [-x, -y, z], [x, -y, z], [x, y, z], [-x, y, z]], dtype=float)
+    f = np.array([[0, 2, 1], [0, 3, 2], [4, 5, 6], [4, 6, 7], [0, 1, 5], [0, 5, 4],
+                  [1, 2, 6], [1, 6, 5], [2, 3, 7], [2, 7, 6], [3, 0, 4], [3, 4, 7]])
+    return MeshData(vertexes=v, faces=f)
+
+
+DEFAULT_CAMERA = dict(elevation=62, azimuth=-90)
+
+
+# ============================================================================ 3D
+if HAVE_GL:
+    class _GLView(gl.GLViewWidget):
+        hovered = pyqtSignal(object, QPointF)
+        clicked = pyqtSignal(object)
+        resized = pyqtSignal()
+
+        def __init__(self, owner):
+            super().__init__()
+            self.owner = owner
+            self._press = None
+            self.user_view = False          # True once the user rotates/zooms
+            self.setMouseTracking(True)
+
+        _fail_streak = 0
+        _capability_checked = False
+
+        def _gl_capable(self):
+            """A context can report OpenGL >= 2.1 yet still have no real shader
+            pipeline (e.g. a software/basic-display fallback) — the version string
+            alone is not enough.  Probe the actual functions pyqtgraph's 3D items
+            need, with the context already current (Qt made it current for us)."""
+            try:
+                from OpenGL import GL
+                return bool(GL.glCreateShader) and bool(GL.glBlendFuncSeparate)
+            except Exception:
+                return False
+
+        def _request_fallback(self, reason):
+            """Tearing down this widget (reparenting/deleting it) must never happen while
+            Qt's C++ side is still inside OUR paintGL() for it — that reentrancy crashes
+            the process. Defer the actual swap to the next event-loop tick."""
+            if getattr(self, "_fallback_requested", False):
+                return
+            self._fallback_requested = True
+            owner = self.owner
+            QTimer.singleShot(0, lambda: owner._gl_unavailable(reason))
+
+        def paintGL(self):
+            if not self._capability_checked:
+                self._capability_checked = True
+                if not self._gl_capable():
+                    self._request_fallback("this GPU/driver has no OpenGL shader support "
+                                           "(glCreateShader unavailable) — 3D parts cannot draw")
+                    return
+            if getattr(self, "_fallback_requested", False):
+                return                        # fallback already scheduled; do not paint further
+            try:
+                super().paintGL()
+                self._fail_streak = 0
+            except Exception as exc:          # OpenGL.error.GLError on a context not ready yet
+                self._fail_streak += 1
+                if not getattr(self, "_gl_error_logged", False):
+                    import logging
+                    logging.getLogger(__name__).warning("OpenGL paint skipped: %s", str(exc).splitlines()[0])
+                    self._gl_error_logged = True
+                if self._fail_streak >= 5:    # transient once is tolerated; persistent means give up cleanly
+                    self._request_fallback(f"OpenGL repeatedly failed to paint ({str(exc).splitlines()[0]})")
+                    return
+            self.owner._position_labels()
+
+        def project(self, p):
+            viewport = (0, 0, self.width(), self.height())
+            m = self.projectionMatrix(viewport, viewport) * self.viewMatrix()
+            v = m.map(QVector3D(*p))
+            return QPointF((v.x() + 1) / 2 * self.width(), (1 - v.y()) / 2 * self.height())
+
+        def pick(self, pos):
+            best, bd = None, 46.0
+            for key, p in self.owner.anchor_points().items():
+                sp = self.project(p)
+                d = math.hypot(sp.x() - pos.x(), sp.y() - pos.y())
+                if d < bd:
+                    best, bd = key, d
+            return best
+
+        def resizeEvent(self, ev):
+            super().resizeEvent(ev)
+            self.resized.emit()
+
+        def mousePressEvent(self, ev):
+            self._press = ev.position()
+            super().mousePressEvent(ev)
+
+        def mouseReleaseEvent(self, ev):
+            super().mouseReleaseEvent(ev)
+            if self._press is not None and (ev.position() - self._press).manhattanLength() < 5:
+                self.clicked.emit(self.pick(ev.position()))
+            self._press = None
+
+        def mouseMoveEvent(self, ev):
+            if ev.buttons():
+                self.user_view = True
+            super().mouseMoveEvent(ev)
+            if not ev.buttons():
+                self.hovered.emit(self.pick(ev.position()), ev.globalPosition())
+
+        def wheelEvent(self, ev):
+            self.user_view = True
+            super().wheelEvent(ev)
+
+
+class Network3D(QWidget):
+    node_clicked = pyqtSignal(object)      # address int, "master", "analyzer", "pc" or None
+    renderer_changed = pyqtSignal()        # emitted once if a 3D view falls back to 2D at runtime
+
+    def __init__(self, prefer_3d=True, compact=False, parent=None):
+        super().__init__(parent)
+        self.playback_paused = False
+        self.playback_speed = 1.0
+        self._stage_key = None
+        self._stage = None
+        self._stage_txn = None
+        self.compact = compact
+        self.model = NodeModel()
+        self.particles: list = []
+        self.flash: dict = {}
+        self.auto_rotate = False
+        self.active = True
+        self.selected = None
+        self.focus = None                   # device chosen by the user (filter); amber ring
+        self._focus_items: list = []
+        self._last_spawn = {}
+        self._labels: dict = {}             # key -> QLabel (scene labels)
+        self._label_rects: dict = {}
+        self._stage_items: list = []
+        self.use_gl = HAVE_GL and prefer_3d
+        self.label_level = 1 if compact else 0
+        self.model.update(self._configured_nodes([]))
+        lay = QVBoxLayout(self)
+        lay.setContentsMargins(0, 0, 0, 0)
+        lay.setSpacing(3 if compact else 6)
+
+        hud_font = "font-size:8pt;" if compact else ""
+        self.capture_clock = QLabel('Capture time: UNKNOWN')
+        self.capture_clock.setWordWrap(True)
+        self.capture_clock.setObjectName('mono')
+        self.capture_clock.setStyleSheet('color:' + C['text2'] + ';' + hud_font)
+        self.rtc_label = QLabel("DS3231 RTC: UNAVAILABLE — no valid RTC record")
+        self.rtc_label.setWordWrap(True)
+        self.rtc_label.setStyleSheet(f"color:{C['text2']};" + hud_font)
+        self.transaction_overlay = QLabel("IDLE — no decoded transaction")
+        self.transaction_overlay.setWordWrap(True)
+        self.transaction_overlay.setStyleSheet(hud_font)
+        self.health_label = QLabel("Bus health: UNKNOWN")
+        self.health_label.setWordWrap(True)
+        self.health_label.setStyleSheet(f"color:{C['text2']};" + hud_font)
+        # HUD: clock | RTC + health on one row, transaction text below (keeps the box short)
+        hud = QGridLayout()
+        hud.setHorizontalSpacing(12)
+        hud.setVerticalSpacing(1)
+        right = QVBoxLayout()
+        right.setSpacing(1)
+        right.addWidget(self.rtc_label)
+        right.addWidget(self.health_label)
+        right.addStretch(1)
+        hud.addWidget(self.capture_clock, 0, 0, Qt.AlignmentFlag.AlignTop)
+        hud.addLayout(right, 0, 1)
+        hud.addWidget(self.transaction_overlay, 1, 0, 1, 2)
+        hud.setColumnStretch(0, 2)
+        hud.setColumnStretch(1, 3)
+        lay.addLayout(hud)
+
+        self._lay = lay
+        self._view_row = lay.count()        # index self.view occupies, for a later swap
+        self._fallback_reason = None
+        self._gl_fallback_done = False
+        if self.use_gl:
+            self.view = _GLView(self)
+            self.view.setBackgroundColor(C["bg"])
+            self.view.hovered.connect(self._hover)
+            self.view.clicked.connect(self.node_clicked.emit)
+            self.view.resized.connect(self._auto_fit)
+            self.view.setMinimumHeight(170 if compact else 240)
+            lay.addWidget(self.view, 1)
+            self._items: dict = {}
+            self._dynamic: list = []
+            self._build_static()
+            self.reset_view()
+        else:
+            self.view = Topology2D(self)
+            self.view.clicked.connect(self.node_clicked.emit)
+            self.view.setMinimumHeight(170 if compact else 240)
+            lay.addWidget(self.view, 1)
+
+        legend = QHBoxLayout()
+        legend.setSpacing(8 if compact else 14)
+        items = (("SDA", C["sda"]), ("SCL", C["scl"]), ("GND", LINE_COL["GND"]), ("USB", LINE_COL["USB"]),
+                 ("C→T", CT_COL), ("T→C", TC_COL), ("ACK", ACK_COL), ("NACK", NACK_COL))
+        for txt, col in items:
+            lb = QLabel(f"<span style='color:{col}'>━━</span> {txt}")
+            lb.setObjectName("cardHint")
+            if compact:
+                lb.setStyleSheet("font-size:8pt;")
+            legend.addWidget(lb)
+        legend.addStretch(1)
+        self.btn_reset = None
+        if compact:
+            self.btn_reset = QPushButton("Reset view")
+            self.btn_reset.setToolTip("Restore the fitted default view of this diagram")
+            self.btn_reset.clicked.connect(self.reset_view)
+            legend.addWidget(self.btn_reset)
+        lay.addLayout(legend)
+        note = ("Arrows show which party transmits the current bit/byte (C = controller, T = target). "
+                "SDA is a bidirectional open-drain wire; SCL is driven by the controller. "
+                "The passive analyzer only observes and forwards records over USB.")
+        if not compact:
+            n = QLabel(note)
+            n.setObjectName("cardHint")
+            n.setWordWrap(True)
+            lay.addWidget(n)
+        self.setToolTip(note)
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self._tick)
+        self.timer.start(33)
+
+    # ------------------------------------------------------------------ API
+    @property
+    def is_3d(self):
+        return self.use_gl
+
+    def set_active(self, on: bool):
+        self.active = on
+
+    def set_auto_rotate(self, on: bool):
+        self.auto_rotate = on
+        if on and self.use_gl:
+            self.view.user_view = True
+
+    def _gl_unavailable(self, reason: str):
+        """Runtime fallback: this session's OpenGL context cannot actually draw the
+        3D scene (missing shader support, or paint kept failing). Swap to the same
+        data drawn by the already-working 2D renderer instead of leaving a blank
+        box, and say why, once, so this is never a silent/unexplained black screen."""
+        if self._gl_fallback_done:
+            return
+        self._gl_fallback_done = True
+        import logging
+        logging.getLogger(__name__).warning("Falling back to 2D topology view: %s", reason)
+        old_view = self.view
+        self.timer.stop()                   # stop driving GL-only animation state
+        self._lay.removeWidget(old_view)
+        old_view.setParent(None)
+        old_view.deleteLater()
+        for lb in list(self._labels.values()):
+            lb.setParent(None)
+            lb.deleteLater()
+        self._labels.clear()
+        self._label_rects.clear()
+        # _stage_label was a child of the old GL view too (destroyed with it);
+        # dropping the reference makes _set_stage treat it as "no label widget",
+        # exactly like a Network3D that was 2D from construction.
+        self._stage_label = None
+        self.particles.clear()
+        self._dynamic = []
+        self._items = {}
+        self._boards = {}
+        self._focus_items = []
+        self._stage_items = []
+        self.use_gl = False
+        self.view = Topology2D(self)
+        self.view.clicked.connect(self.node_clicked.emit)
+        self.view.setMinimumHeight(170 if self.compact else 240)
+        self._lay.insertWidget(self._view_row, self.view, 1)
+        # Drawn ON the canvas by Topology2D.paintEvent (like every other label there),
+        # never as a layout row — it must not be able to shrink the diagram's space.
+        self._fallback_reason = reason
+        self.view.setToolTip(f"Switched to 2D: {reason}. Try updating your graphics driver, or avoid Remote "
+                             "Desktop, then restart the app.")
+        self.timer.start(33)
+        self.view.update()
+        self.renderer_changed.emit()
+
+    @staticmethod
+    def _configured_nodes(devices):
+        """Configured targets stay drawn (as 'Not yet observed') until traffic proves them."""
+        seen = {d[0] for d in devices}
+        extra = [(a, n, "Configured", "Not yet observed") for a, n in config.CONFIGURED_DEVICES.items()
+                 if a not in seen]
+        return list(devices) + extra
+
+    def set_selected(self, key):
+        if key == self.selected:
+            return
+        self.selected = key
+        if self.use_gl:
+            for k, outline in getattr(self, "_boards", {}).items():
+                outline.setData(color=rgba(C["cyan"], 0.9 if k == key else 0.0))
+        else:
+            self.view.update()
+
+    def set_focus(self, addr):
+        """Persistent highlight of the device the user filtered on (independent of playback)."""
+        self.focus = addr if isinstance(addr, int) else None
+        if self.use_gl:
+            self._draw_focus()
+        else:
+            self.view.update()
+
+    def _draw_focus(self):
+        for it in self._focus_items:
+            self.view.removeItem(it)
+        self._focus_items = []
+        r = self.model.rects().get(self.focus)
+        if r is None:
+            return
+        x, y, sx, sy = r
+        hx, hy, z = sx / 2 + 0.28, sy / 2 + 0.28, 0.3
+        ring = np.array([[x-hx, y-hy, z], [x+hx, y-hy, z], [x+hx, y+hy, z], [x-hx, y+hy, z], [x-hx, y-hy, z]])
+        self._line(ring, C["amber"], 3.5, 1.0, dynamic=False, store=self._focus_items)
+
+    def set_devices(self, devices):
+        if self.model.update(self._configured_nodes(devices)):
+            if self.use_gl:
+                self._rebuild_dynamic()
+                self._auto_fit()
+        if not self.use_gl:
+            self.view.update()
+
+    def pulse(self, addr, rw: str, nack: bool, color=None):
+        """Spawn a direction particle on SDA for a decoded stage (no free-running animation)."""
+        import time as _t
+        now = _t.monotonic()
+        last = self._last_spawn.get(addr, 0)
+        if addr not in self.model.slaves or not MOTION["animations"] or (now - last < 0.35 and not nack):
+            self.flash[addr] = 1.0
+            return
+        self._last_spawn[addr] = now
+        col = color or (NACK_COL if nack else (TC_COL if rw == "R" else CT_COL))
+        speed = 0.9 if MOTION["reduced"] else 0.55
+        if len(self.particles) < 120 and not nack:
+            path = self.model.path_to(addr, "SDA")
+            if rw == "R":
+                path = path[::-1]
+            self.particles.append(Particle(path, col, speed))
+        self.flash[addr] = 1.0
+        self.flash["analyzer"] = 0.6
+        self.flash["master"] = 1.0
+
+    # ------------------------------------------------------------------ HUD text
+    def _device_names(self):
+        return {a: f"{short_name(d)} 0x{a:02X}" for a, d in self.model.slaves.items()}
+
+    def show_stage(self, playback, engine):
+        self.capture_clock.setText(capture_clock_text(engine))
+        self._show_rtc(engine)
+        self._show_health(engine)
+        stage = playback.current
+        self.playback_speed = playback.speed
+        if stage is None:
+            self.transaction_overlay.setText('IDLE / UNKNOWN — no selected capture')
+            self.particles.clear()
+            self._stage_key = None
+            self._set_stage(None, None)
+            return
+        txn = playback.txn
+        source = ('SIMULATED — NOT VERIFIED HARDWARE (demo)' if txn.demo else
+                  'REPLAY — recorded capture' if txn.source == 'replay' else
+                  'LIVE — HARDWARE CAPTURE' if engine.measurement_trust()[0] else 'RECORDED — live link disconnected/unverified')
+        who, _, col = stage_description(stage, txn, self._device_names())
+        stamp = (f'event t={format_capture_ns(stage.timestamp)}' if stage.timestamp is not None
+                 else 'byte timestamp unavailable (segment record only)')
+        levels = 'SCL/SDA levels unavailable'
+        if stage.timestamp is not None and engine.edges and engine.edges[0][0] <= stage.timestamp <= engine.edges[-1][0]:
+            ts, states = engine.edges_between(stage.timestamp, stage.timestamp)
+            observed = [int(v) for tt, v in zip(ts, states) if tt <= stage.timestamp]
+            if observed:
+                levels = f"sampled SCL={(observed[-1]>>1)&1} SDA={observed[-1]&1}"
+        col = col or C['cyan']
+        if stage.ack is True:
+            col = ACK_COL
+        elif stage.ack is False:
+            col = NACK_COL
+        a = stage.address if stage.address is not None else txn.address
+        if a is not None:
+            nm, conf = engine.registry.name(a)
+            target = nm if conf in ("Confirmed", "Configured", "Likely") else "unknown"
+            addr_txt = f"0x{a:02X} (7-bit) · target {target}"
+        else:
+            addr_txt = "address — · target unknown"
+        rw = {"R": "READ", "W": "WRITE"}.get(stage.frame_rw or "", txn.operation)
+        hz = txn.timing.get("frequency_hz")
+        scl_text = (f"SCL measured {hz / 1e3:.2f} kHz ({txn.timing.get('frequency_scope', 'scope unknown')}, "
+                    f"{txn.timing.get('frequency_source', '')})" if hz else "SCL measured UNKNOWN")
+        byte = f"0x{stage.byte:02X}" if stage.byte is not None else "—"
+        ack = ""
+        if stage.ack is True:
+            ack = f" · <span style='color:{ACK_COL}'><b>ACK</b></span>"
+        elif stage.ack is False:
+            ack = f" · <span style='color:{NACK_COL}'><b>NACK</b></span>"
+        self.transaction_overlay.setText(
+            f"<b>{source}</b><br>Packet #{txn.id} · {addr_txt} · {rw} · byte {byte}{ack} · "
+            f"stage {int(playback.position)+1}/{len(playback.events)}: "
+            f"<span style='color:{col}'><b>{stage.text}</b></span> · {who}<br>"
+            f"{stamp} · {levels} · {scl_text} · roles inferred from protocol")
+        key = (id(txn), int(playback.position))
+        if key != self._stage_key:
+            self._stage_key = key
+            self.particles.clear()
+            self.set_selected(stage.address)
+            self.flash['master'] = 1.0
+            self.flash['analyzer'] = 0.6
+            self._set_stage(stage, txn)
+            if stage.direction and stage.address is not None and stage.ack is not False:
+                self._last_spawn.clear()
+                self.pulse(stage.address, stage.direction, False, color=col)
+            elif stage.ack is False and stage.address is not None:
+                self.flash[stage.address] = 1.0
+
+    def _show_rtc(self, engine):
+        r = engine.rtc_status() if hasattr(engine, "rtc_status") else dict(state="UNAVAILABLE", text="—", source="")
+        if r["state"] == "UNAVAILABLE":
+            self.rtc_label.setText(("RTC: <span style='color:%s'>UNAVAILABLE</span> — no valid record" if self.compact else
+                                    "DS3231 RTC: <span style='color:%s'>UNAVAILABLE</span> — no valid bus-decoded "
+                                    "RTC record or master telemetry (PC clock is never shown as RTC)") % C["amber"])
+            return
+        age = f" · {r['age_s']:.1f} s old" if r.get("age_s") is not None else ""
+        at = f" · read at t={format_capture_ns(r['t_ns'])}" if r.get("t_ns") is not None else ""
+        col = C["red"] if r["state"] == "INVALID" else C["amber"] if r["state"] == "STALE" else (C["demo"] if "SIMULATED" in r["source"] else C["green"])
+        if self.compact:
+            src = "SIMULATED demo record" if "SIMULATED" in r["source"] else (
+                "master telemetry" if "telemetry" in r["source"] else "bus-decoded 0x68")
+            self.rtc_label.setText(f"RTC <span style='color:{col}'><b>{r['text']}</b> [{r['state']}]</span> · {src}{age}")
+            self.rtc_label.setToolTip(f"{r['source']}{at}{age}")
+            return
+        self.rtc_label.setText(f"DS3231 RTC <span style='color:{col}'><b>{r['text']}</b> [{r['state']}]</span>"
+                               f" · {r['source']}{at}{age}")
+
+    def _show_health(self, engine):
+        if not hasattr(engine, "health_summary"):
+            return
+        h = engine.health_summary()
+        c = h["counts"]
+        n = c["opportunities"]
+        rates = (f"raw {c['raw_nack_pct']:.2f}% · unexpected {c['unexpected_nack_pct']:.2f}%" if n else "rates —")
+        col = {"HEALTHY": C["green"], "DEGRADED": C["red"]}.get(h["state"], C["amber"])
+        sim = (f" · <span style='color:{C['demo']}'>SIMULATED policy: {h['simulated_state']} (not verified)</span>"
+               if h["simulated"] else "")
+        if self.compact:
+            self.health_label.setText(
+                f"Health <span style='color:{col}'><b>{h['state']}</b></span>"
+                + (f" <span style='color:{C['demo']}'>(SIMULATED: {h['simulated_state']})</span>" if h["simulated"] else "")
+                + f" · 60 s · ACK {c['acks']} · NACK {c['raw_nacks']} (end-of-read {c['expected_read_nacks']}, "
+                f"unexpected <span style='color:{C['red'] if c['unexpected_nacks'] else C['text2']}'>{c['unexpected_nacks']}</span>)"
+                f" · {rates}")
+            return
+        self.health_label.setText(
+            f"Bus health <span style='color:{col}'><b>{h['state']}</b></span>{sim} · {h['window']}: "
+            f"slots {n} · ACK {c['acks']} · NACK raw {c['raw_nacks']} (end-of-read {c['expected_read_nacks']}, "
+            f"unexpected <span style='color:{C['red'] if c['unexpected_nacks'] else C['text2']}'>{c['unexpected_nacks']}</span>) · {rates}")
+
+    def anchor_points(self):
+        r = self.model.rects()
+        return {k: (v[0], v[1], 0.6) for k, v in r.items()}
+
+    def describe(self, key):
+        if key == "master":
+            return (f"<b>{MASTER_LABEL}</b><br>I²C controller (RP2040, i2c0) · 100 kHz configured<br>"
+                    "SDA GP4 · SCL GP5 (firmware I2C.c)<br>Drives SCL for READ and WRITE<br>"
+                    "Internal pull-ups not enabled by firmware; bus pull-ups are on the target modules (verify)<br>"
+                    "USB: power + optional master telemetry (separate COM port)")
+        if key == "analyzer":
+            return (f"<b>{ANALYZER_LABEL}</b><br>Passive tap: PIO inputs GP2 (SDA) / GP3 (SCL), pulls disabled<br>"
+                    "Never drives SDA/SCL · no I²C address · never ACKs<br>"
+                    "Sends JSON-lines records over USB CDC to the PC<br>Common GND with the bus required (physically unverified)")
+        if key == "pc":
+            return "<b>PC</b><br>Runs this GUI · receives analyzer records over USB CDC (COM port chosen at runtime)"
+        s = self.model.slaves.get(key)
+        if not s:
+            return ""
+        header = HEADER_PINS.get(s["kind"], "")
+        extra = "<br>Module also carries an AT24C32 EEPROM (not accessed by firmware)" if s["kind"] == "rtc" else ""
+        return (f"<b>{display_name(s)}</b><br>Target address 0x{key:02X} · name {s['conf'].lower()}<br>"
+                f"Status: {s['status']}<br>{header}<br>VCC 3.3 V from Pico 1 3V3 recommended — wiring NOT verified{extra}"
+                "<br><i>click to filter packets</i>")
+
+    def _hover(self, key, gpos):
+        if key is None:
+            QToolTip.hideText()
+        else:
+            QToolTip.showText(gpos.toPoint(), self.describe(key), self)
+
+    # ------------------------------------------------------------------ labels (shared)
+    def _label_widgets(self, parent):
+        specs = self.model.label_specs(self.compact, self.label_level)
+        wanted = {s[0] for s in specs}
+        for k in list(self._labels):
+            if k not in wanted:
+                self._labels.pop(k).deleteLater()
+        font = label_font(self.compact)
+        for key, text, _, _, col, bold, _ in specs:
+            lb = self._labels.get(key)
+            if lb is None:
+                lb = QLabel(parent)
+                lb.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+                self._labels[key] = lb
+            f = QFont(font)
+            f.setBold(bold)
+            lb.setFont(f)
+            lb.setText(text)
+            lb.setStyleSheet(f"color:{col}; background: rgba(8,13,25,150); padding:0px 2px; "
+                             f"font-size:{f.pointSize()}pt; font-weight:{'bold' if bold else 'normal'};")
+            lb.adjustSize()
+            lb.show()
+        if self._stage_label is None:
+            self._stage_label = QLabel(parent)
+            self._stage_label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+            self._stage_label.hide()
+        return specs
+
+    _stage_label = None
+    label_level = 0
+    stage_text = ""
+    stage_color = None
+
+    def _sizes(self, specs):
+        return {s[0]: (self._labels[s[0]].width(), self._labels[s[0]].height()) for s in specs}
+
+    def _position_labels(self):
+        if not self._labels:
+            return
+        specs = self.model.label_specs(self.compact, self.label_level)
+        if any(s[0] not in self._labels for s in specs):
+            specs = self._label_widgets(self.view)
+        rects = place_labels(specs, self.view.project, self._sizes(specs), self.view.width(), self.view.height())
+        self._label_rects = rects
+        for k, r in rects.items():
+            self._labels[k].move(round(r.left()), round(r.top()))
+        self._position_stage_label()
+
+    def _position_stage_label(self):
+        lb = self._stage_label
+        if lb is None or not lb.isVisible() or self._stage is None:
+            return
+        addr = self._stage.address
+        if addr in self.model.slaves:
+            p = self.view.project((self.model.drop_x(addr, "SDA"), RAIL_Y["SDA"], RAIL_Z))
+        else:
+            p = self.view.project((CTRL_X + 1.6, RAIL_Y["SDA"], RAIL_Z))
+        w, h = lb.width(), lb.height()
+        r = QRectF(p.x() - w / 2, p.y() - h - 10, w, h)
+        for _ in range(4):
+            hit = next((t for t in self._label_rects.values() if t.intersects(r)), None)
+            if hit is None:
+                break
+            r.moveBottom(hit.top() - 1)
+        r.moveLeft(min(max(2, r.left()), max(2, self.view.width() - 2 - w)))
+        r.moveTop(min(max(2, r.top()), max(2, self.view.height() - 2 - h)))
+        lb.move(round(r.left()), round(r.top()))
+
+    # ------------------------------------------------------------------ fitting
+    def _scene_fits(self):
+        """True when every board corner, line end and label rect lies inside the view."""
+        w, h = self.view.width(), self.view.height()
+        m = 4
+        for p in self.model.bounds_points():
+            q = self.view.project(p)
+            if not (m <= q.x() <= w - m and m <= q.y() <= h - m):
+                return False
+        specs = self.model.label_specs(self.compact, self.label_level)
+        sizes = self._sizes(specs)
+        rects = place_labels(specs, self.view.project, sizes, 10 ** 6, 10 ** 6, margin=-10 ** 6)
+        return all(r.left() >= 4 and r.top() >= 4 and r.right() <= w - 4 and r.bottom() <= h - 4
+                   for r in rects.values())
+
+    def _labels_overlap(self):
+        specs = self.model.label_specs(self.compact, self.label_level)
+        rects = list(place_labels(specs, self.view.project, self._sizes(specs), 10 ** 6, 10 ** 6,
+                                  margin=-10 ** 6).values())
+        displaced = set(place_labels.displaced)
+        return bool(displaced) or any(a.intersects(b) for i, a in enumerate(rects) for b in rects[i + 1:])
+
+    def _content_center_px(self):
+        xs, ys = [], []
+        for p in self.model.bounds_points():
+            q = self.view.project(p)
+            xs.append(q.x()); ys.append(q.y())
+        specs = self.model.label_specs(self.compact, self.label_level)
+        rects = place_labels(specs, self.view.project, self._sizes(specs), 10 ** 6, 10 ** 6, margin=-10 ** 6)
+        for r in rects.values():
+            xs += [r.left(), r.right()]; ys += [r.top(), r.bottom()]
+        return (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+
+    def fit_view(self):
+        """Fit the whole topology and its labels; shorten label text in small boxes."""
+        if not self.use_gl:
+            self.view.update()
+            return
+        v = self.view
+        if v.width() < 50 or v.height() < 50:
+            return
+        start = 1 if self.compact else 0
+        for level in range(start, 3):
+            self.label_level = level
+            self._fit_at_level()
+            if self._scene_fits() and not self._labels_overlap():
+                break
+        v.update()
+
+    def _points_fit(self, margin=4):
+        w, h = self.view.width(), self.view.height()
+        for p in self.model.bounds_points():
+            q = self.view.project(p)
+            if not (margin <= q.x() <= w - margin and margin <= q.y() <= h - margin):
+                return False
+        return True
+
+    def _recenter(self, span_x, span_y):
+        """Shift the camera centre so the projected content (boards + labels) is centred."""
+        v = self.view
+        c = v.opts["center"]
+        cx, cy = c.x(), c.y()
+        px, py = self._content_center_px()
+        dx, dy = px - v.width() / 2, py - v.height() / 2
+        a = v.project((cx, cy, 0)); b = v.project((cx + 1, cy, 0)); d = v.project((cx, cy + 1, 0))
+        ux = max(1e-3, abs(b.x() - a.x())); uy = max(1e-3, abs(d.y() - a.y()))
+        cx += max(-span_x / 4, min(span_x / 4, dx / ux))
+        cy -= max(-span_y / 4, min(span_y / 4, dy / uy))
+        v.opts["center"] = QVector3D(cx, cy, 0)
+
+    def _fit_at_level(self):
+        v = self.view
+        self._label_widgets(v)
+        pts = np.array(self.model.bounds_points())
+        span_x = pts[:, 0].max() - pts[:, 0].min()
+        span_y = pts[:, 1].max() - pts[:, 1].min()
+        v.opts["center"] = QVector3D((pts[:, 0].min() + pts[:, 0].max()) / 2,
+                                     (pts[:, 1].min() + pts[:, 1].max()) / 2, 0)
+        v.opts["elevation"] = DEFAULT_CAMERA["elevation"]
+        v.opts["azimuth"] = DEFAULT_CAMERA["azimuth"]
+        # 1) largest view where all boards and wires fit (monotonic in distance)
+        lo, hi = 2.0, 2000.0
+        for _ in range(40):
+            mid = (lo + hi) / 2
+            v.opts["distance"] = mid
+            if self._points_fit():
+                hi = mid
+            else:
+                lo = mid
+        v.opts["distance"] = hi
+        # 2) back off gradually until the pixel-sized labels fit too, re-centring each step
+        for _ in range(80):
+            self._recenter(span_x, span_y)
+            if self._scene_fits():
+                break
+            v.opts["distance"] *= 1.04
+        # 3) tighten again while everything still fits
+        for _ in range(30):
+            d = v.opts["distance"]
+            v.opts["distance"] = d * 0.985
+            self._recenter(span_x, span_y)
+            if not self._scene_fits():
+                v.opts["distance"] = d
+                self._recenter(span_x, span_y)
+                break
+        if not self._scene_fits():
+            v.opts["distance"] *= 1.02
+
+    def reset_view(self):
+        """Restore the clear fitted view of THIS diagram (compact and large views are independent)."""
+        if self.use_gl:
+            self.view.user_view = False
+            self.fit_view()
+        else:
+            self.view.update()
+
+    def _auto_fit(self):
+        if self.use_gl and not self.view.user_view:
+            self.fit_view()
+
+    # ------------------------------------------------------------------ 3D scene
+    def _add(self, item, dynamic=False, store=None):
+        self.view.addItem(item)
+        if dynamic:
+            self._dynamic.append(item)
+        if store is not None:
+            store.append(item)
+        return item
+
+    def _board(self, kind, x, y, highlight=False, dynamic=True, rot90=False):
+        sx, sy = board_size(kind, rot90)
+        image = hardware_image(kind, rot90)
+        if not image.isNull():
+            scale = sx / image.width()
+            texture = gl.GLImageItem(hardware_texture(kind, rot90), smooth=True, glOptions="translucent")
+            texture.translate(x - sx / 2, y - sy / 2, 0.22)
+            texture.scale(scale, scale, 1)
+            self._add(texture, dynamic)
+        else:
+            # Unknown discovered hardware is deliberately not given a fabricated photo.
+            board = gl.GLMeshItem(meshdata=box_mesh(sx, sy, 0.16), color=rgba(KIND_STYLE[kind][1]), shader="shaded")
+            board.translate(x, y, 0.05)
+            self._add(board, dynamic)
+        return self._outline(x, y, sx, sy, highlight)
+
+    def _outline(self, x, y, sx, sy, highlight):
+        hx, hy, z = sx / 2 + 0.08, sy / 2 + 0.08, 0.24
+        outline = gl.GLLinePlotItem(pos=np.array([
+            [x-hx, y-hy, z], [x+hx, y-hy, z], [x+hx, y+hy, z], [x-hx, y+hy, z], [x-hx, y-hy, z]]),
+            color=rgba(C["cyan"], 0.9 if highlight else 0.0), width=2, antialias=True,
+            glOptions="translucent")
+        return self._add(outline, True)
+
+    def _line(self, pts, color, width=2.0, alpha=1.0, dynamic=True, mode="line_strip", store=None):
+        it = gl.GLLinePlotItem(pos=np.asarray(pts, dtype=float), color=rgba(color, alpha), width=width,
+                               antialias=True, mode=mode, glOptions="translucent")
+        return self._add(it, dynamic, store)
+
+    @staticmethod
+    def _dashes(p0, p1, n=12):
+        pts = []
+        p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
+        for i in range(n):
+            if i % 2 == 0:
+                pts += [p0 + (p1 - p0) * i / n, p0 + (p1 - p0) * (i + 1) / n]
+        return pts
+
+    def _build_static(self):
+        self.scatter = gl.GLScatterPlotItem(pos=np.zeros((1, 3)), size=0.0, pxMode=True)
+        self.scatter.setGLOptions("additive")
+        self._add(self.scatter)
+        self._rebuild_dynamic()
+
+    def _pc_items(self):
+        px, py = self.model.pc_center()
+        sx, sy = PC_SIZE
+        body = gl.GLMeshItem(meshdata=box_mesh(sx, sy, 0.12), color=rgba("#1B2740"), shader="shaded")
+        body.translate(px, py, 0.05)
+        self._add(body, True)
+        screen = gl.GLMeshItem(meshdata=box_mesh(sx * 0.82, sy * 0.66, 0.02), color=rgba("#0E3A52"), shader="shaded")
+        screen.translate(px, py + 0.1, 0.18)
+        self._add(screen, True)
+        return self._outline(px, py, sx, sy, self.selected == "pc")
+
+    def _rebuild_dynamic(self):
+        for it in self._dynamic:
+            self.view.removeItem(it)
+        self._dynamic.clear()
+        self._boards = {}
+        m = self.model
+        for name, pts, col, dashed in m.segments():
+            if dashed:
+                self._line(self._dashes(pts[0], pts[-1], 14), col, 1.8, 0.9, mode="lines")
+            else:
+                width = 2.6 if name.startswith("rail") else 2.0
+                if name.startswith("rail") or name.startswith("usb"):
+                    self._line(pts, col, 7, 0.14)          # soft halo
+                self._line(pts, col, width, 0.95)
+        dots = np.array(m.junctions(), dtype=float)
+        self._add(gl.GLScatterPlotItem(pos=dots, size=7, color=(1, 1, 1, 0.9), pxMode=True), True)
+        self._boards["master"] = self._board("pico", CTRL_X, CTRL_Y, self.selected == "master")
+        for a in m.order:
+            s = m.slaves[a]
+            self._boards[a] = self._board(s["kind"], s["x"], TARGET_Y, self.selected == a)
+        self._boards["analyzer"] = self._board("pico", m.analyzer_x(), ANALYZER_Y, self.selected == "analyzer", rot90=True)
+        self._boards["pc"] = self._pc_items()
+        self._label_widgets(self.view)
+        self._draw_focus()
+        if self._stage is not None:
+            self._set_stage(self._stage, self._stage_txn)
+
+    # ------------------------------------------------------------------ stage overlay
+    def _arrow_points(self, path, n=3, size=0.32):
+        """Chevrons along a polyline, pointing in the path direction."""
+        path = np.asarray(path, float)
+        seg = np.diff(path, axis=0)
+        lens = np.sqrt((seg ** 2).sum(axis=1))
+        total = lens.sum()
+        pts = []
+        for k in range(1, n + 1):
+            s = total * k / (n + 1)
+            for i, L in enumerate(lens):
+                if s <= L or i == len(lens) - 1:
+                    d = seg[i] / (L or 1)
+                    p = path[i] + d * min(s, L)
+                    nrm = np.array([-d[1], d[0], 0.0])
+                    tip = p + d * size / 2
+                    back = p - d * size / 2
+                    z = np.array([0, 0, 0.05])
+                    pts += [back + nrm * size / 2 + z, tip + z, tip + z, back - nrm * size / 2 + z]
+                    break
+                s -= L
+        return pts
+
+    def _stage_paths(self, stage):
+        """(sda_path oriented transmitter->receiver or None, colour, is_nack)."""
+        if stage is None or stage.address not in self.model.slaves:
+            return None, None, False
+        _, direction, col = stage_description(stage, self._stage_txn, self._device_names())
+        if stage.ack is False:
+            return None, NACK_COL, True
+        if direction is None:
+            return None, None, False
+        path = self.model.path_to(stage.address, "SDA")
+        if direction == "R":
+            path = path[::-1]
+        return path, col, False
+
+    def _set_stage(self, stage, txn):
+        self._stage, self._stage_txn = stage, txn
+        lb = self._stage_label
+        if self.use_gl:
+            for it in self._stage_items:
+                self.view.removeItem(it)
+            self._stage_items = []
+        if stage is None:
+            self.stage_text, self.stage_color = "", None
+            if lb is not None:
+                lb.hide()
+            if not self.use_gl:
+                self.view.update()
+            return
+        path, col, nack = self._stage_paths(stage)
+        if self.use_gl:
+            if path is not None:
+                self._line(path, col, 8, 0.28, dynamic=False, store=self._stage_items)
+                self._line(self._arrow_points(path), col, 3.5, 1.0, dynamic=False, mode="lines",
+                           store=self._stage_items)
+            if stage.address in self.model.slaves and getattr(stage, "kind", "") != "cond":
+                scl = self.model.path_to(stage.address, "SCL")
+                self._line(self._arrow_points(scl, 2, 0.26), C["scl"], 2.5, 0.9, dynamic=False, mode="lines",
+                           store=self._stage_items)
+            if nack and stage.address in self.model.slaves:
+                x, y = self.model.drop_x(stage.address, "SDA"), RAIL_Y["SDA"]
+                s = 0.35
+                self._line([(x - s, y - s, 0.4), (x + s, y + s, 0.4), (x - s, y + s, 0.4), (x + s, y - s, 0.4)],
+                           NACK_COL, 4, 1.0, dynamic=False, mode="lines", store=self._stage_items)
+            for tline in ("SDA", "SCL"):
+                self._line(self.model.tap_path(tline), "#FFFFFF", 3, 0.25, dynamic=False, store=self._stage_items)
+        arrow = {"W": " ▶", "R": " ◀"}.get(stage_description(stage, txn, self._device_names())[1] or "", "")
+        where = f"0x{stage.address:02X} · " if stage.address is not None else ""
+        self.stage_text = f"{where}{stage.text}{arrow}"
+        self.stage_color = col or C["text"]
+        if lb is not None:
+            colour = self.stage_color
+            lb.setText(self.stage_text)
+            f = label_font(self.compact)
+            f.setBold(True)
+            lb.setFont(f)
+            lb.setStyleSheet(f"color:{colour}; background: rgba(8,13,25,200); border:1px solid {colour}; padding:0px 3px; "
+                             f"font-size:{f.pointSize()}pt; font-weight:bold;")
+            lb.adjustSize()
+            lb.show()
+            if self.use_gl:
+                self._position_stage_label()
+        if not self.use_gl:
+            self.view.update()
+
+    # ------------------------------------------------------------------ animation tick
+    def _tick(self):
+        if self.playback_paused:
+            return
+        if not self.active or not self.isVisible():
+            return
+        dt = 0.033
+        moving = False
+        if self.particles:
+            moving = True
+            alive = []
+            for p in self.particles:
+                p.s += p.speed * dt * p.total * 2.2 * self.playback_speed
+                if p.s < p.total:
+                    alive.append(p)
+            self.particles = alive
+        had_flash = bool(self.flash)
+        for k in list(self.flash):
+            self.flash[k] -= dt * 1.8
+            if self.flash[k] <= 0:
+                del self.flash[k]
+        if self.use_gl:
+            if self.particles:
+                pos = np.array([p.pos() for p in self.particles])
+                pos[:, 2] += 0.1
+                cols = np.array([rgba(p.color) for p in self.particles])
+                self.scatter.setData(pos=pos, color=cols, size=12)
+            elif moving:
+                self.scatter.setData(pos=np.zeros((1, 3)), size=0.0)
+            for key, outline in getattr(self, "_boards", {}).items():
+                f = self.flash.get(key, 0)
+                if f > 0 or getattr(outline, "_lit", False):
+                    if f > 0:
+                        outline.setData(color=rgba(C["cyan"], min(1.0, f)))
+                        outline._lit = True
+                    else:
+                        outline.setData(color=rgba(C["cyan"], 0.9 if self.selected == key else 0.0))
+                        outline._lit = False
+            if self.auto_rotate and MOTION["animations"] and not MOTION["reduced"]:
+                self.view.orbit(0.25, 0)
+        else:
+            if moving or had_flash:
+                self.view.update()
+
+
+# ============================================================================ 2D fallback
+class Topology2D(QWidget):
+    """Same schematic layout rendered with QPainter (always fitted)."""
+    clicked = pyqtSignal(object)
+
+    def __init__(self, owner):
+        super().__init__()
+        self.owner = owner
+        self.setMouseTracking(True)
+        self.setMinimumHeight(170)
+        self._rects = {}
+        self.label_rects = {}
+        self._xf = (1.0, 0.0, 0.0)
+
+    def _fit(self):
+        """Uniform scale + offset so all scene points and labels fit without overlap.
+
+        Same policy as the 3D view: largest in-bounds scale first, then shorter
+        label text (level 1, 2) when labels would collide."""
+        o = self.owner
+        m = o.model
+        pts = np.array(m.bounds_points())
+        x0, x1 = pts[:, 0].min(), pts[:, 0].max()
+        y0, y1 = pts[:, 1].min(), pts[:, 1].max()
+        w, h = max(1, self.width()), max(1, self.height())
+        start = 1 if o.compact else 0
+        for level in range(start, 3):
+            o.label_level = level
+            specs = m.label_specs(o.compact, level)
+            sizes = {}
+            for sp in specs:
+                f = label_font(o.compact); f.setBold(sp[5])
+                fm = QFontMetrics(f)
+                sizes[sp[0]] = (fm.horizontalAdvance(sp[1]) + 8, fm.height() + 2)
+            scale = min(w / (x1 - x0), h / (y1 - y0))
+            ok = False
+            for _ in range(60):
+                ox = (w - (x1 - x0) * scale) / 2 - x0 * scale
+                oy = (h - (y1 - y0) * scale) / 2 + y1 * scale
+                self._xf = (scale, ox, oy)
+                rects = place_labels(specs, self.project, sizes, 10 ** 6, 10 ** 6, margin=-10 ** 6)
+                xs = [r.left() for r in rects.values()] + [r.right() for r in rects.values()]
+                ys = [r.top() for r in rects.values()] + [r.bottom() for r in rects.values()]
+                bx0 = min(xs + [ox + x0 * scale]); bx1 = max(xs + [ox + x1 * scale])
+                by0 = min(ys + [oy - y1 * scale]); by1 = max(ys + [oy - y0 * scale])
+                if bx1 - bx0 <= w - 8 and by1 - by0 <= h - 8:
+                    # centre the complete content (boards + labels)
+                    ox += (w - bx1 - bx0) / 2
+                    oy += (h - by1 - by0) / 2
+                    self._xf = (scale, ox, oy)
+                    rects = place_labels(specs, self.project, sizes, 10 ** 6, 10 ** 6, margin=-10 ** 6)
+                    rl = list(rects.values())
+                    ok = not place_labels.displaced and not any(
+                        a.intersects(b) for i, a in enumerate(rl) for b in rl[i + 1:])
+                    break
+                scale *= 0.97
+            if ok:
+                break
+        self.sizes = sizes
+        return specs
+
+    def project(self, p):
+        s, ox, oy = self._xf
+        return QPointF(ox + p[0] * s, oy - p[1] * s)
+
+    def _map(self, x, y):
+        return self.project((x, y, 0))
+
+    def paintEvent(self, e):
+        o = self.owner
+        m = o.model
+        specs = self._fit()
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        p.fillRect(self.rect(), QColor(C["bg"]))
+        for name, pts, col, dashed in m.segments():
+            pen = QPen(QColor(col), 2.4 if name.startswith("rail") else 1.8)
+            if dashed:
+                pen.setStyle(Qt.PenStyle.DashLine)
+            p.setPen(pen)
+            for a, b in zip(pts, pts[1:]):
+                p.drawLine(self._map(*a[:2]), self._map(*b[:2]))
+        p.setPen(Qt.PenStyle.NoPen)
+        p.setBrush(QColor("#FFFFFF"))
+        for j in m.junctions():
+            p.drawEllipse(self._map(*j[:2]), 3, 3)
+        self._rects = {}
+        for key, (cx, cy, sx, sy) in m.rects().items():
+            r = QRectF(self._map(cx - sx / 2, cy + sy / 2), self._map(cx + sx / 2, cy - sy / 2)).normalized()
+            if key == "pc":
+                p.setBrush(QColor("#1B2740")); p.setPen(QPen(QColor(C["border"]), 1))
+                p.drawRoundedRect(r, 4, 4)
+                p.setBrush(QColor("#0E3A52"))
+                p.drawRect(r.adjusted(r.width() * 0.09, r.height() * 0.12, -r.width() * 0.09, -r.height() * 0.3))
+            else:
+                kind = "pico" if key in ("master", "analyzer") else m.slaves[key]["kind"]
+                image = hardware_image(kind, key == "analyzer")
+                if not image.isNull():
+                    p.drawImage(r, image)
+                else:
+                    p.setBrush(QColor(KIND_STYLE[kind][1])); p.setPen(QPen(QColor(C["border"]), 1))
+                    p.drawRoundedRect(r, 6, 6)
+            f = o.flash.get(key, 0)
+            if o.selected == key or f > 0:
+                glow = QColor(C["cyan"])
+                glow.setAlphaF(max(0.8 if o.selected == key else 0.0, min(1.0, f)))
+                p.setPen(QPen(glow, 2)); p.setBrush(Qt.BrushStyle.NoBrush)
+                p.drawRoundedRect(r.adjusted(-3, -3, 3, 3), 4, 4)
+            if o.focus == key:
+                p.setPen(QPen(QColor(C["amber"]), 3)); p.setBrush(Qt.BrushStyle.NoBrush)
+                p.drawRoundedRect(r.adjusted(-6, -6, 6, 6), 5, 5)
+            self._rects[key] = r
+        # stage overlay: highlighted transmitter->receiver path with arrowheads
+        stage = o._stage
+        path, col, nack = o._stage_paths(stage)
+        if path is not None:
+            q = [self._map(*pt[:2]) for pt in path]
+            c = QColor(col); c.setAlpha(110)
+            p.setPen(QPen(c, 8)); p.drawPolyline(QPolygonF(q))
+            p.setPen(QPen(QColor(col), 2)); p.setBrush(QColor(col))
+            for a, b in zip(q, q[1:]):
+                mid = QPointF((a.x() + b.x()) / 2, (a.y() + b.y()) / 2)
+                d = QPointF(b.x() - a.x(), b.y() - a.y())
+                L = math.hypot(d.x(), d.y()) or 1
+                ux, uy = d.x() / L, d.y() / L
+                p.drawPolygon(QPolygonF([QPointF(mid.x() + ux * 7, mid.y() + uy * 7),
+                                         QPointF(mid.x() - ux * 5 - uy * 5, mid.y() - uy * 5 + ux * 5),
+                                         QPointF(mid.x() - ux * 5 + uy * 5, mid.y() - uy * 5 - ux * 5)]))
+        if nack and stage is not None and stage.address in m.slaves:
+            c = self._map(m.drop_x(stage.address, "SDA"), RAIL_Y["SDA"])
+            p.setPen(QPen(QColor(NACK_COL), 3))
+            p.drawLine(QPointF(c.x() - 6, c.y() - 6), QPointF(c.x() + 6, c.y() + 6))
+            p.drawLine(QPointF(c.x() - 6, c.y() + 6), QPointF(c.x() + 6, c.y() - 6))
+        for pt in o.particles:
+            x, y, _ = pt.pos()
+            q = self._map(x, y)
+            c = QColor(pt.color)
+            p.setPen(Qt.PenStyle.NoPen)
+            halo = QColor(c); halo.setAlpha(70)
+            p.setBrush(halo); p.drawEllipse(q, 9, 9)
+            p.setBrush(c); p.drawEllipse(q, 4, 4)
+        # labels
+        rects = place_labels(specs, self.project, self.sizes, self.width(), self.height())
+        self.label_rects = rects
+        for key, text, _, _, col, bold, _ in specs:
+            f = label_font(o.compact); f.setBold(bold)
+            p.setFont(f)
+            r = rects[key]
+            p.setPen(Qt.PenStyle.NoPen); p.setBrush(QColor(8, 13, 25, 150)); p.drawRect(r)
+            p.setPen(QColor(col))
+            p.drawText(r, Qt.AlignmentFlag.AlignCenter, text)
+        self.stage_rect = None
+        if stage is not None and o.stage_text:
+            text = o.stage_text
+            f = label_font(o.compact); f.setBold(True); p.setFont(f)
+            fm = QFontMetrics(f)
+            w, h = fm.horizontalAdvance(text) + 10, fm.height() + 4
+            anchor = (self._map(m.drop_x(stage.address, "SDA"), RAIL_Y["SDA"]) if stage.address in m.slaves
+                      else self._map(CTRL_X + 1.6, RAIL_Y["SDA"]))
+            r = QRectF(anchor.x() - w / 2, anchor.y() - h - 10, w, h)
+            for _ in range(4):
+                hit = next((t for t in rects.values() if t.intersects(r)), None)
+                if hit is None:
+                    break
+                r.moveBottom(hit.top() - 1)
+            r.moveLeft(min(max(2, r.left()), max(2, self.width() - 2 - w)))
+            r.moveTop(min(max(2, r.top()), max(2, self.height() - 2 - h)))
+            colour = QColor(o.stage_color or C["text"])
+            p.setPen(QPen(colour, 1)); p.setBrush(QColor(8, 13, 25, 210)); p.drawRect(r)
+            p.drawText(r, Qt.AlignmentFlag.AlignCenter, text)
+            self.stage_rect = r
+        reason = getattr(o, "_fallback_reason", None)
+        if reason:
+            # Small corner badge, drawn OVER the finished diagram (costs no layout space,
+            # so it can never squeeze the diagram itself). Full reason is the tooltip.
+            text = "⚠ 3D→2D (GPU/driver)"
+            f = QFont("Segoe UI", 7 if o.compact else 8); f.setBold(True); p.setFont(f)
+            fm = QFontMetrics(f)
+            w, h = fm.horizontalAdvance(text) + 8, fm.height() + 4
+            r = QRectF(self.width() - w - 3, self.height() - h - 3, w, h)
+            p.setPen(QPen(QColor(C["amber"]), 1)); p.setBrush(QColor(8, 13, 25, 215)); p.drawRect(r)
+            p.setPen(QColor(C["amber"]))
+            p.drawText(r, Qt.AlignmentFlag.AlignCenter, text)
+
+    def _at(self, pos):
+        for k, r in self._rects.items():
+            if r.contains(pos):
+                return k
+        return None
+
+    def mouseMoveEvent(self, e):
+        k = self._at(e.position())
+        if k is None:
+            QToolTip.hideText()
+        else:
+            QToolTip.showText(e.globalPosition().toPoint(), self.owner.describe(k), self)
+
+    def mouseReleaseEvent(self, e):
+        self.clicked.emit(self._at(e.position()))
