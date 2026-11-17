@@ -53,16 +53,14 @@ The analyzer is **in parallel**, not between the masters and slaves. All devices
 - Independent Pico W reads from the DS3231 and BMP280.
 - Passive monitoring of START/STOP, slave address, read/write direction, data bytes, ACK/NACK, and timing.
 - Live Python GUI with decoded transaction stream, detected addresses, measured SCL frequency, transaction rate, utilization, and 3D bus overview.
-- Real-time reporting of capture-health issues such as missed output records.
+  
 
 **Under development / requires additional validation:**
 - Reliable multi-master arbitration handling, provenance of each master transaction, and arbitration-loss diagnosis.
 - Minimizing dropped records and investigating unexpected address NACK reports.
 - Faithful raw SDA/SCL waveform streaming and synchronized edge-based playback.
-- Controlled fault-injection UI and automated recovery experiments.
 - Versioned, reproducible firmware and GUI source releases.
 
-> The presence of a GUI control or displayed metric does not imply complete capture reliability. Missing records and incomplete transactions must be reported explicitly.
 
 ## Real bench observations
 
