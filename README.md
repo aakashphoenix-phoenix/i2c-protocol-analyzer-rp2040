@@ -35,8 +35,7 @@ The extended system uses **two masters**, **three slave peripherals**, and **one
            |               |                |
            +---------------+----------------+
                            |
-               Pico 2 (passive analyzer)
-                  PIO + DMA capture
+               Pico 2 ( Analyzer)
                            |
                      USB JSON records
                            |
