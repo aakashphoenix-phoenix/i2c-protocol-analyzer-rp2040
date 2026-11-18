@@ -1,0 +1,1343 @@
+{
+  "failures": [],
+  "checks": {
+    "presentation Dashboard: SCL frequency graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}"
+    },
+    "presentation Dashboard: Transactions/s graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}"
+    },
+    "presentation Dashboard: Bus Communication Health graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}"
+    },
+    "presentation Dashboard: Bus communication health card ('UNKNOWN',)": {
+      "ok": true,
+      "detail": "('UNKNOWN', '#ffbf47')"
+    },
+    "presentation Dashboard: health card says why (not live hardware)": {
+      "ok": true,
+      "detail": "SIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only\nrolling 60 s of capture time: ACK slot"
+    },
+    "presentation Dashboard: per-device health ('UNKNOWN',)": {
+      "ok": true,
+      "detail": "OLED (SSD1306) 0x3C: UNKNOWN  |  DS3231 RTC 0x68: UNKNOWN  |  BMP280 0x76: UNKNOWN"
+    },
+    "presentation Dashboard: selected-packet marker on the relative clock": {
+      "ok": true,
+      "detail": "{'value': -0.0074161, 'expected': -0.0074161}"
+    },
+    "presentation Performance: every rolling graph inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'SCL frequency': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'Transactions/s': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'Utilization': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'Duration': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'Throughput': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'ACK/NACK': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}, 'NACK rate': {'points': 16, 'data': (-0.0144264, 0.0), 'view': [-0.015581, 0.000779], 'fill': 0.882}}"
+    },
+    "presentation Performance: all 6 rolling graphs + NACK rate have curves": {
+      "ok": true,
+      "detail": "{'SCL frequency': 16, 'Transactions/s': 16, 'Utilization': 16, 'Duration': 16, 'Throughput': 16, 'ACK/NACK': 16, 'NACK rate': 16}"
+    },
+    "presentation Performance: Bus Communication Health ('UNKNOWN',) in its colour": {
+      "ok": true,
+      "detail": "('UNKNOWN', '#ffbf47')"
+    },
+    "presentation Performance: health says why (not live hardware)": {
+      "ok": true,
+      "detail": "UNKNOWN\nSIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only\nrolling 60 s of capture time: "
+    },
+    "presentation Performance: M1 vs M2 comparison filled": {
+      "ok": true,
+      "detail": "{(1, 'txns'): '10 (62.5 %)', (2, 'txns'): '6 (37.5 %)', (1, 'busy'): '72.3 % · 6.311 ms', (2, 'busy'): '27.7 % · 2.413 ms', (1, 'bytes'): '50', (2, 'bytes'): '16', (1, 'nacks'): '1 / 5', (2, 'nacks'): '0 / 2', (1, 'fscl'): '94.66 kHz', (2, 'fscl'): '94.52 kHz'}"
+    },
+    "presentation Performance: Rolling 1 s computed": {
+      "ok": true,
+      "detail": "94.62 kHz"
+    },
+    "presentation Errors: search 0x3C finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(1, True)"
+    },
+    "presentation Errors: search 0x68 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(3, True)"
+    },
+    "presentation Errors: search 0x76 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(2, True)"
+    },
+    "presentation Errors: Multi-master events logged": {
+      "ok": true,
+      "detail": "2"
+    },
+    "presentation Errors: arbitration event logged": {
+      "ok": true,
+      "detail": "2"
+    },
+    "presentation Errors: injected NACK logged": {
+      "ok": true,
+      "detail": "1"
+    },
+    "presentation Errors: trend X = last 10 min, Y from 0": {
+      "ok": true,
+      "detail": "([-10.0, 0.0], [0.0, 5.0])"
+    },
+    "presentation Sensor: DS3231 clock decoded": {
+      "ok": true,
+      "detail": "08:22:43"
+    },
+    "presentation Sensor: BMP280 temperature + pressure decoded": {
+      "ok": true,
+      "detail": "('25.07 °C', '1006.51 hPa')"
+    },
+    "presentation Sensor: BMP280 identity 0x58 confirmed": {
+      "ok": true,
+      "detail": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "presentation Sensor: date is Monday 16-11-2026": {
+      "ok": true,
+      "detail": "Mon  16-11-2026  (DEMO — simulated)"
+    },
+    "presentation Sensor: weekday matches the calendar date": {
+      "ok": true,
+      "detail": "('Mon  16-11-2026  (DEMO — simulated)', 'Mon')"
+    },
+    "presentation Sensor: temperature + pressure trends drawn": {
+      "ok": true,
+      "detail": "(2, 2)"
+    },
+    "presentation Sensor: OLED preview shows TIME / DATE / TEMP / PRESS": {
+      "ok": true,
+      "detail": "['I2C MONITOR', '', 'TIME 08:22:43', 'DATE 16/11/2026', '', 'TEMP 25.07 C', 'PRESS 1006.51 HPA']"
+    },
+    "presentation Sensor: page shown from the top (RTC card in view)": {
+      "ok": true,
+      "detail": "(0, {'rtc': ((18, 46, 1261, 287), True), 'bmp': ((18, 347, 1261, 684), True), 'oled': ((18, 1045, 1261, 590), True)})"
+    },
+    "presentation Device: every device health UNKNOWN in amber (not live hardware)": {
+      "ok": true,
+      "detail": "({'0x3C': ('UNKNOWN', '#ffbf47'), '0x68': ('UNKNOWN', '#ffbf47'), '0x76': ('UNKNOWN', '#ffbf47')}, {'0x3C': 'Not live hardware (demo/replay/unverified)', '0x68': 'Not live hardware (demo/replay/unverified)', '0x76': 'Not live hardware (demo/replay/unverified)'})"
+    },
+    "presentation Device: Controllers table populated": {
+      "ok": true,
+      "detail": "[['Master 1 (Pico H) · Pico 1', 'HEALTHY', '9', '0'], ['Master 2 (Pico W) · Pico 3', 'CONTENDED', '6', '2']]"
+    },
+    "presentation Device: Master x Target populated": {
+      "ok": true,
+      "detail": "[['Master 1', '0x3C', 'OLED (SSD1306)', '2', '0', '0', '0', '0', '0', '2'], ['Master 1', '0x68', 'DS3231 RTC', '3', '1', '0', '0', '0', '0', '4'], ['Master 1', '0x76', 'BMP280', '4', '0', '0', '0', '0', '0', '4']]"
+    },
+    "presentation Device: Arbitration table populated": {
+      "ok": true,
+      "detail": "['00:00:00.010866', 'Master 2 (Pico W)', '0x68', '1', '1', '230 µs', 'retried', 'Master 1 (Pico H) (packet #13 0x68)']"
+    },
+    "presentation Device: activity rows ACTIVE with exact counts": {
+      "ok": true,
+      "detail": "{'0x3C': ('ACTIVE · SIMULATED', '0', '4'), '0x68': ('ACTIVE · SIMULATED', '3', '5'), '0x76': ('ACTIVE · SIMULATED', '3', '6')}"
+    },
+    "presentation Device: Frames per device bar chart drawn": {
+      "ok": true,
+      "detail": "[[np.float64(4.0), np.float64(5.0), np.float64(6.0)], [np.float64(0.0), np.float64(3.0), np.float64(3.0)]]"
+    },
+    "demo Dashboard: SCL frequency graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 26, 'data': (-25.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.82}"
+    },
+    "demo Dashboard: Transactions/s graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 26, 'data': (-25.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.82}"
+    },
+    "demo Dashboard: Bus Communication Health graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 26, 'data': (-25.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.82}"
+    },
+    "demo Dashboard: Bus communication health card ('UNKNOWN',)": {
+      "ok": true,
+      "detail": "('UNKNOWN', '#ffbf47')"
+    },
+    "demo Dashboard: health card says why (not live hardware)": {
+      "ok": true,
+      "detail": "SIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only\nrolling 60 s of capture time: ACK slot"
+    },
+    "demo Dashboard: per-device health ('UNKNOWN',)": {
+      "ok": true,
+      "detail": "OLED (SSD1306) 0x3C: UNKNOWN  |  DS3231 RTC 0x68: UNKNOWN  |  BMP280 0x76: UNKNOWN"
+    },
+    "demo Dashboard: selected-packet marker on the relative clock": {
+      "ok": true,
+      "detail": "{'value': -12.9067518, 'expected': -12.9067518}"
+    },
+    "demo Performance: every rolling graph inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'SCL frequency': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'Transactions/s': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'Utilization': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'Duration': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'Throughput': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'ACK/NACK': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}, 'NACK rate': {'points': 28, 'data': (-27.0, 0.0), 'view': [-30.0, 0.5], 'fill': 0.885}}"
+    },
+    "demo Performance: all 6 rolling graphs + NACK rate have curves": {
+      "ok": true,
+      "detail": "{'SCL frequency': 28, 'Transactions/s': 28, 'Utilization': 28, 'Duration': 28, 'Throughput': 28, 'ACK/NACK': 28, 'NACK rate': 28}"
+    },
+    "demo Performance: Bus Communication Health ('UNKNOWN',) in its colour": {
+      "ok": true,
+      "detail": "('UNKNOWN', '#ffbf47')"
+    },
+    "demo Performance: health says why (not live hardware)": {
+      "ok": true,
+      "detail": "UNKNOWN\nSIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only\nrolling 60 s of capture time: "
+    },
+    "demo Performance: M1 vs M2 comparison filled": {
+      "ok": true,
+      "detail": "{(1, 'txns'): '2,239 (94.8 %)', (2, 'txns'): '122 (5.2 %)', (1, 'busy'): '96.2 % · 3.461 s', (2, 'busy'): '3.8 % · 137.413 ms', (1, 'bytes'): '33,548', (2, 'bytes'): '1,159', (1, 'nacks'): '0 / 181', (2, 'nacks'): '0 / 122', (1, 'fscl'): '94.61 kHz', (2, 'fscl'): '94.60 kHz'}"
+    },
+    "demo Performance: Rolling 1 s computed": {
+      "ok": true,
+      "detail": "94.63 kHz"
+    },
+    "demo Errors: search 0x3C finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(1, True)"
+    },
+    "demo Errors: search 0x68 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(1, True)"
+    },
+    "demo Errors: search 0x76 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(3, True)"
+    },
+    "demo Errors: Multi-master events logged": {
+      "ok": true,
+      "detail": "3"
+    },
+    "demo Errors: arbitration event logged": {
+      "ok": true,
+      "detail": "1"
+    },
+    "demo Errors: trend X = last 10 min, Y from 0": {
+      "ok": true,
+      "detail": "([-10.0, 0.0], [0.0, 5.0])"
+    },
+    "demo Sensor: DS3231 clock decoded": {
+      "ok": true,
+      "detail": "08:22:34"
+    },
+    "demo Sensor: BMP280 temperature + pressure decoded": {
+      "ok": true,
+      "detail": "('25.30 °C', '1006.69 hPa')"
+    },
+    "demo Sensor: BMP280 identity 0x58 confirmed": {
+      "ok": true,
+      "detail": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "demo Sensor: date is Monday 16-11-2026": {
+      "ok": true,
+      "detail": "Mon  16-11-2026  (DEMO — simulated)"
+    },
+    "demo Sensor: weekday matches the calendar date": {
+      "ok": true,
+      "detail": "('Mon  16-11-2026  (DEMO — simulated)', 'Mon')"
+    },
+    "demo Sensor: temperature + pressure trends drawn": {
+      "ok": true,
+      "detail": "(278, 278)"
+    },
+    "demo Sensor: OLED preview shows TIME / DATE / TEMP / PRESS": {
+      "ok": true,
+      "detail": "['I2C MONITOR', '', 'TIME 08:22:34', 'DATE 16/11/2026', '', 'TEMP 25.30 C', 'PRESS 1006.69 HPA']"
+    },
+    "demo Sensor: page shown from the top (RTC card in view)": {
+      "ok": true,
+      "detail": "(0, {'rtc': ((18, 46, 1261, 287), True), 'bmp': ((18, 347, 1261, 684), True), 'oled': ((18, 1045, 1261, 590), True)})"
+    },
+    "demo Device: every device health UNKNOWN in amber (not live hardware)": {
+      "ok": true,
+      "detail": "({'0x3C': ('UNKNOWN', '#ffbf47'), '0x68': ('UNKNOWN', '#ffbf47'), '0x76': ('UNKNOWN', '#ffbf47')}, {'0x3C': 'Not live hardware (demo/replay/unverified)', '0x68': 'Not live hardware (demo/replay/unverified)', '0x76': 'Not live hardware (demo/replay/unverified)'})"
+    },
+    "demo Device: Controllers table populated": {
+      "ok": true,
+      "detail": "[['Master 1 (Pico H) · Pico 1', 'HEALTHY', '2,666', '0'], ['Master 2 (Pico W) · Pico 3', 'HEALTHY', '144', '0']]"
+    },
+    "demo Device: Master x Target populated": {
+      "ok": true,
+      "detail": "[['Master 1', '0x3C', 'OLED (SSD1306)', '2616', '0', '0', '0', '0', '0', '2616'], ['Master 1', '0x68', 'DS3231 RTC', '37', '0', '0', '0', '0', '0', '37'], ['Master 1', '0x76', 'BMP280', '195', '0', '0', '0', '0', '0', '195']]"
+    },
+    "demo Device: Arbitration table populated": {
+      "ok": true,
+      "detail": "['00:00:00.125764', 'Master 2 (Pico W)', '0x76', '1', '0', '393 µs', 'retried', 'Master 1 (Pico H) (packet #70 0x3C)']"
+    },
+    "demo Device: activity rows ACTIVE with exact counts": {
+      "ok": true,
+      "detail": "{'0x3C': ('ACTIVE · SIMULATED', '0', '700'), '0x68': ('ACTIVE · SIMULATED', '19', '19'), '0x76': ('ACTIVE · SIMULATED', '84', '84')}"
+    },
+    "demo Device: Frames per device bar chart drawn": {
+      "ok": true,
+      "detail": "[[np.float64(700.0), np.float64(19.0), np.float64(84.0)], [np.float64(0.0), np.float64(19.0), np.float64(84.0)]]"
+    },
+    "live: Connect all -> analyzer capturing, both masters attributable, source live": {
+      "ok": true,
+      "detail": "{'capturing': True, 'source': 'live', 'masters': [(1, 'HEALTHY', True), (2, 'HEALTHY', True)]}"
+    },
+    "live: capture trustworthy (no loss) before checking health": {
+      "ok": true,
+      "detail": "{'trust': (True, 'Fresh live capture; no capture loss detected'), 'transport_errors': 0, 'lost_records': 0, 'overflows': 0, 'dropped': 0, 'synced': False, 'disagreements': set()}"
+    },
+    "live: real packets captured": {
+      "ok": true,
+      "detail": "2492"
+    },
+    "live Dashboard: SCL frequency graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 31, 'data': (-30.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.741}"
+    },
+    "live Dashboard: Transactions/s graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 31, 'data': (-30.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.741}"
+    },
+    "live Dashboard: Bus Communication Health graph drawn inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'points': 32, 'data': (-31.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.765}"
+    },
+    "live Dashboard: Bus communication health card ('HEALTHY',)": {
+      "ok": true,
+      "detail": "('HEALTHY', '#36f5a2')"
+    },
+    "live Dashboard: per-device health ('HEALTHY',)": {
+      "ok": true,
+      "detail": "OLED (SSD1306) 0x3C: HEALTHY  |  DS3231 RTC 0x68: HEALTHY  |  BMP280 0x76: HEALTHY"
+    },
+    "live Dashboard: selected-packet marker on the relative clock": {
+      "ok": true,
+      "detail": "{'value': -15.15562349999982, 'expected': -15.15562349999982}"
+    },
+    "live Performance: every rolling graph inside its window and not squashed": {
+      "ok": true,
+      "detail": "{'SCL frequency': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'Transactions/s': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'Utilization': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'Duration': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'Throughput': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'ACK/NACK': {'points': 34, 'data': (-33.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.815}, 'NACK rate': {'points': 35, 'data': (-34.0, 0.0), 'view': [-40.0, 0.5], 'fill': 0.84}}"
+    },
+    "live Performance: all 6 rolling graphs + NACK rate have curves": {
+      "ok": true,
+      "detail": "{'SCL frequency': 34, 'Transactions/s': 34, 'Utilization': 34, 'Duration': 34, 'Throughput': 34, 'ACK/NACK': 34, 'NACK rate': 35}"
+    },
+    "live Performance: Bus Communication Health ('HEALTHY',) in its colour": {
+      "ok": true,
+      "detail": "('HEALTHY', '#36f5a2')"
+    },
+    "live Performance: M1 vs M2 comparison filled": {
+      "ok": true,
+      "detail": "{(1, 'txns'): '2,666 (94.8 %)', (2, 'txns'): '145 (5.2 %)', (1, 'busy'): '96.2 % · 4.167 s', (2, 'busy'): '3.8 % · 164.870 ms', (1, 'bytes'): '40,414', (2, 'bytes'): '1,387', (1, 'nacks'): '0 / 216', (2, 'nacks'): '0 / 145', (1, 'fscl'): '94.52 kHz', (2, 'fscl'): '94.10 kHz'}"
+    },
+    "live Performance: Rolling 1 s computed": {
+      "ok": true,
+      "detail": "94.51 kHz"
+    },
+    "live Errors: search 0x3C finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(1, True)"
+    },
+    "live Errors: search 0x68 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(1, True)"
+    },
+    "live Errors: search 0x76 finds exactly the events of that address": {
+      "ok": true,
+      "detail": "(2, True)"
+    },
+    "live Errors: trend X = last 10 min, Y from 0": {
+      "ok": true,
+      "detail": "([-10.0, 0.0], [0.0, 5.0])"
+    },
+    "live Sensor: DS3231 clock decoded": {
+      "ok": true,
+      "detail": "10:52:12"
+    },
+    "live Sensor: BMP280 temperature + pressure decoded": {
+      "ok": true,
+      "detail": "('29.63 °C', '976.99 hPa')"
+    },
+    "live Sensor: live values not labelled SIMULATED / demo": {
+      "ok": true,
+      "detail": "('Mon  16-11-2026', 'captured ✓')"
+    },
+    "live Sensor: BMP280 identity 0x58 confirmed": {
+      "ok": true,
+      "detail": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "live Sensor: weekday matches the calendar date": {
+      "ok": true,
+      "detail": "('Mon  16-11-2026', 'Mon')"
+    },
+    "live Sensor: temperature + pressure trends drawn": {
+      "ok": true,
+      "detail": "(319, 319)"
+    },
+    "live Sensor: OLED preview shows TIME / DATE / TEMP / PRESS": {
+      "ok": true,
+      "detail": "['I2C MONITOR', '', 'TIME 10:52:12', 'DATE 16/11/2026', '', 'TEMP 29.63 C', 'PRESS 976.99 HPA']"
+    },
+    "live Sensor: page shown from the top (RTC card in view)": {
+      "ok": true,
+      "detail": "(0, {'rtc': ((18, 46, 411, 799), True), 'bmp': ((443, 46, 411, 799), True), 'oled': ((868, 46, 411, 799), True)})"
+    },
+    "live Device: working slaves HEALTHY in green": {
+      "ok": true,
+      "detail": "{'0x3C': ('HEALTHY', '#36f5a2'), '0x68': ('HEALTHY', '#36f5a2'), '0x76': ('HEALTHY', '#36f5a2')}"
+    },
+    "live Device: a target with a fresh NACK is DEGRADED in red": {
+      "ok": true,
+      "detail": "{'0x3C': ('HEALTHY', '#36f5a2'), '0x68': ('HEALTHY', '#36f5a2'), '0x76': ('HEALTHY', '#36f5a2')}"
+    },
+    "live Device: Controllers table populated": {
+      "ok": true,
+      "detail": "[['Master 1 (Pico H) · Pico 1', 'HEALTHY', '3,126', '0'], ['Master 2 (Pico W) · Pico 3', 'HEALTHY', '171', '0']]"
+    },
+    "live Device: Master x Target populated": {
+      "ok": true,
+      "detail": "[['Master 1', '0x3C', 'OLED (SSD1306)', '2940', '0', '0', '0', '0', '0', '2940'], ['Master 1', '0x68', 'DS3231 RTC', '42', '0', '0', '0', '0', '0', '42'], ['Master 1', '0x76', 'BMP280', '222', '0', '0', '0', '0', '0', '221']]"
+    },
+    "live Device: activity rows ACTIVE with exact counts": {
+      "ok": true,
+      "detail": "{'0x3C': ('ACTIVE', '0', '700'), '0x68': ('ACTIVE', '19', '19'), '0x76': ('ACTIVE', '84', '84')}"
+    },
+    "live Device: live activity not labelled SIMULATED": {
+      "ok": true,
+      "detail": "{'0x3C': ('ACTIVE', '0', '700'), '0x68': ('ACTIVE', '19', '19'), '0x76': ('ACTIVE', '84', '84')}"
+    },
+    "live Device: Frames per device bar chart drawn": {
+      "ok": true,
+      "detail": "[[np.float64(700.0), np.float64(19.0), np.float64(84.0)], [np.float64(0.0), np.float64(19.0), np.float64(84.0)]]"
+    },
+    "no outside mouse / key input during the run": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "no Python / Qt errors": {
+      "ok": true,
+      "detail": "[]"
+    }
+  },
+  "shots": [
+    "tabs_presentation_dashboard.png",
+    "tabs_presentation_performance.png",
+    "tabs_presentation_errors.png",
+    "tabs_presentation_sensor.png",
+    "tabs_presentation_device_activity.png",
+    "tabs_demo_dashboard.png",
+    "tabs_demo_performance.png",
+    "tabs_demo_errors.png",
+    "tabs_demo_sensor.png",
+    "tabs_demo_device_activity.png",
+    "tabs_live_dashboard.png",
+    "tabs_live_performance.png",
+    "tabs_live_errors.png",
+    "tabs_live_sensor.png",
+    "tabs_live_device_activity.png"
+  ],
+  "values": {
+    "presentation_dashboard_graphs": {
+      "SCL frequency": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Transactions/s": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Bus Communication Health": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      }
+    },
+    "presentation_dashboard_health": [
+      "UNKNOWN",
+      "#ffbf47",
+      "SIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only"
+    ],
+    "presentation_dashboard_device_health": "OLED (SSD1306) 0x3C: UNKNOWN  |  DS3231 RTC 0x68: UNKNOWN  |  BMP280 0x76: UNKNOWN",
+    "presentation_dashboard_marker": {
+      "value": -0.0074161,
+      "expected": -0.0074161
+    },
+    "presentation_perf_graph_points": {
+      "SCL frequency": 16,
+      "Transactions/s": 16,
+      "Utilization": 16,
+      "Duration": 16,
+      "Throughput": 16,
+      "ACK/NACK": 16,
+      "NACK rate": 16
+    },
+    "presentation_perf_graph_fit": {
+      "SCL frequency": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Transactions/s": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Utilization": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Duration": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "Throughput": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "ACK/NACK": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      },
+      "NACK rate": {
+        "points": 16,
+        "data": [
+          -0.0144264,
+          0.0
+        ],
+        "view": [
+          -0.015581,
+          0.000779
+        ],
+        "fill": 0.882
+      }
+    },
+    "presentation_health": "UNKNOWN",
+    "presentation_search_hits": {
+      "0x3C": 1,
+      "0x68": 3,
+      "0x76": 2
+    },
+    "presentation_multimaster_events": [
+      [
+        "Arbitration lost",
+        "Master 2 (Pico W) lost arbitration addressing 0x68 (attempt 1, byte 1) to Master"
+      ],
+      [
+        "Arbitration lost",
+        "Master 2 (Pico W) lost arbitration addressing 0x68 (attempt 1, byte 1) to Master"
+      ]
+    ],
+    "presentation_sensor": {
+      "clock": "08:22:43",
+      "date": "Mon  16-11-2026  (DEMO — simulated)",
+      "temp": "25.07 °C",
+      "press": "1006.51 hPa",
+      "preview": [
+        "I2C MONITOR",
+        "",
+        "TIME 08:22:43",
+        "DATE 16/11/2026",
+        "",
+        "TEMP 25.07 C",
+        "PRESS 1006.51 HPA"
+      ],
+      "calib": "SIMULATED standard set (demo / presentation: not captured)",
+      "identity": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "presentation_sensor_layout": {
+      "scroll": [
+        0,
+        981
+      ],
+      "cols": 1,
+      "viewport": [
+        1297,
+        670
+      ],
+      "cards": {
+        "rtc": [
+          [
+            18,
+            46,
+            1261,
+            287
+          ],
+          true
+        ],
+        "bmp": [
+          [
+            18,
+            347,
+            1261,
+            684
+          ],
+          true
+        ],
+        "oled": [
+          [
+            18,
+            1045,
+            1261,
+            590
+          ],
+          true
+        ]
+      }
+    },
+    "presentation_device_health": {
+      "0x3C": [
+        "UNKNOWN",
+        "#ffbf47"
+      ],
+      "0x68": [
+        "UNKNOWN",
+        "#ffbf47"
+      ],
+      "0x76": [
+        "UNKNOWN",
+        "#ffbf47"
+      ]
+    },
+    "presentation_nacked_targets": [
+      "0x68"
+    ],
+    "presentation_controllers": [
+      [
+        "Master 1 (Pico H) · Pico 1",
+        "HEALTHY",
+        "9",
+        "0"
+      ],
+      [
+        "Master 2 (Pico W) · Pico 3",
+        "CONTENDED",
+        "6",
+        "2"
+      ]
+    ],
+    "presentation_arbitration_rows": 2,
+    "presentation_activity": {
+      "0x3C": [
+        "ACTIVE · SIMULATED",
+        "0",
+        "4"
+      ],
+      "0x68": [
+        "ACTIVE · SIMULATED",
+        "3",
+        "5"
+      ],
+      "0x76": [
+        "ACTIVE · SIMULATED",
+        "3",
+        "6"
+      ]
+    },
+    "demo_dashboard_graphs": {
+      "SCL frequency": {
+        "points": 26,
+        "data": [
+          -25.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.82
+      },
+      "Transactions/s": {
+        "points": 26,
+        "data": [
+          -25.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.82
+      },
+      "Bus Communication Health": {
+        "points": 26,
+        "data": [
+          -25.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.82
+      }
+    },
+    "demo_dashboard_health": [
+      "UNKNOWN",
+      "#ffbf47",
+      "SIMULATED — NOT VERIFIED HARDWARE · Not live hardware (demo/replay/unverified): health is evaluated on live hardware only"
+    ],
+    "demo_dashboard_device_health": "OLED (SSD1306) 0x3C: UNKNOWN  |  DS3231 RTC 0x68: UNKNOWN  |  BMP280 0x76: UNKNOWN",
+    "demo_dashboard_marker": {
+      "value": -12.9067518,
+      "expected": -12.9067518
+    },
+    "demo_perf_graph_points": {
+      "SCL frequency": 28,
+      "Transactions/s": 28,
+      "Utilization": 28,
+      "Duration": 28,
+      "Throughput": 28,
+      "ACK/NACK": 28,
+      "NACK rate": 28
+    },
+    "demo_perf_graph_fit": {
+      "SCL frequency": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "Transactions/s": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "Utilization": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "Duration": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "Throughput": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "ACK/NACK": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      },
+      "NACK rate": {
+        "points": 28,
+        "data": [
+          -27.0,
+          0.0
+        ],
+        "view": [
+          -30.0,
+          0.5
+        ],
+        "fill": 0.885
+      }
+    },
+    "demo_health": "UNKNOWN",
+    "demo_search_hits": {
+      "0x3C": 1,
+      "0x68": 1,
+      "0x76": 3
+    },
+    "demo_multimaster_events": [
+      [
+        "Arbitration lost",
+        "Master 2 (Pico W) lost arbitration addressing 0x76 (attempt 1, byte 0) to the ot"
+      ],
+      [
+        "Controller clock aligned",
+        "Master 2 (Pico W): telemetry aligned to analyzer capture time (14/15 recent tran"
+      ],
+      [
+        "Controller clock aligned",
+        "Master 1 (Pico H): telemetry aligned to analyzer capture time (259/260 recent tr"
+      ]
+    ],
+    "demo_sensor": {
+      "clock": "08:22:34",
+      "date": "Mon  16-11-2026  (DEMO — simulated)",
+      "temp": "25.30 °C",
+      "press": "1006.69 hPa",
+      "preview": [
+        "I2C MONITOR",
+        "",
+        "TIME 08:22:34",
+        "DATE 16/11/2026",
+        "",
+        "TEMP 25.30 C",
+        "PRESS 1006.69 HPA"
+      ],
+      "calib": "captured ✓",
+      "identity": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "demo_sensor_layout": {
+      "scroll": [
+        0,
+        981
+      ],
+      "cols": 1,
+      "viewport": [
+        1297,
+        670
+      ],
+      "cards": {
+        "rtc": [
+          [
+            18,
+            46,
+            1261,
+            287
+          ],
+          true
+        ],
+        "bmp": [
+          [
+            18,
+            347,
+            1261,
+            684
+          ],
+          true
+        ],
+        "oled": [
+          [
+            18,
+            1045,
+            1261,
+            590
+          ],
+          true
+        ]
+      }
+    },
+    "demo_device_health": {
+      "0x3C": [
+        "UNKNOWN",
+        "#ffbf47"
+      ],
+      "0x68": [
+        "UNKNOWN",
+        "#ffbf47"
+      ],
+      "0x76": [
+        "UNKNOWN",
+        "#ffbf47"
+      ]
+    },
+    "demo_nacked_targets": [],
+    "demo_controllers": [
+      [
+        "Master 1 (Pico H) · Pico 1",
+        "HEALTHY",
+        "2,666",
+        "0"
+      ],
+      [
+        "Master 2 (Pico W) · Pico 3",
+        "HEALTHY",
+        "144",
+        "0"
+      ]
+    ],
+    "demo_arbitration_rows": 1,
+    "demo_activity": {
+      "0x3C": [
+        "ACTIVE · SIMULATED",
+        "0",
+        "700"
+      ],
+      "0x68": [
+        "ACTIVE · SIMULATED",
+        "19",
+        "19"
+      ],
+      "0x76": [
+        "ACTIVE · SIMULATED",
+        "84",
+        "84"
+      ]
+    },
+    "live_connect": {
+      "capturing": true,
+      "source": "live",
+      "masters": [
+        [
+          1,
+          "HEALTHY",
+          true
+        ],
+        [
+          2,
+          "HEALTHY",
+          true
+        ]
+      ]
+    },
+    "live_packets": 2492,
+    "live_trust": {
+      "trust": [
+        true,
+        "Fresh live capture; no capture loss detected"
+      ],
+      "transport_errors": 0,
+      "lost_records": 0,
+      "overflows": 0,
+      "dropped": 0,
+      "synced": false,
+      "disagreements": "set()"
+    },
+    "live_loss_events": [],
+    "live_page_log": [
+      [
+        51.34,
+        "page",
+        0
+      ],
+      [
+        53.45,
+        "page",
+        4
+      ],
+      [
+        55.18,
+        "page",
+        7
+      ],
+      [
+        58.86,
+        "page",
+        5
+      ],
+      [
+        60.58,
+        "page",
+        6
+      ],
+      [
+        106.82,
+        "page",
+        0
+      ],
+      [
+        109.18,
+        "page",
+        4
+      ],
+      [
+        111.06,
+        "page",
+        7
+      ],
+      [
+        114.9,
+        "page",
+        5
+      ],
+      [
+        116.75,
+        "page",
+        6
+      ],
+      [
+        0.0,
+        "connect",
+        6
+      ]
+    ],
+    "live_dashboard_graphs": {
+      "SCL frequency": {
+        "points": 31,
+        "data": [
+          -30.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.741
+      },
+      "Transactions/s": {
+        "points": 31,
+        "data": [
+          -30.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.741
+      },
+      "Bus Communication Health": {
+        "points": 32,
+        "data": [
+          -31.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.765
+      }
+    },
+    "live_dashboard_health": [
+      "HEALTHY",
+      "#36f5a2",
+      "rolling 60 s of capture time: ACK slots 41,124 · ACK 40,794 · raw NACK 330 · end-of-read 330 · unexpected 0"
+    ],
+    "live_dashboard_device_health": "OLED (SSD1306) 0x3C: HEALTHY  |  DS3231 RTC 0x68: HEALTHY  |  BMP280 0x76: HEALTHY",
+    "live_dashboard_marker": {
+      "value": -15.15562349999982,
+      "expected": -15.15562349999982
+    },
+    "live_trust_timeline": [
+      [
+        "after Dashboard",
+        true,
+        0,
+        0
+      ],
+      [
+        "after Performance",
+        true,
+        0,
+        0
+      ],
+      [
+        "after Errors",
+        true,
+        0,
+        0
+      ],
+      [
+        "after Sensor",
+        true,
+        0,
+        0
+      ]
+    ],
+    "live_perf_graph_points": {
+      "SCL frequency": 34,
+      "Transactions/s": 34,
+      "Utilization": 34,
+      "Duration": 34,
+      "Throughput": 34,
+      "ACK/NACK": 34,
+      "NACK rate": 35
+    },
+    "live_perf_graph_fit": {
+      "SCL frequency": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "Transactions/s": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "Utilization": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "Duration": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "Throughput": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "ACK/NACK": {
+        "points": 34,
+        "data": [
+          -33.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.815
+      },
+      "NACK rate": {
+        "points": 35,
+        "data": [
+          -34.0,
+          0.0
+        ],
+        "view": [
+          -40.0,
+          0.5
+        ],
+        "fill": 0.84
+      }
+    },
+    "live_health": "HEALTHY",
+    "live_search_hits": {
+      "0x3C": 1,
+      "0x68": 1,
+      "0x76": 2
+    },
+    "live_multimaster_events": [
+      [
+        "Controller clock aligned",
+        "Master 1 (Pico H): telemetry aligned to analyzer capture time (20/28 recent tran"
+      ],
+      [
+        "Controller clock aligned",
+        "Master 2 (Pico W): telemetry aligned to analyzer capture time (6/8 recent transf"
+      ]
+    ],
+    "live_sensor": {
+      "clock": "10:52:12",
+      "date": "Mon  16-11-2026",
+      "temp": "29.63 °C",
+      "press": "976.99 hPa",
+      "preview": [
+        "I2C MONITOR",
+        "",
+        "TIME 10:52:12",
+        "DATE 16/11/2026",
+        "",
+        "TEMP 29.63 C",
+        "PRESS 976.99 HPA"
+      ],
+      "calib": "captured ✓",
+      "identity": "0x76 · BMP280 (confirmed: reg 0xD0 = 0x58)"
+    },
+    "live_sensor_layout": {
+      "scroll": [
+        0,
+        173
+      ],
+      "cols": 3,
+      "viewport": [
+        1297,
+        688
+      ],
+      "cards": {
+        "rtc": [
+          [
+            18,
+            46,
+            411,
+            799
+          ],
+          true
+        ],
+        "bmp": [
+          [
+            443,
+            46,
+            411,
+            799
+          ],
+          true
+        ],
+        "oled": [
+          [
+            868,
+            46,
+            411,
+            799
+          ],
+          true
+        ]
+      }
+    },
+    "live_device_health": {
+      "0x3C": [
+        "HEALTHY",
+        "#36f5a2"
+      ],
+      "0x68": [
+        "HEALTHY",
+        "#36f5a2"
+      ],
+      "0x76": [
+        "HEALTHY",
+        "#36f5a2"
+      ]
+    },
+    "live_nacked_targets": [],
+    "live_controllers": [
+      [
+        "Master 1 (Pico H) · Pico 1",
+        "HEALTHY",
+        "3,126",
+        "0"
+      ],
+      [
+        "Master 2 (Pico W) · Pico 3",
+        "HEALTHY",
+        "171",
+        "0"
+      ]
+    ],
+    "live_arbitration_rows": 0,
+    "live_activity": {
+      "0x3C": [
+        "ACTIVE",
+        "0",
+        "700"
+      ],
+      "0x68": [
+        "ACTIVE",
+        "19",
+        "19"
+      ],
+      "0x76": [
+        "ACTIVE",
+        "84",
+        "84"
+      ]
+    }
+  },
+  "outside_input": [],
+  "python_or_qt_errors": [],
+  "result": "PASS"
+}

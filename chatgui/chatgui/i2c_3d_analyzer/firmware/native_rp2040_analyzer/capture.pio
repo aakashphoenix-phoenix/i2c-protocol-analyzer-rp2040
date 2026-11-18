@@ -1,0 +1,8 @@
+; RP2040 PIO: passive sampling of adjacent SDA(GP2) + SCL(GP3).
+; TWO instructions per 2-bit sample. Sampling rate set in C via clkdiv.
+.program i2c_capture
+.wrap_target
+loop:
+    in pins, 2
+    jmp loop
+.wrap

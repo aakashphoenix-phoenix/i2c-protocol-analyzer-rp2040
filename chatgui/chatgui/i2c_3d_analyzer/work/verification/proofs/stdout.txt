@@ -1,0 +1,26 @@
+OK   Connect all: capturing, both masters clock-aligned
+OK   Packet Proof M1_BMP280 (#514 WRITE→READ) PROVEN
+OK   Packet Proof M1_RTC (#657 WRITE→READ) PROVEN
+OK   Packet Proof M1_OLED (#728 WRITE) PROVEN
+OK   Packet Proof M2_BMP280 (#732 WRITE→READ) PROVEN
+OK   Packet Proof M2_RTC (#729 WRITE→READ) PROVEN
+OK   Packet Proof M2_OLED (#948 WRITE) PROVEN
+OK   Known transactions: every report of each master found on the bus
+OK   Two decoders (Pico firmware vs PC raw edges) never disagree
+OK   Known content: BMP280 chip ID 0x58 and DS3231 BCD time
+OK   Waveform 'Export view' VCD holds the captured packet (re-decoded from the file)
+OK   Packet Analyzer: address filter shows only that slave
+OK   Unvalidated packets are labelled 'Unknown' (never guessed)
+OK   no Python errors
+OK   user's native QSettings untouched
+{
+ "result": "PASS",
+ "failures": [],
+ "capture": {
+  "sample_hz": 2000000,
+  "tick_ns": 500.0,
+  "firmware": "RP2040 segment analyzer",
+  "packets": 656,
+  "segment_decoder": true
+ }
+}

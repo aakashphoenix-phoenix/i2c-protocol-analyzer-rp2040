@@ -1,0 +1,39 @@
+OK   Connect all: analyzer + Master 1 + Master 2 capturing (Real Hardware Mode)
+OK   both masters report firmware 2.4-turns
+OK   Real-time playback selected
+OK   Real-time: packets play strictly in capture order
+OK   Real-time: never more than ~2.5 s behind the bus
+OK   SEQ ON 500 acknowledged by both masters
+OK   SEQ: every transfer stands alone (>= 0.45 s idle bus between packets)
+OK   SEQ: Master 1 RTC→BMP280→OLED, then Master 2 RTC→BMP280→OLED, alternating
+OK   SEQ Master 1 ↔ RTC: write 0x00, read time bytes
+OK   SEQ Master 1 ↔ BMP280: write 0xF7, read 6 P/T ADC bytes
+OK   SEQ Master 1 ↔ OLED: write 0x00/0x40, every byte ACKed by the OLED
+OK   SEQ Master 2 ↔ RTC: write 0x00, read time bytes
+OK   SEQ Master 2 ↔ BMP280: write 0xF7, read 6 P/T ADC bytes
+OK   SEQ Master 2 ↔ OLED: write 0x00/0x40, every byte ACKed by the OLED
+OK   SEQ: the 3D view showed every SEQ packet in order (none skipped)
+OK   SEQ: every packet stayed on screen >= ~80 ms (never replaced unseen)
+OK   SEQ: never more than ~2.5 s behind the bus
+OK   Sensor Monitoring: RTC time + BMP280 temperature / pressure decoded from the bus
+OK   Device Activity: both masters with all three targets on the bus
+OK   all packets attributed by telemetry (0 unknown), 0 lost records, 0 stream gaps
+OK   PROBE 2A: a real 0x2A transfer on the bus with an Address NACK
+OK   PROBE 2A: attributed to Master 1 by its telemetry
+OK   PROBE 2A: logged in Error & Diagnostics as an error
+OK   Visualize Error Waveform: the 0x2A packet, labels S, ADDR 0x2A W, red NACK, P above SCL/SDA
+OK   Error banner above the waveform states the cause
+OK   ARB: both masters ran the arbitration test
+OK   ARB: real arb_lost reported by a master's firmware
+OK   ARB: the winning bus packet was matched
+OK   Arbitration never counted as a NACK
+OK   Device Activity → Arbitration lists it
+OK   Visualize Arbitration: the winner's waveform with the ARBITRATION banner
+OK   Amber collision marker drawn above the waveform
+OK   Arbitration packet fully decoded above SCL/SDA (S, ADDR, ACK, DATA, P)
+OK   Error & Diagnostics logs the arbitration loss (Multi-master, not a NACK)
+OK   Error & Diagnostics → Visualize Arbitration opens the winner with the amber marker
+OK   no Python / Qt errors
+OK   no modal message boxes
+OK   user's native QSettings untouched
+{"failures": []}

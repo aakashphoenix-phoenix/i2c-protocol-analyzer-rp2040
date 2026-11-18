@@ -1,0 +1,706 @@
+{
+  "failures": [],
+  "checks": {
+    "presentation on": {
+      "ok": true,
+      "detail": ""
+    },
+    "waveform shows a window": {
+      "ok": true,
+      "detail": ""
+    },
+    "drag 1: A -> 250.0 µs, B -> 420.0 µs by mouse": {
+      "ok": true,
+      "detail": "(250.0, 420.0)"
+    },
+    "drag 1 round 1: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((250.0, 420.0), (250.0, 420.0))"
+    },
+    "drag 1 round 1: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 1 round 1: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #3"
+    },
+    "drag 1 round 2: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((250.0, 420.0), (250.0, 420.0))"
+    },
+    "drag 1 round 2: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 1 round 2: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #4"
+    },
+    "drag 1 round 3: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((250.0, 420.0), (250.0, 420.0))"
+    },
+    "drag 1 round 3: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 1 round 3: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #5"
+    },
+    "drag 2: A -> 780.0 µs, B -> 120.0 µs by mouse": {
+      "ok": true,
+      "detail": "(780.0, 119.99999999999983)"
+    },
+    "drag 2 round 1: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((780.0, 119.99999999999983), (780.0, 119.99999999999983))"
+    },
+    "drag 2 round 1: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 2 round 1: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #6"
+    },
+    "drag 2 round 2: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((780.0, 119.99999999999983), (780.0, 119.99999999999983))"
+    },
+    "drag 2 round 2: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 2 round 2: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "cursor A between packets"
+    },
+    "drag 2 round 3: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((780.0, 119.99999999999983), (780.0, 119.99999999999983))"
+    },
+    "drag 2 round 3: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 2 round 3: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "cursor A between packets"
+    },
+    "drag 3: A -> 420.0 µs, B -> 780.0 µs by mouse": {
+      "ok": true,
+      "detail": "(420.00000000000006, 780.9090909090908)"
+    },
+    "drag 3 round 1: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((420.00000000000006, 780.9090909090908), (420.00000000000006, 780.9090909090908))"
+    },
+    "drag 3 round 1: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 3 round 1: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "cursor A between packets"
+    },
+    "drag 3 round 2: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((420.00000000000006, 780.9090909090908), (420.00000000000006, 780.9090909090908))"
+    },
+    "drag 3 round 2: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 3 round 2: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #10"
+    },
+    "drag 3 round 3: cursors not reset by new packets": {
+      "ok": true,
+      "detail": "((420.00000000000006, 780.9090909090908), (420.00000000000006, 780.9090909090908))"
+    },
+    "drag 3 round 3: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "drag 3 round 3: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "cursor A between packets"
+    },
+    "forced redraw keeps cursors": {
+      "ok": true,
+      "detail": ""
+    },
+    "Fit packet keeps on-screen cursors": {
+      "ok": true,
+      "detail": ""
+    },
+    "never snapped back to the defaults": {
+      "ok": true,
+      "detail": ""
+    },
+    "readout not clipped at 1680x980": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "readout fully reachable at 1680x980 (scrolled)": {
+      "ok": true,
+      "detail": "(695, 774, 806)"
+    },
+    "readout not clipped at 1280x760": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "readout fully reachable at 1280x760 (scrolled)": {
+      "ok": true,
+      "detail": "(475, 554, 586)"
+    },
+    "readout not clipped at 1024x700": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "readout fully reachable at 1024x700 (scrolled)": {
+      "ok": true,
+      "detail": "(399, 494, 526)"
+    },
+    "bench clock ~94.6 kHz (not an ideal 100 kHz)": {
+      "ok": true,
+      "detail": "{'packets': 12, 'f_khz': [94.27, 94.6, 95.24], 'high_us': 4.44, 'low_us': 6.13}"
+    },
+    "HIGH ~4.44 µs / LOW ~6.13 µs": {
+      "ok": true,
+      "detail": "{'packets': 12, 'f_khz': [94.27, 94.6, 95.24], 'high_us': 4.44, 'low_us': 6.13}"
+    },
+    "no OLED 0x3C reads": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo: running": {
+      "ok": true,
+      "detail": ""
+    },
+    "demo: cursors dragged by mouse to 250 / 420 µs": {
+      "ok": true,
+      "detail": "(250.0000000000001, 420.9090909090907)"
+    },
+    "demo 1: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 1: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 1: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #993"
+    },
+    "demo 2: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 2: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 2: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #1311"
+    },
+    "demo 3: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 3: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 3: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #1634"
+    },
+    "demo 4: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 4: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 4: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #1955"
+    },
+    "demo 5: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 5: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 5: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2278"
+    },
+    "demo 6: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 6: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 6: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2598"
+    },
+    "demo 7: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 7: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 7: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2918"
+    },
+    "demo 8: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "demo 8: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "demo 8: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #3237"
+    },
+    "demo: new packets / sweeps arrived meanwhile": {
+      "ok": true,
+      "detail": "8"
+    },
+    "demo: readout not clipped": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live: capturing": {
+      "ok": true,
+      "detail": ""
+    },
+    "live: cursors dragged by mouse to 250 / 420 µs": {
+      "ok": true,
+      "detail": "(250.0000000000001, 420.9090909090907)"
+    },
+    "live 1: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 1: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 1: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #723"
+    },
+    "live 2: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 2: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 2: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #968"
+    },
+    "live 3: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 3: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 3: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #1365"
+    },
+    "live 4: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 4: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 4: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #1612"
+    },
+    "live 5: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 5: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 5: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2009"
+    },
+    "live 6: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 6: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 6: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2332"
+    },
+    "live 7: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 7: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 7: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2621"
+    },
+    "live 8: cursors not reset by new sweeps": {
+      "ok": true,
+      "detail": "((250.0000000000001, 420.9090909090907), (250.0000000000001, 420.9090909090907))"
+    },
+    "live 8: readout matches independent recomputation": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "live 8: banner = cursor A's packet": {
+      "ok": true,
+      "detail": "packet #2975"
+    },
+    "live: new packets / sweeps arrived meanwhile": {
+      "ok": true,
+      "detail": "8"
+    },
+    "live: readout not clipped": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "no outside mouse / key input during the run": {
+      "ok": true,
+      "detail": "[]"
+    },
+    "no Python / Qt errors": {
+      "ok": true,
+      "detail": "[]"
+    }
+  },
+  "shots": [
+    "wave_01_initial.png",
+    "wave_02_cursors_250_420.png",
+    "wave_02_cursors_780_120.png",
+    "wave_02_cursors_420_780.png",
+    "wave_03_size_normal.png",
+    "wave_03_size_medium.png",
+    "wave_03_size_small.png",
+    "wave_04_demo.png",
+    "wave_04_live.png"
+  ],
+  "readouts": [
+    {
+      "A": 250.0,
+      "B": 420.0,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:00.002527 (2,527.200 µs) · SCL cycle at A (packet #3): T_A = rise→next rise 10.60 µs · f_A = 1/T_A = 94.340 kHz · HIGH 4.50 µs · LOW 6.10 µs · duty 42.5 %",
+        "Cursor B: x_B = 420.00 µs · capture time 00:00:00.002697 (2,697.200 µs) · SCL cycle at B: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |2,697.200 − 2,527.200| µs = 170.000 µs · Capture Frequency (1/Δt) = 1 / 170.000 µs = 5.882 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.0,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:00.003197 (3,197.300 µs) · SCL cycle at A (packet #4): T_A = rise→next rise 10.70 µs · f_A = 1/T_A = 93.458 kHz · HIGH 4.50 µs · LOW 6.20 µs · duty 42.1 %",
+        "Cursor B: x_B = 420.00 µs · capture time 00:00:00.003367 (3,367.300 µs) · SCL cycle at B (packet #4): T_B = rise→next rise 11.00 µs · f_B = 1/T_B = 90.909 kHz · HIGH 4.60 µs · LOW 6.40 µs · duty 41.8 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |3,367.300 − 3,197.300| µs = 170.000 µs · Capture Frequency (1/Δt) = 1 / 170.000 µs = 5.882 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.0,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:00.004509 (4,508.900 µs) · SCL cycle at A (packet #5): T_A = rise→next rise 10.40 µs · f_A = 1/T_A = 96.154 kHz · HIGH 4.30 µs · LOW 6.10 µs · duty 41.3 %",
+        "Cursor B: x_B = 420.00 µs · capture time 00:00:00.004679 (4,678.900 µs) · SCL cycle at B: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |4,678.900 − 4,508.900| µs = 170.000 µs · Capture Frequency (1/Δt) = 1 / 170.000 µs = 5.882 kHz"
+      ]
+    },
+    {
+      "A": 780.0,
+      "B": 120.0,
+      "text": [
+        "Cursor A: x_A = 780.00 µs · capture time 00:00:00.005715 (5,715.300 µs) · SCL cycle at A: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Cursor B: x_B = 120.00 µs · capture time 00:00:00.005055 (5,055.300 µs) · SCL cycle at B (packet #6): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.40 µs · LOW 6.10 µs · duty 41.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |5,055.300 − 5,715.300| µs = 660.000 µs · Capture Frequency (1/Δt) = 1 / 660.000 µs = 1.515 kHz"
+      ]
+    },
+    {
+      "A": 780.0,
+      "B": 120.0,
+      "text": [
+        "Cursor A: x_A = 780.00 µs · capture time 00:00:00.006800 (6,800.400 µs) · SCL cycle at A: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Cursor B: x_B = 120.00 µs · capture time 00:00:00.006140 (6,140.400 µs) · SCL cycle at B (packet #7): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.60 µs · LOW 5.90 µs · duty 43.8 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |6,140.400 − 6,800.400| µs = 660.000 µs · Capture Frequency (1/Δt) = 1 / 660.000 µs = 1.515 kHz"
+      ]
+    },
+    {
+      "A": 780.0,
+      "B": 120.0,
+      "text": [
+        "Cursor A: x_A = 780.00 µs · capture time 00:00:00.007519 (7,519.000 µs) · SCL cycle at A: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Cursor B: x_B = 120.00 µs · capture time 00:00:00.006859 (6,859.000 µs) · SCL cycle at B (packet #8): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |6,859.000 − 7,519.000| µs = 660.000 µs · Capture Frequency (1/Δt) = 1 / 660.000 µs = 1.515 kHz"
+      ]
+    },
+    {
+      "A": 420.0,
+      "B": 780.91,
+      "text": [
+        "Cursor A: x_A = 420.00 µs · capture time 00:00:00.007932 (7,931.600 µs) · SCL cycle at A: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Cursor B: x_B = 780.91 µs · capture time 00:00:00.008293 (8,292.509 µs) · SCL cycle at B: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |8,292.509 − 7,931.600| µs = 360.909 µs · Capture Frequency (1/Δt) = 1 / 360.909 µs = 2.771 kHz"
+      ]
+    },
+    {
+      "A": 420.0,
+      "B": 780.91,
+      "text": [
+        "Cursor A: x_A = 420.00 µs · capture time 00:00:00.008617 (8,616.700 µs) · SCL cycle at A (packet #10): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+        "Cursor B: x_B = 780.91 µs · capture time 00:00:00.008978 (8,977.609 µs) · SCL cycle at B: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |8,977.609 − 8,616.700| µs = 360.909 µs · Capture Frequency (1/Δt) = 1 / 360.909 µs = 2.771 kHz"
+      ]
+    },
+    {
+      "A": 420.0,
+      "B": 780.91,
+      "text": [
+        "Cursor A: x_A = 420.00 µs · capture time 00:00:00.009411 (9,411.400 µs) · SCL cycle at A: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Cursor B: x_B = 780.91 µs · capture time 00:00:00.009772 (9,772.309 µs) · SCL cycle at B: UNKNOWN (no captured SCL cycle here: idle bus, START/STOP boundary or capture gap)",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,772.309 − 9,411.400| µs = 360.909 µs · Capture Frequency (1/Δt) = 1 / 360.909 µs = 2.771 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:11.347536 (11,347,536.200 µs) · SCL cycle at A (packet #993): T_A = rise→next rise 10.40 µs · f_A = 1/T_A = 96.154 kHz · HIGH 4.40 µs · LOW 6.00 µs · duty 42.3 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:11.347707 (11,347,707.109 µs) · SCL cycle at B (packet #993): T_B = rise→next rise 10.40 µs · f_B = 1/T_B = 96.154 kHz · HIGH 4.50 µs · LOW 5.90 µs · duty 43.3 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |11,347,707.109 − 11,347,536.200| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:15.256661 (15,256,660.700 µs) · SCL cycle at A (packet #1311): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:15.256832 (15,256,831.609 µs) · SCL cycle at B (packet #1311): T_B = rise→next rise 10.40 µs · f_B = 1/T_B = 96.154 kHz · HIGH 4.30 µs · LOW 6.10 µs · duty 41.3 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |15,256,831.609 − 15,256,660.700| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:19.597621 (19,597,621.200 µs) · SCL cycle at A (packet #1634): T_A = rise→next rise 10.40 µs · f_A = 1/T_A = 96.154 kHz · HIGH 4.30 µs · LOW 6.10 µs · duty 41.3 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:19.597792 (19,597,792.109 µs) · SCL cycle at B (packet #1634): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.40 µs · LOW 6.10 µs · duty 41.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |19,597,792.109 − 19,597,621.200| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:23.228659 (23,228,659.200 µs) · SCL cycle at A (packet #1955): T_A = rise→next rise 10.60 µs · f_A = 1/T_A = 94.340 kHz · HIGH 4.60 µs · LOW 6.00 µs · duty 43.4 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:23.228830 (23,228,830.109 µs) · SCL cycle at B (packet #1955): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |23,228,830.109 − 23,228,659.200| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:27.626812 (27,626,812.100 µs) · SCL cycle at A (packet #2278): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:27.626983 (27,626,983.009 µs) · SCL cycle at B (packet #2278): T_B = rise→next rise 10.80 µs · f_B = 1/T_B = 92.593 kHz · HIGH 4.40 µs · LOW 6.40 µs · duty 40.7 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |27,626,983.009 − 27,626,812.100| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:31.202019 (31,202,019.400 µs) · SCL cycle at A (packet #2598): T_A = rise→next rise 10.70 µs · f_A = 1/T_A = 93.458 kHz · HIGH 4.50 µs · LOW 6.20 µs · duty 42.1 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:31.202190 (31,202,190.309 µs) · SCL cycle at B (packet #2598): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |31,202,190.309 − 31,202,019.400| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:35.256660 (35,256,659.800 µs) · SCL cycle at A (packet #2918): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:35.256831 (35,256,830.709 µs) · SCL cycle at B (packet #2918): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |35,256,830.709 − 35,256,659.800| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 00:00:39.202656 (39,202,656.200 µs) · SCL cycle at A (packet #3237): T_A = rise→next rise 10.60 µs · f_A = 1/T_A = 94.340 kHz · HIGH 4.50 µs · LOW 6.10 µs · duty 42.5 %",
+        "Cursor B: x_B = 420.91 µs · capture time 00:00:39.202827 (39,202,827.109 µs) · SCL cycle at B (packet #3237): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.40 µs · LOW 6.10 µs · duty 41.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |39,202,827.109 − 39,202,656.200| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:07.811564 (9,847,811,564.000 µs) · SCL cycle at A (packet #723): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:07.811735 (9,847,811,734.909 µs) · SCL cycle at B (packet #723): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,847,811,734.909 − 9,847,811,564.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:11.411442 (9,851,411,442.000 µs) · SCL cycle at A (packet #968): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:11.411613 (9,851,411,612.909 µs) · SCL cycle at B (packet #968): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,851,411,612.909 − 9,851,411,442.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:15.759050 (9,855,759,050.000 µs) · SCL cycle at A (packet #1365): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:15.759221 (9,855,759,220.909 µs) · SCL cycle at B (packet #1365): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,855,759,220.909 − 9,855,759,050.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:19.411753 (9,859,411,753.000 µs) · SCL cycle at A (packet #1612): T_A = rise→next rise 11.00 µs · f_A = 1/T_A = 90.909 kHz · HIGH 4.50 µs · LOW 6.50 µs · duty 40.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:19.411924 (9,859,411,923.909 µs) · SCL cycle at B (packet #1612): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,859,411,923.909 − 9,859,411,753.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:23.760098 (9,863,760,098.500 µs) · SCL cycle at A (packet #2009): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:23.760269 (9,863,760,269.409 µs) · SCL cycle at B (packet #2009): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,863,760,269.409 − 9,863,760,098.500| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:28.021216 (9,868,021,216.000 µs) · SCL cycle at A (packet #2332): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:28.021387 (9,868,021,386.909 µs) · SCL cycle at B (packet #2332): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,868,021,386.909 − 9,868,021,216.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:31.699298 (9,871,699,298.000 µs) · SCL cycle at A (packet #2621): T_A = rise→next rise 11.00 µs · f_A = 1/T_A = 90.909 kHz · HIGH 4.50 µs · LOW 6.50 µs · duty 40.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:31.699469 (9,871,699,468.909 µs) · SCL cycle at B (packet #2621): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,871,699,468.909 − 9,871,699,298.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    },
+    {
+      "A": 250.0,
+      "B": 420.91,
+      "text": [
+        "Cursor A: x_A = 250.00 µs · capture time 02:44:36.010810 (9,876,010,810.500 µs) · SCL cycle at A (packet #2975): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Cursor B: x_B = 420.91 µs · capture time 02:44:36.010981 (9,876,010,981.409 µs) · SCL cycle at B (packet #2975): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+        "Δ (A ↔ B): Δt = |t_B − t_A| = |9,876,010,981.409 − 9,876,010,810.500| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+      ]
+    }
+  ],
+  "default_cursors": [
+    300.0,
+    310.0
+  ],
+  "bench_timing": {
+    "packets": 12,
+    "f_khz": [
+      94.27,
+      94.6,
+      95.24
+    ],
+    "high_us": 4.44,
+    "low_us": 6.13
+  },
+  "traffic": [
+    "#1 0x68 WRITE W: 00 30 22 08",
+    "#2 0x68 WRITE→READ W: 00 | R: 34 22 08",
+    "#3 0x76 WRITE W: F4 27",
+    "#4 0x76 WRITE→READ W: F7 | R: 65 59 40 7E EB F0",
+    "#5 0x3C WRITE W: 00 AF",
+    "#6 0x3C WRITE W: 40 3E 51 49 45 3E",
+    "#7 0x68 WRITE W: 0E 1C",
+    "#8 0x68 WRITE→READ W: 0F | R: 08",
+    "#9 0x76 WRITE W: F5 A0",
+    "#10 0x76 WRITE→READ W: D0 | R: 58",
+    "#11 0x3C WRITE W: 00 A6",
+    "#12 0x3C WRITE W: 40 7F 09 09 09 06"
+  ],
+  "demo_readouts": [
+    [
+      "Cursor A: x_A = 250.00 µs · capture time 00:00:35.256660 (35,256,659.800 µs) · SCL cycle at A (packet #2918): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+      "Cursor B: x_B = 420.91 µs · capture time 00:00:35.256831 (35,256,830.709 µs) · SCL cycle at B (packet #2918): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.30 µs · LOW 6.20 µs · duty 41.0 %",
+      "Δ (A ↔ B): Δt = |t_B − t_A| = |35,256,830.709 − 35,256,659.800| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+    ],
+    [
+      "Cursor A: x_A = 250.00 µs · capture time 00:00:39.202656 (39,202,656.200 µs) · SCL cycle at A (packet #3237): T_A = rise→next rise 10.60 µs · f_A = 1/T_A = 94.340 kHz · HIGH 4.50 µs · LOW 6.10 µs · duty 42.5 %",
+      "Cursor B: x_B = 420.91 µs · capture time 00:00:39.202827 (39,202,827.109 µs) · SCL cycle at B (packet #3237): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.40 µs · LOW 6.10 µs · duty 41.9 %",
+      "Δ (A ↔ B): Δt = |t_B − t_A| = |39,202,827.109 − 39,202,656.200| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+    ]
+  ],
+  "live_readouts": [
+    [
+      "Cursor A: x_A = 250.00 µs · capture time 02:44:31.699298 (9,871,699,298.000 µs) · SCL cycle at A (packet #2621): T_A = rise→next rise 11.00 µs · f_A = 1/T_A = 90.909 kHz · HIGH 4.50 µs · LOW 6.50 µs · duty 40.9 %",
+      "Cursor B: x_B = 420.91 µs · capture time 02:44:31.699469 (9,871,699,468.909 µs) · SCL cycle at B (packet #2621): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+      "Δ (A ↔ B): Δt = |t_B − t_A| = |9,871,699,468.909 − 9,871,699,298.000| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+    ],
+    [
+      "Cursor A: x_A = 250.00 µs · capture time 02:44:36.010810 (9,876,010,810.500 µs) · SCL cycle at A (packet #2975): T_A = rise→next rise 10.50 µs · f_A = 1/T_A = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+      "Cursor B: x_B = 420.91 µs · capture time 02:44:36.010981 (9,876,010,981.409 µs) · SCL cycle at B (packet #2975): T_B = rise→next rise 10.50 µs · f_B = 1/T_B = 95.238 kHz · HIGH 4.50 µs · LOW 6.00 µs · duty 42.9 %",
+      "Δ (A ↔ B): Δt = |t_B − t_A| = |9,876,010,981.409 − 9,876,010,810.500| µs = 170.909 µs · Capture Frequency (1/Δt) = 1 / 170.909 µs = 5.851 kHz"
+    ]
+  ],
+  "outside_input": [],
+  "python_or_qt_errors": [],
+  "result": "PASS"
+}

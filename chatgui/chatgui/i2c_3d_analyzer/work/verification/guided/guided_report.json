@@ -1,0 +1,293 @@
+{
+ "results": {
+  "Performance Monitoring / Device Activity / Capture History hidden from the navigation": {
+   "ok": true,
+   "detail": "['Live Dashboard', '3D I²C Network', 'Packet Analyzer', 'Digital Waveform', 'Sensor Monitoring', 'Error & Diagnostics', 'Settings']"
+  },
+  "Connect all: analyzer + Master 1 + Master 2 capturing, clocks aligned (Real Hardware Mode)": {
+   "ok": true,
+   "detail": "[(1, 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)'), (2, 'aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)')]"
+  },
+  "both masters run controller firmware 2.6-live": {
+   "ok": true,
+   "detail": "{1: '2.6-live', 2: '2.6-live'}"
+  },
+  "window fits the 1536 px laptop screen (presentation theme)": {
+   "ok": true,
+   "detail": "(1019, 1180)"
+  },
+  "Guided flow started (CONDUCT ON sent to both masters)": {
+   "ok": true,
+   "detail": "next"
+  },
+  "presentation-mode controls on real hardware: NACK next transfer → the next REAL transfer is an invalid address, opened held at phase 1 and stepped phase by phase": {
+   "ok": true,
+   "detail": "{'enabled': True, 'queued': {'kind': 'PROBE', 'mid': 1, 'addr': 42, 'user': True, 'n0': 188, 'sent': 22633.812}, 'held': True, 'addr': '0x2A', 'nack': True, 'phases': [0, 1, 2, 3, 4]}"
+  },
+  "_played": {
+   "ok": true,
+   "detail": "[('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('PROBE', 1, '0x2A'), ('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('ARB', 2, '0x68'), ('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('PROBE', 2, '0x45'), ('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('ARB', 1, '0x3C'), ('DO', 1, '0x68')]"
+  },
+  "order: Master 1 RTC→BMP280→OLED, Master 2 RTC→BMP280→OLED, then an injected error (4 cycles)": {
+   "ok": true,
+   "detail": "[[('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('PROBE', 1, '0x2A')], [('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('ARB', 2, '0x68')], [('DO', 1, '0x68'), ('DO', 1, '0x76'), ('DO', 1, '0x3C'), ('DO', 2, '0x68'), ('DO', 2, '0x76'), ('DO', 2, '0x3C'), ('PROBE', 2, '0x45')]]"
+  },
+  "errors alternate: invalid address, arbitration, invalid address, ...": {
+   "ok": true,
+   "detail": "['PROBE', 'ARB', 'PROBE', 'ARB']"
+  },
+  "invalid addresses rotate and the master alternates": {
+   "ok": true,
+   "detail": "[(1, '0x2A'), (2, '0x45')]"
+  },
+  "each invalid address: a real Address NACK, attributed by its master's own report, logged as an error": {
+   "ok": true,
+   "detail": "[(24, 'N', 'telemetry'), (108, 'N', 'telemetry')]"
+  },
+  "each arbitration: a real arb_lost from a master's firmware, the winner packet matched": {
+   "ok": true,
+   "detail": "[(1, 118, 2, 104), (2, 118, 1, 60)]"
+  },
+  "arbitration between DIFFERENT slave pairs (rotating), never counted as a NACK": {
+   "ok": true,
+   "detail": "{'pairs': [('M1 lost at 0x76', 'M2 won 0x68'), ('M2 lost at 0x76', 'M1 won 0x3C')], 'expected': {(104, 118), (60, 118)}}"
+  },
+  "every played packet shown byte by byte (one ACK/NACK per byte; OLED text writes: first 8 bytes, rest condensed)": {
+   "ok": true,
+   "detail": "29 packets"
+  },
+  "every packet stays on screen for its full stage time before the next command": {
+   "ok": true,
+   "detail": "[]"
+  },
+  "_unplayed_bus_packets": {
+   "ok": true,
+   "detail": "[(31, 1, '0x76'), (32, 2, '0x68'), (34, 1, '0x76'), (35, 2, '0x68'), (36, 1, '0x76'), (37, 2, '0x68'), (39, 1, '0x76'), (40, 2, '0x68'), (42, 1, '0x76'), (43, 2, '0x68'), (44, 2, '0x68'), (46, 1, '0x76'), (47, 2, '0x68'), (49, 1, '0x76'), (51, 2, '0x68'), (52, 2, '0x68'), (53, 2, '0x68'), (54, 2, '0x68'), (55, 2, '0x68'), (56, 2, '0x68'), (57, 2, '0x68'), (58, 2, '0x68'), (59, 2, '0x68'), (60, 2, '0x68'), (61, 2, '0x68'), (62, 2, '0x68'), (63, 2, '0x68'), (64, 2, '0x68'), (65, 2, '0x68'), (66, 2, '0x68'), (67, 2, '0x68'), (68, 2, '0x68'), (69, 2, '0x68'), (70, 2, '0x68'), (71, 2, '0x68'), (72, 2, '0x68'), (73, 2, '0x68'), (74, 2, '0x68'), (75, 2, '0x68'), (76, 2, '0x68')]"
+  },
+  "bus: no transfer except the commanded ones (ARB bursts aside)": {
+   "ok": true,
+   "detail": "[]"
+  },
+  "all guided packets attributed by telemetry (0 unknown), 0 lost records, 0 stream gaps": {
+   "ok": true,
+   "detail": "lost 0 gaps 0 framing 0"
+  },
+  "waveform: invalid-address packet decoded above SCL/SDA (S, ADDR, red NACK, P) with the error banner": {
+   "ok": true,
+   "detail": "[(['S', 'addr', 'nack', 'P'], 0, \"<b style='color:#B91C1C'>INVALID ADDRESS ERROR: Master 1 sent 0x2A (W), no slave answered → Address NACK at 9th clock (SDA stayed HIGH)</b>\"), (['S', 'addr', 'nack', 'P'], 0, \"<b style='color:#B91C1C'>INVALID ADDRESS ERROR: Master 2 sent 0x45 (W), no slave answered → Address NACK at 9th clock (SDA stayed HIGH)</b>\")]"
+  },
+  "waveform: arbitration winner decoded (S, ADDR, ACK, DATA, P) with the amber collision marker": {
+   "ok": true,
+   "detail": "[(['S', 'addr', 'ack', 'data', 'ack', 'Sr', 'addr', 'ack'], 2, \"<b style='color:#963E06'>⚡ ARBITRATION LOST: Master 2 (0x68) vs Master 1 (0x76) \"), (['S', 'addr', 'ack', 'data', 'ack', 'data', 'ack', 'P'], 2, \"<b style='color:#963E06'>⚡ ARBITRATION LOST: Master 1 (0x3C) vs Master 2 (0x76) \")]"
+  },
+  "DO CAL: BMP280 calibration captured from the bus (not simulated)": {
+   "ok": true,
+   "detail": "(True, False, '')"
+  },
+  "temperature / pressure decoded from the captured BMP280 bytes": {
+   "ok": true,
+   "detail": "(31.099048997741193, 976.2383795479234)"
+  },
+  "OLED: each master writes its LIVE time / temperature / pressure (text read back from the captured pixels)": {
+   "ok": true,
+   "detail": "{1: [[]], 2: [['M2 23:47:54', 'T 31.11 C', 'P 976.20 HPA']]}"
+  },
+  "OLED mirror: Master 1 lines on pages 0-2, Master 2 lines on pages 4-6 (captured RAM)": {
+   "ok": true,
+   "detail": "[123, 79, 136, 0, 124, 70, 141, 0]"
+  },
+  "Sensor page shows the CAPTURED OLED pixels and the decoded readings": {
+   "ok": true,
+   "detail": "('CAPTURED: the SSD1306 RAM rebuilt from the 3,276 display bytes both masters wrote to 0x3C ', '31.10 °C')"
+  },
+  "capture stays trustworthy (health judged; the injected NACKs count as the real faults they are)": {
+   "ok": true,
+   "detail": "('DEGRADED', 'Fresh live capture')"
+  },
+  "no Python / Qt errors, no modal boxes": {
+   "ok": true,
+   "detail": "([], [], [])"
+  },
+  "user's native QSettings untouched": {
+   "ok": true,
+   "detail": ""
+  }
+ },
+ "failures": [],
+ "history": [
+  [
+   0.7,
+   "Master 1 → RTC 0x68",
+   18,
+   "played"
+  ],
+  [
+   9.2,
+   "Master 1 → BME 0x76",
+   19,
+   "played"
+  ],
+  [
+   16.8,
+   "Master 1 → OLED 0x3C",
+   20,
+   "played"
+  ],
+  [
+   25.0,
+   "Master 2 → RTC 0x68",
+   21,
+   "played"
+  ],
+  [
+   33.9,
+   "Master 2 → BME 0x76",
+   22,
+   "played"
+  ],
+  [
+   41.4,
+   "Master 2 → OLED 0x3C",
+   23,
+   "played"
+  ],
+  [
+   50.0,
+   "Master 1 → invalid address 0x2A",
+   24,
+   "played"
+  ],
+  [
+   50.9,
+   "Master 1 → RTC 0x68",
+   25,
+   "played"
+  ],
+  [
+   59.1,
+   "Master 1 → BME 0x76",
+   26,
+   "played"
+  ],
+  [
+   67.4,
+   "Master 1 → OLED 0x3C",
+   27,
+   "played"
+  ],
+  [
+   76.2,
+   "Master 2 → RTC 0x68",
+   28,
+   "played"
+  ],
+  [
+   84.5,
+   "Master 2 → BME 0x76",
+   29,
+   "played"
+  ],
+  [
+   91.9,
+   "Master 2 → OLED 0x3C",
+   30,
+   "played"
+  ],
+  [
+   102.1,
+   "arbitration: Master 1 → 0x76 vs Master 2 → 0x68",
+   48,
+   "played"
+  ],
+  [
+   110.1,
+   "Master 1 → RTC 0x68",
+   102,
+   "played"
+  ],
+  [
+   118.8,
+   "Master 1 → BME 0x76",
+   103,
+   "played"
+  ],
+  [
+   126.5,
+   "Master 1 → OLED 0x3C",
+   104,
+   "played"
+  ],
+  [
+   135.4,
+   "Master 2 → RTC 0x68",
+   105,
+   "played"
+  ],
+  [
+   143.7,
+   "Master 2 → BME 0x76",
+   106,
+   "played"
+  ],
+  [
+   151.1,
+   "Master 2 → OLED 0x3C",
+   107,
+   "played"
+  ],
+  [
+   159.9,
+   "Master 2 → invalid address 0x45",
+   108,
+   "played"
+  ],
+  [
+   160.8,
+   "Master 1 → RTC 0x68",
+   109,
+   "played"
+  ],
+  [
+   168.8,
+   "Master 1 → BME 0x76",
+   110,
+   "played"
+  ],
+  [
+   176.5,
+   "Master 1 → OLED 0x3C",
+   111,
+   "played"
+  ],
+  [
+   185.4,
+   "Master 2 → RTC 0x68",
+   112,
+   "played"
+  ],
+  [
+   193.7,
+   "Master 2 → BME 0x76",
+   113,
+   "played"
+  ],
+  [
+   201.3,
+   "Master 2 → OLED 0x3C",
+   114,
+   "played"
+  ],
+  [
+   212.2,
+   "arbitration: Master 1 → 0x3C vs Master 2 → 0x76",
+   137,
+   "played"
+  ],
+  [
+   215.3,
+   "Master 1 → RTC 0x68",
+   188,
+   "played"
+  ]
+ ]
+}

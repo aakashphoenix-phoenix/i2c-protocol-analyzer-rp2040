@@ -1,0 +1,564 @@
+{
+ "analyzer": {
+  "file": "work/measurements/mm_turns.jsonl",
+  "records": {
+   "hello": 2,
+   "status": 72,
+   "edges": 2122,
+   "segment": 1216
+  },
+  "unparsable_lines": 0,
+  "engine": {
+   "records_received": 3412,
+   "transport_errors": 0,
+   "lost_records": 0,
+   "stream_gaps": 0,
+   "mid_byte_cuts": 0,
+   "fw_stats": {
+    "buf_pct": null,
+    "dropped": 0,
+    "overflows": 0,
+    "capturing": true,
+    "waveform_dropped": 0
+   }
+  },
+  "firmware_status_counters": {
+   "first": {
+    "dma_lost_buffers": 0,
+    "dropped_records": 0,
+    "waveform_dropped": 0,
+    "mid_byte_ends": 0,
+    "stream_dropped": 0
+   },
+   "last": {
+    "dma_lost_buffers": 0,
+    "dropped_records": 0,
+    "waveform_dropped": 0,
+    "mid_byte_ends": 0,
+    "stream_dropped": 0
+   },
+   "decode_max_us_max": 6977
+  },
+  "loss_records": 0,
+  "edge_batches_with_gap": 0,
+  "segments": {
+   "count": 1216,
+   "start": {
+    "null": 1168,
+    "RESTART": 48
+   },
+   "end": {
+    "RESTART": 48,
+    "null": 1168
+   },
+   "mid_byte_end": 0
+  },
+  "packets": {
+   "count": 1168,
+   "status": {
+    "ok": 1168
+   },
+   "without_stop": 0,
+   "span_s": 62.372925,
+   "per_s": 18.72607385335865,
+   "signatures": {
+    "0x3C w2 r0": 96,
+    "0x3C w17 r0": 1024,
+    "0x68 w1 r16": 16,
+    "0x76 w1 r1": 8,
+    "0x76 w1 r6": 16,
+    "0x76 w1 r24": 8
+   }
+  },
+  "timing": {
+   "scl_hz_median": 94570.0,
+   "scl_hz_min": 93333,
+   "scl_hz_max": 94736,
+   "bus_free_ns_min": 317500,
+   "bus_free_ns_median": 422000,
+   "bus_free_below_tBUF_4700ns": 0
+  },
+  "phase_table": {
+   "0x3C": {
+    "summary": {
+     "transactions": 1120,
+     "acks": 18720,
+     "nacks": 0,
+     "slots": 18720,
+     "nack_rate": 0.0,
+     "unexpected": 0,
+     "unexpected_rate": 0.0
+    },
+    "phases": {
+     "addr-W:ACK": 1120,
+     "frames_W": 1120,
+     "transactions": 1120,
+     "write[0]:ACK(target)": 1120,
+     "write[1]:ACK(target)": 1120,
+     "write[>=2]:ACK(target)": 15360
+    }
+   },
+   "0x68": {
+    "summary": {
+     "transactions": 16,
+     "acks": 288,
+     "nacks": 16,
+     "slots": 304,
+     "nack_rate": 5.2631578947368425,
+     "unexpected": 0,
+     "unexpected_rate": 0.0
+    },
+    "phases": {
+     "addr-R:ACK": 16,
+     "addr-W:ACK": 16,
+     "frames_R": 16,
+     "frames_W": 16,
+     "read[final]:NACK(controller end-of-read, normal)": 16,
+     "read[not final]:ACK(controller)": 240,
+     "transactions": 16,
+     "write[0]:ACK(target)": 16
+    }
+   },
+   "0x76": {
+    "summary": {
+     "transactions": 32,
+     "acks": 360,
+     "nacks": 32,
+     "slots": 392,
+     "nack_rate": 8.16326530612245,
+     "unexpected": 0,
+     "unexpected_rate": 0.0
+    },
+    "phases": {
+     "addr-R:ACK": 32,
+     "addr-W:ACK": 32,
+     "frames_R": 32,
+     "frames_W": 32,
+     "read[final]:NACK(controller end-of-read, normal)": 32,
+     "read[not final]:ACK(controller)": 264,
+     "transactions": 32,
+     "write[0]:ACK(target)": 32
+    }
+   }
+  },
+  "nack_categories": {
+   "0x3C": {},
+   "0x68": {
+    "read_end_nack_normal": 16
+   },
+   "0x76": {
+    "read_end_nack_normal": 32
+   }
+  },
+  "totals": {
+   "transactions": 1168,
+   "acks": 19368,
+   "nacks": 48,
+   "slots": 19416,
+   "nack_rate": 0.24721878862793573,
+   "unexpected": 0,
+   "unexpected_rate": 0.0
+  }
+ },
+ "masters": {
+  "master_1": {
+   "file": "work/measurements/mm_turns_com32.log",
+   "unparsable_lines": 0,
+   "hello": {
+    "type": "hello",
+    "role": "controller",
+    "source": "controller",
+    "master_id": 1,
+    "name": "Master 1",
+    "board": "pico",
+    "fw": "I2C multi-master controller",
+    "fw_version": "2.2-turns",
+    "sda_pin": 4,
+    "scl_pin": 5,
+    "scl_hz": 100000,
+    "drives_oled": true,
+    "oled_cmd_writes": false,
+    "schedule": "turns",
+    "turn_gap_ms": 4000,
+    "turn_takeover_ms": 4500,
+    "peer_timeout_ms": 13500,
+    "turn_order": [
+     104,
+     118,
+     60
+    ],
+    "first_turn_owner": 1,
+    "identity_ms": 10000,
+    "idle_window_us": 40,
+    "holdoff_us": 120,
+    "max_attempts": 6,
+    "txlog": false
+   },
+   "scl_config": {
+    "type": "scl_config",
+    "source": "controller",
+    "master_id": 1,
+    "result": "current",
+    "requested_hz": 100000,
+    "applied_hz": 100000,
+    "supported_hz": [
+     100000,
+     400000
+    ],
+    "reason": ""
+   },
+   "events": {
+    "hello": 2,
+    "turn_start": 10,
+    "sensor_telemetry": 10,
+    "turn_end": 10,
+    "master_stats": 79,
+    "txlog": 2,
+    "scl_config": 1,
+    "txn": 658
+   },
+   "master_stats_first": {
+    "type": "master_stats",
+    "source": "controller",
+    "master_id": 1,
+    "t_us": 138024943,
+    "txn_ok": 321,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0,
+    "txlog": false,
+    "last_timeout": {
+     "t_us": 0,
+     "addr": 0,
+     "wlen": 0,
+     "rlen": 0,
+     "attempt": 0,
+     "ic_status": 0,
+     "sda": 0,
+     "scl": 0
+    }
+   },
+   "master_stats_last": {
+    "type": "master_stats",
+    "source": "controller",
+    "master_id": 1,
+    "t_us": 214003705,
+    "txn_ok": 979,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0,
+    "txlog": false,
+    "last_timeout": {
+     "t_us": 0,
+     "addr": 0,
+     "wlen": 0,
+     "rlen": 0,
+     "attempt": 0,
+     "ic_status": 0,
+     "sda": 0,
+     "scl": 0
+    }
+   },
+   "master_stats_delta": {
+    "txn_ok": 658,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0
+   },
+   "master_stats_span_s": 75.978762,
+   "txn": {
+    "count": 658,
+    "results": {
+     "ok": 658
+    },
+    "multi_attempt": 0,
+    "by_signature": {
+     "0x3C w17 r0 ok": 576,
+     "0x3C w2 r0 ok": 54,
+     "0x68 w1 r16 ok": 9,
+     "0x76 w1 r1 ok": 5,
+     "0x76 w1 r24 ok": 5,
+     "0x76 w1 r6 ok": 9
+    },
+    "dur_us_median": {
+     "0x3C": 1733.0,
+     "0x68": 1851,
+     "0x76": 892
+    },
+    "dur_us_max": {
+     "0x3C": 1747,
+     "0x68": 1851,
+     "0x76": 2617
+    }
+   },
+   "arb_lost_events": [],
+   "resets_recoveries": []
+  },
+  "master_2": {
+   "file": "work/measurements/mm_turns_com34.log",
+   "unparsable_lines": 1,
+   "hello": {
+    "type": "hello",
+    "role": "controller",
+    "source": "controller",
+    "master_id": 2,
+    "name": "Master 2",
+    "board": "pico_w",
+    "fw": "I2C multi-master controller",
+    "fw_version": "2.2-turns",
+    "sda_pin": 4,
+    "scl_pin": 5,
+    "scl_hz": 100000,
+    "drives_oled": true,
+    "oled_cmd_writes": false,
+    "schedule": "turns",
+    "turn_gap_ms": 4000,
+    "turn_takeover_ms": 4500,
+    "peer_timeout_ms": 13500,
+    "turn_order": [
+     104,
+     118,
+     60
+    ],
+    "first_turn_owner": 1,
+    "identity_ms": 10000,
+    "idle_window_us": 70,
+    "holdoff_us": 120,
+    "max_attempts": 6,
+    "txlog": false
+   },
+   "scl_config": {
+    "type": "scl_config",
+    "source": "controller",
+    "master_id": 2,
+    "result": "current",
+    "requested_hz": 100000,
+    "applied_hz": 100000,
+    "supported_hz": [
+     100000,
+     400000
+    ],
+    "reason": ""
+   },
+   "events": {
+    "master_stats": 79,
+    "hello": 1,
+    "txlog": 2,
+    "scl_config": 1,
+    "turn_start": 9,
+    "txn": 656,
+    "sensor_telemetry": 9,
+    "turn_end": 9
+   },
+   "master_stats_first": {
+    "type": "master_stats",
+    "source": "controller",
+    "master_id": 2,
+    "t_us": 17101610,
+    "txn_ok": 101,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0,
+    "txlog": false,
+    "last_timeout": {
+     "t_us": 0,
+     "addr": 0,
+     "wlen": 0,
+     "rlen": 0,
+     "attempt": 0,
+     "ic_status": 0,
+     "sda": 0,
+     "scl": 0
+    }
+   },
+   "master_stats_last": {
+    "type": "master_stats",
+    "source": "controller",
+    "master_id": 2,
+    "t_us": 93101624,
+    "txn_ok": 757,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0,
+    "txlog": true,
+    "last_timeout": {
+     "t_us": 0,
+     "addr": 0,
+     "wlen": 0,
+     "rlen": 0,
+     "attempt": 0,
+     "ic_status": 0,
+     "sda": 0,
+     "scl": 0
+    }
+   },
+   "master_stats_delta": {
+    "txn_ok": 656,
+    "addr_nack": 0,
+    "data_nack": 0,
+    "arb_lost": 0,
+    "retries": 0,
+    "gave_up": 0,
+    "busy_waits": 0,
+    "busy_timeouts": 0,
+    "timeouts": 0,
+    "other_aborts": 0,
+    "recoveries": 0,
+    "recovery_skipped": 0,
+    "controller_resets": 0
+   },
+   "master_stats_span_s": 76.000014,
+   "txn": {
+    "count": 656,
+    "results": {
+     "ok": 656
+    },
+    "multi_attempt": 0,
+    "by_signature": {
+     "0x3C w17 r0 ok": 576,
+     "0x3C w2 r0 ok": 54,
+     "0x68 w1 r16 ok": 9,
+     "0x76 w1 r1 ok": 4,
+     "0x76 w1 r24 ok": 4,
+     "0x76 w1 r6 ok": 9
+    },
+    "dur_us_median": {
+     "0x3C": 1733.0,
+     "0x68": 1850,
+     "0x76": 892
+    },
+    "dur_us_max": {
+     "0x3C": 1746,
+     "0x68": 1855,
+     "0x76": 2617
+    }
+   },
+   "arb_lost_events": [],
+   "resets_recoveries": []
+  }
+ },
+ "attribution": {
+  "clock_fit": {
+   "1": {
+    "drift_ppm": 10.989298768526723,
+    "offset_us": 37962180.81835717
+   },
+   "2": {
+    "drift_ppm": 12.185276645260146,
+    "offset_us": 158468661.60657087
+   }
+  },
+  "packets_attributed": {
+   "1": 573,
+   "2": 584
+  },
+  "packets_unattributed": {
+   "0x68": 2,
+   "0x76": 4,
+   "0x3C": 5
+  },
+  "master_txn_in_window_not_seen_on_bus": {
+   "M1 0x3C w17 r0": 2,
+   "M1 0x3C w2 r0": 3,
+   "M1 0x68 w1 r16": 1,
+   "M1 0x76 w1 r1": 1,
+   "M1 0x76 w1 r24": 1,
+   "M1 0x76 w1 r6": 2
+  },
+  "per_master_address": {
+   "M1 0x3C": {
+    "frames_W": 555,
+    "ack": 9315
+   },
+   "M1 0x68": {
+    "frames_W": 6,
+    "ack": 108,
+    "frames_R": 6,
+    "read_end_nack_normal": 6
+   },
+   "M1 0x76": {
+    "frames_W": 12,
+    "ack": 135,
+    "frames_R": 12,
+    "read_end_nack_normal": 12
+   },
+   "M2 0x3C": {
+    "frames_W": 560,
+    "ack": 9360
+   },
+   "M2 0x68": {
+    "frames_W": 8,
+    "ack": 144,
+    "frames_R": 8,
+    "read_end_nack_normal": 8
+   },
+   "M2 0x76": {
+    "frames_W": 16,
+    "ack": 180,
+    "frames_R": 16,
+    "read_end_nack_normal": 16
+   },
+   "unattributed 0x3C": {
+    "frames_W": 5,
+    "ack": 45
+   },
+   "unattributed 0x68": {
+    "frames_W": 2,
+    "ack": 36,
+    "frames_R": 2,
+    "read_end_nack_normal": 2
+   },
+   "unattributed 0x76": {
+    "frames_W": 4,
+    "ack": 45,
+    "frames_R": 4,
+    "read_end_nack_normal": 4
+   }
+  }
+ }
+}

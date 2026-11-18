@@ -1,0 +1,353 @@
+Source: live analyzer COM28 for 60 s · records 6532 · rejected 0 · lost 0 · packets 5916
+
+0x08  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x09  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x0F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x10  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x11  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x12  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x13  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x14  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x15  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x16  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x17  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x18  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x19  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x1F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x20  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x21  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x22  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x23  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x24  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x25  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x26  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x27  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x28  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x29  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x2F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x30  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x31  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x32  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x33  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x34  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x35  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x36  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x37  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x38  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x39  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x3A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x3B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x3C  transactions 4212 · ACK 70212 · NACK 12 · NACK rate 0.02% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              12
+    addr-W:ACK                                              4200
+    read[final]:NACK(controller end-of-read, normal)        12
+    write[0]:ACK(target)                                    4200
+    write[1]:ACK(target)                                    4200
+    write[>=2]:ACK(target)                                  57600
+
+0x3D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x3E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x3F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x40  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x41  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x42  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x43  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x44  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x45  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x46  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x47  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x48  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x49  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x4F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x50  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x51  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x52  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x53  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x54  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x55  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x56  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x57  transactions 12 · ACK 12 · NACK 12 · NACK rate 50.00% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              12
+    read[final]:NACK(controller end-of-read, normal)        12
+
+0x58  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x59  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x5F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x60  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x61  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x62  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x63  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x64  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x65  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x66  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x67  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x68  transactions 72 · ACK 552 · NACK 72 · NACK rate 11.54% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              72
+    addr-W:ACK                                              60
+    read[final]:NACK(controller end-of-read, normal)        72
+    read[not final]:ACK(controller)                         360
+    write[0]:ACK(target)                                    60
+
+0x69  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6A  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6B  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6C  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6D  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6E  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x6F  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x70  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x71  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x72  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x73  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x74  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x75  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+0x76  transactions 324 · ACK 2586 · NACK 324 · NACK rate 11.13% · unexpected NACK 0 (0.00%)
+    addr-R:ACK                                              324
+    addr-W:ACK                                              312
+    read[final]:NACK(controller end-of-read, normal)        324
+    read[not final]:ACK(controller)                         1638
+    write[0]:ACK(target)                                    312
+
+0x77  transactions 12 · ACK 0 · NACK 12 · NACK rate 100.00% · unexpected NACK 12 (100.00%)
+    addr-R:NACK(target absent/busy)                         12
+
+ALL  ACK 73362 · NACK 1716 · unexpected 1296

@@ -1,0 +1,208 @@
+{
+  "renderer": "3D (OpenGL)",
+  "ports": {
+    "analyzer": "COM28",
+    "master1": "COM32",
+    "master2": "COM34"
+  },
+  "failures": [],
+  "notes": [],
+  "connect_all": {
+    "capturing": true,
+    "masters": [
+      [
+        1,
+        "HEALTHY",
+        "aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)",
+        true
+      ],
+      [
+        2,
+        "HEALTHY",
+        "acquiring alignment\u2026",
+        true
+      ]
+    ],
+    "can_attribute": true,
+    "button": "Disconnect all"
+  },
+  "live": {
+    "packets": 28957,
+    "dots": 133,
+    "cut": 0,
+    "arrived": 133,
+    "packets_by_master": {
+      "1": 27465,
+      "2": 1490,
+      "None": 2
+    },
+    "packets_by_addr": {
+      "0x3C": 25230,
+      "0x68": 688,
+      "0x76": 3039
+    }
+  },
+  "stop": {
+    "state_after_click": "draining",
+    "button": "\u25a0 Stopping\u2026",
+    "txn": 25986,
+    "position": 21.457750000002058,
+    "stages": 43,
+    "capturing": false,
+    "drain_s": 34.92,
+    "final_state": "stopped",
+    "same_txn": true,
+    "finished": true,
+    "dots_in_flight": false,
+    "txns_during_drain": [
+      25986
+    ]
+  },
+  "frozen": {
+    "new_dots": 0,
+    "txn_unchanged": true,
+    "particles": 0,
+    "packets_engine": 30643,
+    "hud": true
+  },
+  "resume": {
+    "button_before": "Connect all",
+    "capturing": true,
+    "state": "running",
+    "packets_after_click": 0,
+    "queue": 0,
+    "txn_after_click": null,
+    "dots": 7,
+    "packets": 1605,
+    "stale_played": 0,
+    "masters": [
+      [
+        1,
+        "HEALTHY",
+        "aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)"
+      ],
+      [
+        2,
+        "HEALTHY",
+        "aligned (USB-arrival prior + transfer signatures, 100% of recent transfers matched)"
+      ]
+    ]
+  },
+  "dots": {
+    "total": 170,
+    "by_master": {
+      "1": 128,
+      "2": 41,
+      "None": 1
+    },
+    "by_target": {
+      "0x3C": 38,
+      "0x68": 82,
+      "0x76": 50
+    },
+    "ack": 72,
+    "nack": 4,
+    "tx": 33,
+    "rx": 44,
+    "travel_s": [
+      1.28,
+      1.28,
+      1.28
+    ],
+    "particles_cut_counter": 0,
+    "bad_route": [],
+    "bad_colour": [],
+    "not_arrived": []
+  },
+  "uniform_pace": {
+    "speed": 0.5,
+    "dot_travel_s": 1.28,
+    "faster_dots": []
+  },
+  "pairs_seen_live": {
+    "MNone 0x76 WRITE\u2192READ": {
+      "m2s": 1,
+      "s2m": 0
+    },
+    "M1 0x76 WRITE\u2192READ": {
+      "m2s": 29,
+      "s2m": 20
+    },
+    "M1 0x3C WRITE": {
+      "m2s": 20,
+      "s2m": 18
+    },
+    "M1 0x68 WRITE\u2192READ": {
+      "m2s": 22,
+      "s2m": 19
+    },
+    "M2 0x68 WRITE\u2192READ": {
+      "m2s": 22,
+      "s2m": 19
+    }
+  },
+  "colours": {
+    "ACK": "#39FF6A",
+    "NACK": "#FF2B2B",
+    "M1_TX": "#5271FF",
+    "M1_RX": "#00D9FF",
+    "M2_TX": "#FF4FC3",
+    "M2_RX": "#FFB3E6",
+    "unattributed": "#9FB0CC",
+    "analyzer": "#6B7A92"
+  },
+  "stray_labels": [],
+  "engine_errors": [],
+  "transport_errors": 0,
+  "shutdown": {
+    "analyzer_connected": false,
+    "masters_connected": []
+  },
+  "python_exceptions": [],
+  "screenshots": [
+    "work\\verification\\live_ack.png",
+    "work\\verification\\live_live_1.png",
+    "work\\verification\\live_live_2.png",
+    "work\\verification\\live_live_3.png",
+    "work\\verification\\live_live_4.png",
+    "work\\verification\\live_live_5.png",
+    "work\\verification\\live_nack.png",
+    "work\\verification\\live_live_6.png",
+    "work\\verification\\live_live_7.png",
+    "work\\verification\\live_live_8.png",
+    "work\\verification\\live_live_9.png",
+    "work\\verification\\live_live_10.png",
+    "work\\verification\\live_live_11.png",
+    "work\\verification\\live_live_12.png",
+    "work\\verification\\live_live_13.png",
+    "work\\verification\\live_live_14.png",
+    "work\\verification\\live_live_15.png",
+    "work\\verification\\live_live_16.png",
+    "work\\verification\\live_live_17.png",
+    "work\\verification\\live_live_18.png",
+    "work\\verification\\live_live_19.png",
+    "work\\verification\\live_live_20.png",
+    "work\\verification\\live_live_21.png",
+    "work\\verification\\live_live_22.png",
+    "work\\verification\\live_live_23.png",
+    "work\\verification\\live_live_24.png",
+    "work\\verification\\live_live_25.png",
+    "work\\verification\\live_live_26.png",
+    "work\\verification\\live_live_27.png",
+    "work\\verification\\live_live_28.png",
+    "work\\verification\\live_live_29.png",
+    "work\\verification\\live_live_30.png",
+    "work\\verification\\live_live_31.png",
+    "work\\verification\\live_live_32.png",
+    "work\\verification\\live_m2_tx.png",
+    "work\\verification\\live_live_33.png",
+    "work\\verification\\live_live_34.png",
+    "work\\verification\\live_m2_rx.png",
+    "work\\verification\\live_live_35.png",
+    "work\\verification\\live_live_36.png",
+    "work\\verification\\live_stopping.png",
+    "work\\verification\\live_stopped.png",
+    "work\\verification\\live_resumed.png"
+  ],
+  "result": "PASS"
+}

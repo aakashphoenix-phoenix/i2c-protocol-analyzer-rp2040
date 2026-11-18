@@ -1,0 +1,20 @@
+OK   Performance Monitoring / Device Activity / Capture History hidden from the navigation
+OK   Connect all: analyzer + Master 1 + Master 2 capturing, clocks aligned (Real Hardware Mode)
+OK   both masters run controller firmware 2.5-turns
+OK   Guided flow started (CONDUCT ON sent to both masters)
+OK   order: Master 1 RTC→BMP280→OLED, Master 2 RTC→BMP280→OLED, then an injected error (4 cycles)
+OK   errors alternate: invalid address, arbitration, invalid address, ...
+OK   invalid addresses rotate and the master alternates
+OK   each invalid address: a real Address NACK, attributed by its master's own report, logged as an error
+OK   each arbitration: a real arb_lost from a master's firmware, the winner packet matched
+OK   arbitration between DIFFERENT slave pairs (rotating), never counted as a NACK
+OK   every played packet shown byte by byte: one ACK/NACK stage per byte (never condensed)
+OK   every packet stays on screen for its full stage time before the next command
+OK   bus: no transfer except the commanded ones (ARB bursts aside)
+OK   all guided packets attributed by telemetry (0 unknown), 0 lost records, 0 stream gaps
+OK   waveform: invalid-address packet decoded above SCL/SDA (S, ADDR, red NACK, P) with the error banner
+OK   waveform: arbitration winner decoded (S, ADDR, ACK, DATA, P) with the amber collision marker
+OK   capture stays trustworthy (health judged; the injected NACKs count as the real faults they are)
+OK   no Python / Qt errors, no modal boxes
+OK   user's native QSettings untouched
+{"failures": []}
