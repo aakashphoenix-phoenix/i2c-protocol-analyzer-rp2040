@@ -1,6 +1,6 @@
 # I²C Protocol Analyzer & Real-Time Performance Monitoring System
 
-A hardware-based I²C monitoring and experimentation project using **Raspberry Pi Pico / Pico W (RP2040)** controllers, a dedicated **PIO + DMA passive analyzer**, and a **Python desktop GUI**.
+A hardware-based I²C monitoring and experimentation project using **Raspberry Pi Pico / Pico W (RP2040)** controllers and a **Python desktop GUI**.
 
 > **Repository publication status:** Project documentation is available. The original project archive (proposed **v1.0**) and upgraded source files (proposed **v2.0**) are being reviewed and organized for publication. No historical release should be treated as published until its actual source has been committed and tagged.
 
